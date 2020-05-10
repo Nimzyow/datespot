@@ -1,0 +1,19 @@
+.spotHeader{
+    text-align: center;
+}
+
+.spotHeader span{
+    background-color: rgba( 255, 255, 255, 0.8);
+    padding: 8px;
+    color:#000000;
+    line-height: 1.5;
+    border-radius: 15px;
+}
+
+.jumboContainer{
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 300px;
+}

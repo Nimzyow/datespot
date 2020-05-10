@@ -1,0 +1,33 @@
+h1 span, h3 span, h6 span{
+    background-color: rgba( 0, 0, 0, 0.4);
+    padding: 5px;
+    color:#f8f9fa;;
+    opacity: 1;
+    line-height: 1.6;
+}
+
+.map{
+    display: block;
+    height: 300px;
+}
+
+.spotButton {
+    display: flex;
+    width: 100%;
+    justify-content: left;
+    padding-bottom: 10px;
+  }
+  
+  .spotButton Button{
+    background-color: rgb(228, 66, 54);
+    border-color: rgb(151, 44, 36);
+  }
+  
+  .spotButton Button:hover, .homeButton Button:active, .homeButton Button:active:focus{
+    background-color: rgb(151, 44, 36) !important;
+    border-color: rgb(228, 66, 54) !important;
+  }
+
+  .address{
+    margin-top: 10px;
+  }

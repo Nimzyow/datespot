@@ -1,0 +1,34 @@
+.spotContainer{
+  border: 1px solid black;
+  height: 162px;
+  margin: 20px;
+  padding: 0px
+}
+
+ /* .spotText span{
+  background-color: rgba(255, 255, 255, 0.5);
+  color:#000000;
+
+}  */
+
+.spotButton {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+ ;
+}
+
+.spotButton Button{
+  background-color: rgb(228, 66, 54);
+  border-color: rgb(151, 44, 36);
+}
+
+.spotButton Button:hover, .spotButton Button:active, .spotButton Button:active:focus{
+  background-color: rgb(151, 44, 36) !important;
+  border-color: rgb(228, 66, 54) !important;
+}
+
+
+.spotFooter{
+  padding: 20px;
+}
