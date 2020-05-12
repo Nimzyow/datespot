@@ -6,7 +6,8 @@ const router = express.Router();
 // @access  Private
 
 router.get("/", (req, res) => {
-  res.json({ msg: "hello get request from user" });
+  try {
+  } catch (err) {}
 });
 
 module.exports = router;
