@@ -18,7 +18,15 @@ router.get(
     check("password", "Please enter a password").isLength({ min: 6 }),
   ],
   async (req, res) => {
-    res.json({ msg: "get request in auth" });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    const { username, email, password } = req.body;
+
+    try {
+    } catch (err) {}
   }
 );
 
