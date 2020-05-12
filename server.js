@@ -7,7 +7,6 @@ const app = express();
 connectDB();
 
 //init middleware
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
