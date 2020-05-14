@@ -23,11 +23,12 @@ router.get("/", auth, async (req, res) => {
 //@access   Private
 
 router.post("/", auth, async (req, res) => {
-  const { tag } = req.body;
+  const { tag, spotId } = req.body;
 
   try {
     const newTag = new Tags({
       tag,
+      spots: [spotId],
     });
 
     const tagSave = await newTag.save();

@@ -47,6 +47,10 @@ const SpotSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    tags: [
+      {type: mongoose.Schema.Types.ObjectId, ref: "tags"}
+    ]
+    //tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "tag" }],
   },
   { timestamps: true }
 );
