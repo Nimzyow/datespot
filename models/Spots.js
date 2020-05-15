@@ -48,10 +48,10 @@ const SpotSchema = mongoose.Schema(
       required: true,
     },
     tags: [
-      {type: mongoose.Schema.Types.ObjectId, ref: "tags"}
-    ]
+      { type: mongoose.Schema.Types.ObjectId, ref: "tags" },
+    ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("spot", SpotSchema);
