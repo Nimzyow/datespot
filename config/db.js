@@ -19,15 +19,17 @@ const connect = () => {
     return connectDB(config.get("testURI")).then(() => {
       // eslint-disable-next-line no-console
       console.log(`Connected to ${process.env.NODE_ENV} db`);
-    });
+      // eslint-disable-next-line no-console
+    }).catch((err) => console.log(err.message));
   }
   if (process.env.NODE_ENV === "production") {
     return connectDB(config.get("productionURI")).then(() => {
       // eslint-disable-next-line no-console
       console.log(`Connected to ${process.env.NODE_ENV} db`);
-    });
+      // eslint-disable-next-line no-console
+    }).catch((err) => console.log(err.message));
   }
-
+  // eslint-disable-next-line no-console
   console.error(`
   Couldn't connect:
   
