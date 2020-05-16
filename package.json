@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon index.js"
+    "server": "NODE_ENV=production nodemon index.js",
+    "test": "NODE_ENV=test mocha ./routes/routesTests/*.test.js"
   },
   "keywords": [],
   "author": "",
