@@ -19,6 +19,7 @@ router.post(
     check("email", "Please include a valid email").isEmail(),
     check("password", "Please enter a password").isLength({ min: 6 }),
   ],
+  // eslint-disable-next-line consistent-return
   async (req, res) => {
     // express validator check, gotten from express validator documentation
     const errors = validationResult(req);

@@ -18,7 +18,7 @@ const SpotSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    avg_cost: {
+    avgCost: {
       type: String,
       required: true,
     },
@@ -40,7 +40,7 @@ const SpotSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    best_times: {
+    bestTimes: {
       type: String,
     },
     advice: {
@@ -48,7 +48,10 @@ const SpotSchema = mongoose.Schema(
       required: true,
     },
     tags: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "tags" },
+      { type: mongoose.Schema.Types.ObjectId, ref: "tag" },
+    ],
+    comments: [
+      { comment: { type: String }, date: { type: Date, default: Date.now }, userId: { type: mongoose.Schema.Types.ObjectId, ref: "user" } },
     ],
   },
   { timestamps: true },

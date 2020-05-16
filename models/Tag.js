@@ -8,7 +8,7 @@ const TagSchema = mongoose.Schema(
     },
     spots: [{ type: mongoose.Schema.Types.ObjectId, ref: "spot" }],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("tag", TagSchema);

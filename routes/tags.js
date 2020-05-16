@@ -51,7 +51,7 @@ router.post("/", auth, async (req, res) => {
   try {
     const newTag = new Tags({
       tag,
-      spots: [spotId],
+      spots: spotId,
     });
 
     const tagSave = await newTag.save();

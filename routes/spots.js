@@ -1,8 +1,9 @@
 const express = require("express");
+
 const router = express.Router();
 const auth = require("../middleware/auth");
 
-const Spots = require("../models/Spots");
+const Spots = require("../models/Spot");
 
 // @route   GET api/spots
 // @Desc    Get all spots
@@ -18,6 +19,62 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
+// @route   PUT api/spots/:id
+// @Desc    Update spots
+// @access  Private
+
+router.put("/:id", auth, async (req, res) => {
+  const {
+    title,
+    description,
+    location,
+    url,
+    avgCost,
+    latitude,
+    longitude,
+    summary,
+    address,
+    dress,
+    bestTimes,
+    advice,
+    tags,
+    comments,
+  } = req.body;
+
+  const spotFields = {};
+
+  if (title) spotFields.title = title;
+  if (description) spotFields.description = description;
+  if (location) spotFields.location = location;
+  if (url) spotFields.url = url;
+  if (avgCost) spotFields.avgCost = avgCost;
+  if (latitude) spotFields.latitude = latitude;
+  if (longitude) spotFields.longitude = longitude;
+  if (summary) spotFields.summary = summary;
+  if (address) spotFields.address = address;
+  if (dress) spotFields.dress = dress;
+  if (bestTimes) spotFields.bestTimes = bestTimes;
+  if (advice) spotFields.advice = advice;
+  if (tags) spotFields.tags = tags;
+  if (comments) spotFields.comments = comments;
+  try {
+    let spot = await Spots.findById(req.params.id);
+    if (!spot) return res.status(404).json({ msg: "Contact not found" });
+
+    spot = await Spots.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: spotFields,
+      },
+      { new: true },
+    );
+    res.json(spot);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
 // @route   POST api/spots
 // @Desc    Add new spots
 // @access  Private
@@ -28,14 +85,15 @@ router.post("/", auth, async (req, res) => {
     description,
     location,
     url,
-    avg_cost,
+    avgCost,
     latitude,
     longitude,
     summary,
     address,
     dress,
-    best_times,
+    bestTimes,
     advice,
+    comments,
   } = req.body;
 
   try {
@@ -44,14 +102,15 @@ router.post("/", auth, async (req, res) => {
       description,
       location,
       url,
-      avg_cost,
+      avgCost,
       latitude,
       longitude,
       summary,
       address,
       dress,
-      best_times,
+      bestTimes,
       advice,
+      comments,
     });
 
     const spot = await newSpot.save();
