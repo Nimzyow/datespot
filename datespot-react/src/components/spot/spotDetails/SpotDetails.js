@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useContext } from "react";
-import { Jumbotron, Container, Row, Col } from "react-bootstrap";
+import { Jumbotron, Container, Row, Col, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
 import "../css/SpotDetails.css";
@@ -15,9 +15,10 @@ const SpotDetails = (props) => {
   const spotContext = useContext(SpotContext);
   const authContext = useContext(AuthContext);
   const { getCommentBasedOnSpot, comments, clearComments } = spotContext;
-  const { user } = authContext;
+  const { user, loadUser } = authContext;
   const properties = props.location.aboutProps;
   useEffect(() => {
+    loadUser();
     clearComments();
     getCommentBasedOnSpot(props.location.aboutProps.id);
     getComments();

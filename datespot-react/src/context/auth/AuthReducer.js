@@ -7,7 +7,7 @@ export default (state, action) => {
         ...state,
         isAuthenticated: true,
         loading: false,
-        user: action.payload.user,
+        user: action.payload,
       };
     case Types.AUTH_ERROR:
       localStorage.removeItem("token");
@@ -28,10 +28,10 @@ export default (state, action) => {
         loading: false,
       };
     case Types.LOGIN_SUCCESS:
-      localStorage.setItem("token", action.payload.user.token);
+      localStorage.setItem("token", action.payload.token);
       return {
         ...state,
-        ...action.payload.user,
+        ...action.payload,
         isAuthenticated: true,
         loading: false,
       };

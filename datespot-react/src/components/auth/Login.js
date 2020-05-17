@@ -14,7 +14,7 @@ const Login = (props) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      props.history.push("/");
+      props.history.push("/spots");
     }
     if (error === "Invalid Credentials") {
       setAlert(error, "danger");
@@ -39,7 +39,7 @@ const Login = (props) => {
     if (email === "" || password === "") {
       setAlert("Please fill in all fields", "danger");
     } else {
-      login({ user: { email, password } });
+      login({ email, password });
     }
   };
 

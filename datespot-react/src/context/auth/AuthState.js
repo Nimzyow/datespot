@@ -21,7 +21,7 @@ const AuthState = (props) => {
   const loadUser = async () => {
     setAuthToken(localStorage.token);
     try {
-      const res = await axios.get("http://localhost:4000/api/user");
+      const res = await axios.get("http://localhost:4000/api/auth");
 
       dispatch({
         type: Types.USER_LOADED,
@@ -84,7 +84,7 @@ const AuthState = (props) => {
     try {
       const res = await axios.post("http://localhost:4000/api/auth", formData, config);
 
-      console.log(res.data);
+      console.log(res.data)
 
       dispatch({
         type: Types.LOGIN_SUCCESS,
@@ -92,14 +92,7 @@ const AuthState = (props) => {
       });
       noShowSpinner();
 
-      setAuthToken(localStorage.token);
-
-      dispatch({
-        type: Types.USER_LOADED,
-        payload: res.data,
-      });
-
-      //loadUser();
+      loadUser();
     } catch (err) {
       dispatch({
         type: Types.LOGIN_FAIL,

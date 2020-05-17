@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import SpotContext from "../../../context/spot/SpotContext";
+import AuthContext from "../../../context/auth/AuthContext"
 import { CardColumns, Jumbotron, Container } from "react-bootstrap";
 import { Spinner } from "react-bootstrap";
 import SpotItem from "../../spot/SpotItem";
@@ -9,8 +10,10 @@ import "./Spot.css";
 
 const Spot = () => {
   const spotContext = useContext(SpotContext);
+  const authContext = useContext(AuthContext);
   const { spots, filtered, getSpots, filteredByTag } = spotContext;
   useEffect(() => {
+    authContext.loadUser();
     getSpots();
   }, []);
 

@@ -28,9 +28,9 @@ function App() {
                 <NavigationBar />
                 <Alerts />
                 <Switch>
-                  <PrivateRoute exact path="/" component={Spot} />
+                  <PrivateRoute exact path="/" component={Home} />
                   <Route exact path="/about" component={About} />
-                  <Route exact path="/home" component={Home} />
+                  <PrivateRoute exact path="/spots" component={Spot} />
                   <PrivateRoute
                     exact
                     path="/spotdetails"

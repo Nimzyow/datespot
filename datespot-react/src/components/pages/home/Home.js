@@ -1,10 +1,17 @@
-import React from "react";
+import React, {useContext, useEffect} from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./Home.css";
 import logo from "../../../assets/images/logo.png";
+import AuthContext from "../../../context/auth/AuthContext"
 
 const Home = () => {
+  const authContext = useContext(AuthContext)
+
+  useEffect(() => {
+    authContext.loadUser()
+  }, [])
+
   return (
     <div className="bg">
       <div className="v-centre">
