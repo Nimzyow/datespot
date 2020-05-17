@@ -53,6 +53,9 @@ const SpotSchema = mongoose.Schema(
     comments: [
       { comment: { type: String }, date: { type: Date, default: Date.now }, userId: { type: mongoose.Schema.Types.ObjectId, ref: "user" } },
     ],
+    likes: [
+      { date: { type: Date, default: Date.now }, userId: { type: mongoose.Schema.Types.ObjectId, ref: "user" } },
+    ],
   },
   { timestamps: true },
 );
