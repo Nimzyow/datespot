@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const express = require("express");
 
 const router = express.Router();
@@ -60,7 +61,12 @@ router.put("/:id", auth, async (req, res) => {
   try {
     let spot = await Spots.findById(req.params.id);
     if (!spot) return res.status(404).json({ msg: "Contact not found" });
-
+    if (spot && comments) {
+      spotFields.comments = [...spot.comments, comments];
+    }
+    if (spot && tags) {
+      spotFields.tags = [...spot.tags, tags];
+    }
     spot = await Spots.findByIdAndUpdate(
       req.params.id,
       {

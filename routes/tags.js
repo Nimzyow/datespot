@@ -32,7 +32,7 @@ router.get("/:id", auth, async (req, res) => {
           return res.status(400)
             .json({ msg: "bad request" });
         }
-        res.json(spots);
+        res.json(spots.spots);
       });
   } catch (err) {
     // eslint-disable-next-line no-console

@@ -6,6 +6,7 @@ const connectDB = async (uri) => {
     await mongoose.connect(uri, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
+      useFindAndModify: false,
     });
   } catch (err) {
     // eslint-disable-next-line no-console
