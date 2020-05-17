@@ -128,8 +128,10 @@ const SpotState = (props) => {
   };
 
   const getSpots = async () => {
+    console.log("hello")
     try {
-      const res = await axios.get("/api/v1/spots");
+      const res = await axios.get("http://localhost:4000/api/spots");
+      console.log(res.data)
       getLikes();
       dispatch({
         type: Types.GET_SPOTS,
@@ -146,7 +148,7 @@ const SpotState = (props) => {
   //get likes
   const getLikes = async () => {
     try {
-      const res = await axios.get("/api/v1/likes");
+      const res = await axios.get("http://localhost:4000/api/v1/likes");
       dispatch({
         type: Types.GET_LIKES,
         payload: res.data,
@@ -166,7 +168,7 @@ const SpotState = (props) => {
       },
     };
     try {
-      const res = await axios.post("/api/v1/likes", toAdd, config);
+      const res = await axios.post("http://localhost:4000/api/v1/likes", toAdd, config);
       dispatch({
         type: Types.ADD_TO_LIKE_TABLE,
         payload: res.data,
@@ -186,7 +188,7 @@ const SpotState = (props) => {
     );
     let idToDelete = toDelete[0].id;
     try {
-      await axios.delete(`/api/v1/likes/${idToDelete}`);
+      await axios.delete(`http://localhost:4000/api/v1/likes/${idToDelete}`);
       dispatch({
         type: Types.REMOVE_FROM_LIKE_TABLE,
         payload: toRemove,
