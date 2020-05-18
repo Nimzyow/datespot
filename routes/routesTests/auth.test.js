@@ -135,5 +135,30 @@ describe("auth routes", () => {
             });
         });
     });
+    it("not successfull with wrong email", (done) => {
+      request(app)
+        .post("/api/users")
+        .set("Content-Type", "application/json")
+        .send(newUser)
+        .end((err) => {
+          if (err) {
+            assert.fail(0, 1, "Did not fail an expected fail");
+          }
+          delete newUser.username;
+          newUser.email = "notRightEmail@test.com";
+          request(app)
+            .post("/api/auth")
+            .set("Content-Type", "application/json")
+            .send(newUser)
+            .end((error, res) => {
+              if (error) {
+                assert.fail(0, 1, "Did not fail an expected fail");
+              }
+              expect(res.statusCode).to.equal(401);
+              expect(res.body.msg).to.equal("Invalid credentials");
+              done();
+            });
+        });
+    });
   });
 });
