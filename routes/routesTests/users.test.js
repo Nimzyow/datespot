@@ -86,7 +86,7 @@ describe("users routes", () => {
       request(app)
         .post("/api/users")
         .send(newUser)
-        .set("Context-Type", "application/json")
+        .set("Content-Type", "application/json")
         .end((err, res) => {
           if (err) {
             assert.fail(0, 1, "Did not fail an expected fail");
