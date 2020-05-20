@@ -115,8 +115,6 @@ For our MVP we decided to keep it as simple as possible. Our MVP would be to sim
 
 ![mvp](https://raw.githubusercontent.com/rafahg/travel-final-project/master/images/mvp.png)
 
-In the coming days we will flesh out the next stages and create a desired feature list
-
 ## Tech stack
 
 - JavaScript
