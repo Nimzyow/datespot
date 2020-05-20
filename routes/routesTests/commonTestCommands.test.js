@@ -10,12 +10,11 @@ const createDBUser = async (user) => {
   };
 
   const salt = await bcrypt.genSalt(10);
-  await bcrypt.hash(userToSave.password, salt);
-
+  const passwordEncrypted = await bcrypt.hash(userToSave.password, salt);
   const userCreated = new User({
     ...userToSave,
+    password: passwordEncrypted,
   });
-
   const userSaved = await userCreated.save();
 
   return userSaved;

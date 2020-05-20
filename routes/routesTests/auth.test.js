@@ -1,6 +1,8 @@
 const { expect } = require("chai");
 const request = require("supertest");
 
+const { createDBUser } = require("./commonTestCommands.test");
+
 const app = require("../../server");
 
 describe("auth routes", () => {
@@ -53,12 +55,10 @@ describe("auth routes", () => {
     });
 
     it("success", async () => {
-      await request(app)
-        .post("/api/users")
-        .set("Content-Type", "application/json")
-        .send(newUser);
+      await createDBUser(newUser);
 
       delete newUser.username;
+
       const response = await request(app)
         .post("/api/auth")
         .set("Content-Type", "application/json")
@@ -69,10 +69,7 @@ describe("auth routes", () => {
     });
 
     it("not successfull with wrong email", async () => {
-      await request(app)
-        .post("/api/users")
-        .set("Content-Type", "application/json")
-        .send(newUser);
+      await createDBUser(newUser);
 
       delete newUser.username;
       newUser.email = "notRightEmail@test.com";
