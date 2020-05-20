@@ -146,4 +146,4 @@ For our MVP we decided to keep it as simple as possible. Our MVP would be to sim
 
 ## Extra notes
 
-This project is turning to be a great exercise to really test my capabilites. I am not only trying to convert the backend to Node and Express with MongoDB as my database, I am also converting Reacts Context API to Redux. I am also doing all of this with testing in mind. I aim to have the backend and front end thoroughly tested and this along with my use of Redux will be the main showcase of this project.
+This project is turning to be a great exercise to really test my capabilites. I am not only trying to convert the backend to Node and Express with MongoDB as my database, I am also converting Reacts Context API to Redux. I am also doing all of this with testing in mind. I aim to have the backend and front end thoroughly tested. My use of Tests and implementation of Redux will be the main showcase of this project.
