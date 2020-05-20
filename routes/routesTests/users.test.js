@@ -1,7 +1,6 @@
-const { assert, expect } = require("chai");
+const { expect } = require("chai");
 const request = require("supertest");
 
-const db = require("../../config/db");
 const app = require("../../server");
 
 describe("users routes", () => {
@@ -9,7 +8,6 @@ describe("users routes", () => {
     let newUser;
 
     beforeEach(() => {
-      db.cleanDatabase();
       newUser = {
         email: "test@test.com",
         username: "testy",
@@ -18,7 +16,7 @@ describe("users routes", () => {
     });
     // check for errors when missing email, username or password
     describe("Credential errors", () => {
-      it("for username", (done) => {
+      it("for username", async () => {
         delete newUser.username;
         const expectedErrorMsg = [
           {
@@ -27,19 +25,14 @@ describe("users routes", () => {
             param: "username",
           },
         ];
-        request(app)
+        const response = await request(app)
           .post("/api/users")
-          .send(newUser)
-          .end((err, res) => {
-            if (err) {
-              assert.fail(0, 1, "Did not fail an expected fail");
-            }
-            expect(res.statusCode).to.equal(400);
-            expect(res.body.errors).to.deep.equal(expectedErrorMsg);
-            done();
-          });
+          .send(newUser);
+
+        expect(response.statusCode).to.equal(400);
+        expect(response.body.errors).to.deep.equal(expectedErrorMsg);
       });
-      it("for email", (done) => {
+      it("for email", async () => {
         delete newUser.email;
         const expectedErrorMsg = [
           {
@@ -48,19 +41,14 @@ describe("users routes", () => {
             param: "email",
           },
         ];
-        request(app)
+        const response = await request(app)
           .post("/api/users")
-          .send(newUser)
-          .end((err, res) => {
-            if (err) {
-              assert.fail(0, 1, "Did not fail an expected fail");
-            }
-            expect(res.statusCode).to.equal(400);
-            expect(res.body.errors).to.deep.equal(expectedErrorMsg);
-            done();
-          });
+          .send(newUser);
+
+        expect(response.statusCode).to.equal(400);
+        expect(response.body.errors).to.deep.equal(expectedErrorMsg);
       });
-      it("for password", (done) => {
+      it("for password", async () => {
         delete newUser.password;
         const expectedErrorMsg = [
           {
@@ -69,54 +57,35 @@ describe("users routes", () => {
             param: "password",
           },
         ];
-        request(app)
+        const response = await request(app)
           .post("/api/users")
-          .send(newUser)
-          .end((err, res) => {
-            if (err) {
-              assert.fail(0, 1, "Did not fail an expected fail");
-            }
-            expect(res.statusCode).to.equal(400);
-            expect(res.body.errors).to.deep.equal(expectedErrorMsg);
-            done();
-          });
+          .send(newUser);
+
+        expect(response.statusCode).to.equal(400);
+        expect(response.body.errors).to.deep.equal(expectedErrorMsg);
       });
     });
-    it("successful response", (done) => {
-      request(app)
+    it("successful response", async () => {
+      const response = await request(app)
         .post("/api/users")
-        .send(newUser)
         .set("Content-Type", "application/json")
-        .end((err, res) => {
-          if (err) {
-            assert.fail(0, 1, "Did not fail an expected fail");
-          }
-          expect(res.statusCode).to.equal(200);
-          expect(res.body.token).to.be.a("string");
-          done();
-        });
+        .send(newUser);
+
+
+      expect(response.statusCode).to.equal(200);
+      expect(response.body.token).to.be.a("string");
     });
-    it("twice with same email error", (done) => {
-      request(app)
+    it("twice with same email error", async () => {
+      await request(app)
         .post("/api/users")
-        .send(newUser)
         .set("Content-Type", "application/json")
-        .end((err) => {
-          if (err) {
-            assert.fail(0, 1, "Did not fail an expected fail");
-          }
-          request(app)
-            .post("/api/users")
-            .send(newUser)
-            .set("Content-Type", "application/json")
-            .end((error, res) => {
-              if (error) {
-                assert.fail(0, 1, "Did not fail an expected fail");
-              }
-              expect(res.statusCode).to.equal(401);
-              done();
-            });
-        });
+        .send(newUser);
+
+      const response = await request(app)
+        .post("/api/users")
+        .set("Content-Type", "application/json")
+        .send(newUser);
+      expect(response.statusCode).to.equal(401);
     });
   });
 });
