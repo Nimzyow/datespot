@@ -3,6 +3,8 @@ const request = require("supertest");
 
 const app = require("../../server");
 
+const { createDBUser } = require("./commonTestCommands.test");
+
 describe("users routes", () => {
   describe("POST new user", () => {
     let newUser;
@@ -14,7 +16,7 @@ describe("users routes", () => {
         password: "testpassword",
       };
     });
-    // check for errors when missing email, username or password
+
     describe("Credential errors", () => {
       it("for username", async () => {
         delete newUser.username;
@@ -75,11 +77,9 @@ describe("users routes", () => {
       expect(response.statusCode).to.equal(200);
       expect(response.body.token).to.be.a("string");
     });
+
     it("twice with same email error", async () => {
-      await request(app)
-        .post("/api/users")
-        .set("Content-Type", "application/json")
-        .send(newUser);
+      await createDBUser(newUser);
 
       const response = await request(app)
         .post("/api/users")
