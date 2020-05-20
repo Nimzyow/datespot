@@ -1,22 +1,20 @@
-const { assert, expect } = require("chai");
+const { expect } = require("chai");
 const request = require("supertest");
 
-const db = require("../../config/db");
 const app = require("../../server");
 
 describe("auth routes", () => {
   let newUser;
   beforeEach(() => {
-    db.cleanDatabase();
     newUser = {
       email: "test@test.com",
       username: "testy",
       password: "testpassword",
     };
   });
-  describe("Log in user", () => {
+  describe("Log in user", async () => {
     describe("credential check", () => {
-      it("for password only", (done) => {
+      it("for password only", async () => {
         delete newUser.email;
         delete newUser.username;
         const expectedErrorMsg = [
@@ -26,20 +24,15 @@ describe("auth routes", () => {
             param: "email",
           },
         ];
-        request(app)
+        const response = await request(app)
           .post("/api/auth")
           .set("Content-Type", "application/json")
-          .send(newUser)
-          .end((err, res) => {
-            if (err) {
-              assert.fail(0, 1, "Did not fail an expected fail");
-            }
-            expect(res.statusCode).to.equal(400);
-            expect(res.body.errors).to.deep.equal(expectedErrorMsg);
-            done();
-          });
+          .send(newUser);
+
+        expect(response.statusCode).to.equal(400);
+        expect(response.body.errors).to.deep.equal(expectedErrorMsg);
       });
-      it("for email only", (done) => {
+      it("for email only", async () => {
         delete newUser.password;
         delete newUser.username;
         const expectedErrorMsg = [
@@ -49,22 +42,17 @@ describe("auth routes", () => {
             param: "password",
           },
         ];
-        request(app)
+        const response = await request(app)
           .post("/api/auth")
           .set("Content-Type", "application/json")
-          .send(newUser)
-          .end((err, res) => {
-            if (err) {
-              assert.fail(0, 1, "Did not fail an expected fail");
-            }
-            expect(res.statusCode).to.equal(400);
-            expect(res.body.errors).to.deep.equal(expectedErrorMsg);
-            done();
-          });
+          .send(newUser);
+
+        expect(response.statusCode).to.equal(400);
+        expect(response.body.errors).to.deep.equal(expectedErrorMsg);
       });
     });
     describe("credential check", () => {
-      it("for password only", (done) => {
+      it("for password only", async () => {
         delete newUser.email;
         delete newUser.username;
         const expectedErrorMsg = [
@@ -74,20 +62,15 @@ describe("auth routes", () => {
             param: "email",
           },
         ];
-        request(app)
+        const response = await request(app)
           .post("/api/auth")
           .set("Content-Type", "application/json")
-          .send(newUser)
-          .end((err, res) => {
-            if (err) {
-              assert.fail(0, 1, "Did not fail an expected fail");
-            }
-            expect(res.statusCode).to.equal(400);
-            expect(res.body.errors).to.deep.equal(expectedErrorMsg);
-          });
-        done();
+          .send(newUser);
+
+        expect(response.statusCode).to.equal(400);
+        expect(response.body.errors).to.deep.equal(expectedErrorMsg);
       });
-      it("for email only", (done) => {
+      it("for email only", async () => {
         delete newUser.password;
         delete newUser.username;
         const expectedErrorMsg = [
@@ -97,68 +80,46 @@ describe("auth routes", () => {
             param: "password",
           },
         ];
-        request(app)
+        const response = await request(app)
           .post("/api/auth")
           .set("Content-Type", "application/json")
-          .send(newUser)
-          .end((err, res) => {
-            if (err) {
-              assert.fail(0, 1, "Did not fail an expected fail");
-            }
-            expect(res.statusCode).to.equal(400);
-            expect(res.body.errors).to.deep.equal(expectedErrorMsg);
-            done();
-          });
+          .send(newUser);
+
+        expect(response.statusCode).to.equal(400);
+        expect(response.body.errors).to.deep.equal(expectedErrorMsg);
       });
     });
-    it("success", (done) => {
-      request(app)
+    it("success", async () => {
+      await request(app)
         .post("/api/users")
         .set("Content-Type", "application/json")
-        .send(newUser)
-        .end((err) => {
-          if (err) {
-            assert.fail(0, 1, "Did not fail an expected fail");
-          }
-          delete newUser.username;
-          request(app)
-            .post("/api/auth")
-            .set("Content-Type", "application/json")
-            .send(newUser)
-            .end((error, res) => {
-              if (error) {
-                assert.fail(0, 1, "Did not fail an expected fail");
-              }
-              expect(res.statusCode).to.equal(200);
-              expect(res.body.token).to.be.a("string");
-              done();
-            });
-        });
+        .send(newUser);
+
+      delete newUser.username;
+      const response = await request(app)
+        .post("/api/auth")
+        .set("Content-Type", "application/json")
+        .send(newUser);
+
+      expect(response.statusCode).to.equal(200);
+      expect(response.body.token).to.be.a("string");
     });
-    it("not successfull with wrong email", (done) => {
-      request(app)
+
+    it("not successfull with wrong email", async () => {
+      await request(app)
         .post("/api/users")
         .set("Content-Type", "application/json")
-        .send(newUser)
-        .end((err) => {
-          if (err) {
-            assert.fail(0, 1, "Did not fail an expected fail");
-          }
-          delete newUser.username;
-          newUser.email = "notRightEmail@test.com";
-          request(app)
-            .post("/api/auth")
-            .set("Content-Type", "application/json")
-            .send(newUser)
-            .end((error, res) => {
-              if (error) {
-                assert.fail(0, 1, "Did not fail an expected fail");
-              }
-              expect(res.statusCode).to.equal(401);
-              expect(res.body.msg).to.equal("Invalid credentials");
-              done();
-            });
-        });
+        .send(newUser);
+
+      delete newUser.username;
+      newUser.email = "notRightEmail@test.com";
+      const response = await request(app)
+        .post("/api/auth")
+        .set("Content-Type", "application/json")
+        .send(newUser);
+
+      expect(response.statusCode).to.equal(401);
+      expect(response.body.msg).to.equal("Invalid credentials");
     });
   });
 });

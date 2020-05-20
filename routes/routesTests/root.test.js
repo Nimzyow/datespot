@@ -9,6 +9,10 @@ before(async () => {
   server = app.listen(PORT);
 });
 
+beforeEach(() => {
+  db.cleanDatabase();
+});
+
 after(async () => {
   server.close();
 
