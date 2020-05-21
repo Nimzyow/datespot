@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 
 const User = require("../../models/User");
+const Spot = require("../../models/Spot");
 
 const createDBUser = async (user) => {
   const userToSave = user || {
@@ -22,6 +23,29 @@ const createDBUser = async (user) => {
     return userSaved;
   } catch (err) {
     console.error(err);
+  }
+};
+
+const generateSpot = async (spot) => {
+  const spotToSave = spot || {
+    title: "a default title",
+    description: "a default description",
+    url: "www.google.com",
+    avgCost: "30",
+    summary: "A default summary",
+    address: "A default address",
+    advice: "A default advice",
+  };
+  try {
+    const spotCreated = new Spot({
+      ...spotToSave,
+    });
+
+    const spotSaved = await spotCreated.save();
+
+    return spotSaved;
+  } catch (err) {
+    console.log(err);
   }
 };
 
@@ -46,4 +70,5 @@ const generateToken = (id) => new Promise((resolve, reject) => {
 module.exports = {
   createDBUser,
   generateToken,
+  generateSpot,
 };

@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const request = require("supertest");
 
-const { createDBUser, generateToken } = require("./commonTestCommands.test");
+const { createDBUser, generateToken, generateSpot } = require("./commonTestCommands.test");
 
 const app = require("../../server");
 
@@ -173,19 +173,37 @@ describe("Spots routes", async () => {
       expect(response.body.address).to.equal(newSpot.address);
       expect(response.body.advice).to.equal(newSpot.advice);
     });
+    it("is not successful if no user", async () => {
+      const response = await request(app)
+        .post("/api/spots")
+        .set("Content-Type", "application/json")
+        .send(newSpot);
+      expect(response.statusCode).to.equal(401);
+      expect(response.body.msg).to.equal("No token, Authorization denied");
+    });
   });
-  it("is not successful if no user", async () => {
+
+  it.only("get all Spots", async () => {
+    const secondSpot = {
+      title: "a second title",
+      description: "a second description",
+      url: "www.google.com",
+      avgCost: "30",
+      summary: "A second summary",
+      address: "A second address",
+      advice: "A second advice",
+    };
+    generateSpot();
+    generateSpot(secondSpot);
+
     const response = await request(app)
-      .post("/api/spots")
-      .set("Content-Type", "application/json")
-      .send(newSpot);
-    expect(response.statusCode).to.equal(401);
-    expect(response.body.msg).to.equal("No token, Authorization denied");
+      .get("/api/spots")
+      .set("x-auth-token", token);
+
+    expect(response.statusCode).to.equal(200);
+    expect(response.body.length).to.equal(2);
   });
 
-
-  //  GET all spots
-  //    - test for 200 status and return of spots
   //  PATCH a particular spot
   //  POST add a new like to spots
   //  DELETE a spot
