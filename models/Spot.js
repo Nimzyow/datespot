@@ -12,7 +12,6 @@ const SpotSchema = mongoose.Schema(
     },
     location: {
       type: String,
-      required: true,
     },
     url: {
       type: String,
@@ -38,7 +37,6 @@ const SpotSchema = mongoose.Schema(
     },
     dress: {
       type: String,
-      required: true,
     },
     bestTimes: {
       type: String,
