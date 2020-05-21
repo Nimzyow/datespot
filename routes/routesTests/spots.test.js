@@ -183,7 +183,7 @@ describe("Spots routes", async () => {
     });
   });
 
-  it.only("get all Spots", async () => {
+  it("get all Spots", async () => {
     const secondSpot = {
       title: "a second title",
       description: "a second description",
@@ -193,8 +193,8 @@ describe("Spots routes", async () => {
       address: "A second address",
       advice: "A second advice",
     };
-    generateSpot();
-    generateSpot(secondSpot);
+    await generateSpot();
+    await generateSpot(secondSpot);
 
     const response = await request(app)
       .get("/api/spots")
@@ -205,6 +205,6 @@ describe("Spots routes", async () => {
   });
 
   //  PATCH a particular spot
-  //  POST add a new like to spots
   //  DELETE a spot
+  //  POST add a new like to spots
 });
