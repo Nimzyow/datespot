@@ -174,6 +174,14 @@ describe("Spots routes", async () => {
       expect(response.body.advice).to.equal(newSpot.advice);
     });
   });
+  it("is not successful if no user", async () => {
+    const response = await request(app)
+      .post("/api/spots")
+      .set("Content-Type", "application/json")
+      .send(newSpot);
+    expect(response.statusCode).to.equal(401);
+    expect(response.body.msg).to.equal("No token, Authorization denied");
+  });
 
 
   //  GET all spots
