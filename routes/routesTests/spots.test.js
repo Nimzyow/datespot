@@ -11,8 +11,11 @@ describe("Spots routes", async () => {
   //  POST add a new spot
   //    - error checking
   describe("error checking", () => {
-    it("for title", async () => {
-      const newSpot = {
+    let newSpot;
+    let user;
+    let token;
+    beforeEach(async () => {
+      newSpot = {
         title: "a default title",
         description: "a default description",
         url: "www.google.com",
@@ -21,14 +24,16 @@ describe("Spots routes", async () => {
         address: "A default address",
         advice: "A default advice",
       };
+      user = await createDBUser();
+      token = await generateToken(user.id);
+    });
+    it("for title", async () => {
       const expectedError = [{
         location: "body",
         msg: "Please enter a title",
         param: "title",
-
       }];
-      const user = await createDBUser();
-      const token = await generateToken(user.id);
+
       delete newSpot.title;
 
       const response = await request(app)
@@ -42,24 +47,57 @@ describe("Spots routes", async () => {
       expect(response.statusCode).to.equal(400);
       expect(response.body.errors).to.deep.equal(expectedError);
     });
-    it("for description", () => {
+    it("for description", async () => {
+      const expectedError = [{
+        location: "body",
+        msg: "Please enter a description",
+        param: "description",
+      }];
 
-    });
-    it("for url", () => {
+      delete newSpot.description;
 
-    });
-    it("for aveCost", () => {
+      const response = await request(app)
+        .post("/api/spots")
+        .set({
+          "Content-Type": "application/json",
+          "x-auth-token": token,
+        })
+        .send(newSpot);
 
+      expect(response.statusCode).to.equal(400);
+      expect(response.body.errors).to.deep.equal(expectedError);
     });
-    it("for summary", () => {
+    it("for url", async () => {
+      const expectedError = [{
+        location: "body",
+        msg: "Please enter a url to an image",
+        param: "url",
+      }];
 
-    });
-    it("for address", () => {
+      delete newSpot.url;
+      const response = await request(app)
+        .post("/api/spots")
+        .set({
+          "Content-Type": "application/json",
+          "x-auth-token": token,
+        })
+        .send(newSpot);
 
+      expect(response.statusCode).to.equal(400);
+      expect(response.body.errors).to.deep.equal(expectedError);
     });
-    it("for advice", () => {
+    // it("for aveCost", () => {
 
-    });
+    // });
+    // it("for summary", () => {
+
+    // });
+    // it("for address", () => {
+
+    // });
+    // it("for advice", () => {
+
+    // });
   });
   // describe.skip('add new spot', () => {
   //   it('succesfull', () => {

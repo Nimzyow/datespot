@@ -29,7 +29,6 @@ router.post("/", [auth, [
       ...req.body,
     });
 
-
     const spot = await newSpot.save();
     res.json(spot);
   } catch (err) {
