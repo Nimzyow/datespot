@@ -30,7 +30,7 @@ router.post("/", [auth, [
     });
 
     const spot = await newSpot.save();
-    res.json(spot);
+    return res.json(spot);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");

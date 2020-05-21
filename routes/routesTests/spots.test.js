@@ -6,27 +6,23 @@ const { createDBUser, generateToken } = require("./commonTestCommands.test");
 const app = require("../../server");
 
 describe("Spots routes", async () => {
-  // tests taht we want to perform:
-
-  //  POST add a new spot
-  //    - error checking
+  let newSpot;
+  let user;
+  let token;
+  beforeEach(async () => {
+    newSpot = {
+      title: "a default title",
+      description: "a default description",
+      url: "www.google.com",
+      avgCost: "30",
+      summary: "A default summary",
+      address: "A default address",
+      advice: "A default advice",
+    };
+    user = await createDBUser();
+    token = await generateToken(user.id);
+  });
   describe("error checking", () => {
-    let newSpot;
-    let user;
-    let token;
-    beforeEach(async () => {
-      newSpot = {
-        title: "a default title",
-        description: "a default description",
-        url: "www.google.com",
-        avgCost: "30",
-        summary: "A default summary",
-        address: "A default address",
-        advice: "A default advice",
-      };
-      user = await createDBUser();
-      token = await generateToken(user.id);
-    });
     it("for title", async () => {
       const expectedError = [{
         location: "body",
@@ -86,24 +82,98 @@ describe("Spots routes", async () => {
       expect(response.statusCode).to.equal(400);
       expect(response.body.errors).to.deep.equal(expectedError);
     });
-    // it("for aveCost", () => {
+    it("for aveCost", async () => {
+      const expectedError = [{
+        location: "body",
+        msg: "Please enter an average cost",
+        param: "avgCost",
+      }];
 
-    // });
-    // it("for summary", () => {
+      delete newSpot.avgCost;
+      const response = await request(app)
+        .post("/api/spots")
+        .set({
+          "Content-Type": "application/json",
+          "x-auth-token": token,
+        })
+        .send(newSpot);
 
-    // });
-    // it("for address", () => {
+      expect(response.statusCode).to.equal(400);
+      expect(response.body.errors).to.deep.equal(expectedError);
+    });
+    it("for summary", async () => {
+      const expectedError = [{
+        location: "body",
+        msg: "Please enter a summary",
+        param: "summary",
+      }];
 
-    // });
-    // it("for advice", () => {
+      delete newSpot.summary;
+      const response = await request(app)
+        .post("/api/spots")
+        .set({
+          "Content-Type": "application/json",
+          "x-auth-token": token,
+        })
+        .send(newSpot);
 
-    // });
+      expect(response.statusCode).to.equal(400);
+      expect(response.body.errors).to.deep.equal(expectedError);
+    });
+    it("for address", async () => {
+      const expectedError = [{
+        location: "body",
+        msg: "Please enter an address",
+        param: "address",
+      }];
+
+      delete newSpot.address;
+      const response = await request(app)
+        .post("/api/spots")
+        .set({
+          "Content-Type": "application/json",
+          "x-auth-token": token,
+        })
+        .send(newSpot);
+
+      expect(response.statusCode).to.equal(400);
+      expect(response.body.errors).to.deep.equal(expectedError);
+    });
+    it("for advice", async () => {
+      const expectedError = [{
+        location: "body",
+        msg: "Please enter an advice for this spot",
+        param: "advice",
+      }];
+
+      delete newSpot.advice;
+      const response = await request(app)
+        .post("/api/spots")
+        .set({
+          "Content-Type": "application/json",
+          "x-auth-token": token,
+        })
+        .send(newSpot);
+
+      expect(response.statusCode).to.equal(400);
+      expect(response.body.errors).to.deep.equal(expectedError);
+    });
   });
-  // describe.skip('add new spot', () => {
-  //   it('succesfull', () => {
+  describe("add new spot", () => {
+    it("successful", async () => {
+      const response = await request(app)
+        .post("/api/spots")
+        .set({
+          "Content-Type": "application/json",
+          "x-auth-token": token,
+        })
+        .send(newSpot);
 
-  //   });
-  // });
+      expect(response.statusCode).to.equal(200);
+      expect(response.body.address).to.equal(newSpot.address);
+      expect(response.body.advice).to.equal(newSpot.advice);
+    });
+  });
 
 
   //  GET all spots
