@@ -39,15 +39,23 @@ const connect = () => {
 };
 
 const disconnect = () => {
-  mongoose.connection.close(() => {
-    // eslint-disable-next-line no-console
-    console.log(`Disconnected from ${process.env.NODE_ENV} db`);
-    process.exit(0);
-  });
+  try {
+    mongoose.connection.close(() => {
+      // eslint-disable-next-line no-console
+      console.log(`Disconnected from ${process.env.NODE_ENV} db`);
+      process.exit(0);
+    });
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 const cleanDatabase = () => {
-  mongoose.connection.db.dropDatabase();
+  try {
+    mongoose.connection.db.dropDatabase();
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 const db = {

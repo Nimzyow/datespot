@@ -2,9 +2,40 @@
 const express = require("express");
 
 const router = express.Router();
+const { check, validationResult } = require("express-validator");
 const auth = require("../middleware/auth");
 
 const Spots = require("../models/Spot");
+
+// @route   POST api/spots
+// @Desc    Add new spots
+// @access  Private
+
+router.post("/", [auth, [
+  check("title", "Please enter a title").notEmpty(),
+  check("description", "Please enter a description").notEmpty(),
+  check("url", "Please enter a url to an image").isURL(),
+  check("avgCost", "Please enter an average cost").exists(),
+  check("summary", "Please enter a summary").notEmpty(),
+  check("address", "Please enter an address").notEmpty(),
+  check("advice", "Please enter an advice for this spot").notEmpty(),
+]], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  try {
+    const newSpot = new Spots({
+      ...req.body,
+    });
+
+    const spot = await newSpot.save();
+    return res.json(spot);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
 
 // @route   GET api/spots
 // @Desc    Get all spots
@@ -107,52 +138,6 @@ router.put("/like/:id", auth, async (req, res) => {
       },
       { new: true },
     );
-    res.json(spot);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
-});
-
-// @route   POST api/spots
-// @Desc    Add new spots
-// @access  Private
-
-router.post("/", auth, async (req, res) => {
-  const {
-    title,
-    description,
-    location,
-    url,
-    avgCost,
-    latitude,
-    longitude,
-    summary,
-    address,
-    dress,
-    bestTimes,
-    advice,
-    comments,
-  } = req.body;
-
-  try {
-    const newSpot = new Spots({
-      title,
-      description,
-      location,
-      url,
-      avgCost,
-      latitude,
-      longitude,
-      summary,
-      address,
-      dress,
-      bestTimes,
-      advice,
-      comments,
-    });
-
-    const spot = await newSpot.save();
     res.json(spot);
   } catch (err) {
     console.error(err.message);

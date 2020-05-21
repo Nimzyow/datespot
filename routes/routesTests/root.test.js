@@ -9,8 +9,8 @@ before(async () => {
   server = app.listen(PORT);
 });
 
-beforeEach(() => {
-  db.cleanDatabase();
+beforeEach(async () => {
+  await db.cleanDatabase();
 });
 
 after(async () => {
