@@ -25,6 +25,7 @@ describe("Like routes", async () => {
       .send(userLikesPost);
 
     expect(response.statusCode).to.equal(200);
-    expect(response.body.msg).to.equal("Spot liked");
+    expect(response.body.likes.length).to.equal(1);
+    expect(response.body.likes[0].userId).to.equal(user.id);
   });
 });
