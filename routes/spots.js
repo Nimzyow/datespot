@@ -145,4 +145,14 @@ router.put("/like/:id", auth, async (req, res) => {
   }
 });
 
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    await Spots.findByIdAndRemove(req.params.id);
+    return res.status(200).json({ msg: "Deleted spot successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ msg: "Server error" });
+  }
+});
+
 module.exports = router;

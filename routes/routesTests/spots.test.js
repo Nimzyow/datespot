@@ -204,7 +204,25 @@ describe("Spots routes", async () => {
     expect(response.body.length).to.equal(2);
   });
 
-  //  PATCH a particular spot
-  //  DELETE a spot
-  //  POST add a new like to spots
+  describe("Delete a spot", () => {
+    it("successful", async () => {
+      const spot = await generateSpot();
+      const response = await request(app)
+        .delete(`/api/spots/${spot.id}`)
+        .set("x-auth-token", token);
+      expect(response.statusCode).to.equal(200);
+      expect(response.body.msg).to.equal("Deleted spot successfully");
+    });
+    it("not successful if no user", async () => {
+      const spot = await generateSpot();
+      const response = await request(app)
+        .delete(`/api/spots/${spot.id}`);
+      expect(response.statusCode).to.equal(401);
+      expect(response.body.msg).to.equal("No token, Authorization denied");
+    });
+
+    //  PATCH a particular spot
+    //  DELETE a spot
+    //  POST add a new like to spots
+  });
 });
