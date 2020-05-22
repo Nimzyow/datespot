@@ -50,9 +50,9 @@ const disconnect = () => {
   }
 };
 
-const cleanDatabase = () => {
+const cleanDatabase = async () => {
   try {
-    mongoose.connection.db.dropDatabase();
+    await mongoose.connection.db.dropDatabase();
   } catch (err) {
     console.error(err);
   }

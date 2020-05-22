@@ -55,48 +55,16 @@ router.get("/", auth, async (req, res) => {
 // @Desc    Update spots
 // @access  Private
 
-router.put("/:id", auth, async (req, res) => {
-  const {
-    title,
-    description,
-    location,
-    url,
-    avgCost,
-    latitude,
-    longitude,
-    summary,
-    address,
-    dress,
-    bestTimes,
-    advice,
-    tags,
-    comments,
-  } = req.body;
-
-  const spotFields = {};
-
-  if (title) spotFields.title = title;
-  if (description) spotFields.description = description;
-  if (location) spotFields.location = location;
-  if (url) spotFields.url = url;
-  if (avgCost) spotFields.avgCost = avgCost;
-  if (latitude) spotFields.latitude = latitude;
-  if (longitude) spotFields.longitude = longitude;
-  if (summary) spotFields.summary = summary;
-  if (address) spotFields.address = address;
-  if (dress) spotFields.dress = dress;
-  if (bestTimes) spotFields.bestTimes = bestTimes;
-  if (advice) spotFields.advice = advice;
-  if (tags) spotFields.tags = tags;
-  if (comments) spotFields.comments = comments;
+router.patch("/:id", auth, async (req, res) => {
+  const spotFields = { ...req.body };
   try {
     let spot = await Spots.findById(req.params.id);
     if (!spot) return res.status(404).json({ msg: "Contact not found" });
-    if (spot && comments) {
-      spotFields.comments = [...spot.comments, comments];
+    if (spot && req.body.comments) {
+      spotFields.comments = [...spot.comments, req.body.comments];
     }
-    if (spot && tags) {
-      spotFields.tags = [...spot.tags, tags];
+    if (spot && req.body.tags) {
+      spotFields.tags = [...spot.tags, req.body.tags];
     }
     spot = await Spots.findByIdAndUpdate(
       req.params.id,
@@ -105,7 +73,7 @@ router.put("/:id", auth, async (req, res) => {
       },
       { new: true },
     );
-    res.json(spot);
+    return res.json(spot);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
