@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const request = require("supertest");
 
-const { createDBUser, generateToken, generateSpot } = require("./commonTestCommands.test");
+const { createDBUser, generateToken, createSpot } = require("./commonTestCommands.test");
 
 const app = require("../../server");
 
@@ -193,8 +193,8 @@ describe("Spots routes", async () => {
       address: "A second address",
       advice: "A second advice",
     };
-    await generateSpot();
-    await generateSpot(secondSpot);
+    await createSpot();
+    await createSpot(secondSpot);
 
     const response = await request(app)
       .get("/api/spots")
@@ -206,7 +206,7 @@ describe("Spots routes", async () => {
 
   describe("Delete a spot", () => {
     it("successful", async () => {
-      const spot = await generateSpot();
+      const spot = await createSpot();
       const response = await request(app)
         .delete(`/api/spots/${spot.id}`)
         .set("x-auth-token", token);
@@ -214,7 +214,7 @@ describe("Spots routes", async () => {
       expect(response.body.msg).to.equal("Deleted spot successfully");
     });
     it("not successful if no user", async () => {
-      const spot = await generateSpot();
+      const spot = await createSpot();
       const response = await request(app)
         .delete(`/api/spots/${spot.id}`);
       expect(response.statusCode).to.equal(401);
@@ -226,7 +226,7 @@ describe("Spots routes", async () => {
         const updateTitleOfSpot = {
           title: "THIS SPOT HAS BEEN UPDATED",
         };
-        const spot = await generateSpot();
+        const spot = await createSpot();
         const response = await request(app)
           .patch(`/api/spots/${spot.id}`)
           .set({
@@ -242,7 +242,7 @@ describe("Spots routes", async () => {
         const updateTitleOfSpot = {
           title: "THIS SPOT HAS BEEN UPDATED",
         };
-        const spot = await generateSpot();
+        const spot = await createSpot();
         const response = await request(app)
           .patch(`/api/spots/${spot.id}`)
           .set("Content-Type", "application/json")
@@ -254,6 +254,5 @@ describe("Spots routes", async () => {
     });
 
     //  PATCH a particular spot
-    //  POST add a new like to spots
   });
 });
