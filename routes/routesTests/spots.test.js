@@ -159,7 +159,7 @@ describe("Spots routes", async () => {
       expect(response.body.errors).to.deep.equal(expectedError);
     });
   });
-  describe("add new spot", () => {
+  describe("Add new spot", () => {
     it("successful", async () => {
       const response = await request(app)
         .post("/api/spots")
@@ -204,7 +204,56 @@ describe("Spots routes", async () => {
     expect(response.body.length).to.equal(2);
   });
 
-  //  PATCH a particular spot
-  //  DELETE a spot
-  //  POST add a new like to spots
+  describe("Delete a spot", () => {
+    it("successful", async () => {
+      const spot = await generateSpot();
+      const response = await request(app)
+        .delete(`/api/spots/${spot.id}`)
+        .set("x-auth-token", token);
+      expect(response.statusCode).to.equal(200);
+      expect(response.body.msg).to.equal("Deleted spot successfully");
+    });
+    it("not successful if no user", async () => {
+      const spot = await generateSpot();
+      const response = await request(app)
+        .delete(`/api/spots/${spot.id}`);
+      expect(response.statusCode).to.equal(401);
+      expect(response.body.msg).to.equal("No token, Authorization denied");
+    });
+
+    describe("Update a spot", () => {
+      it("is successful", async () => {
+        const updateTitleOfSpot = {
+          title: "THIS SPOT HAS BEEN UPDATED",
+        };
+        const spot = await generateSpot();
+        const response = await request(app)
+          .patch(`/api/spots/${spot.id}`)
+          .set({
+            "Content-Type": "application/json",
+            "x-auth-token": token,
+          })
+          .send(updateTitleOfSpot);
+
+        expect(response.statusCode).to.equal(200);
+        expect(response.body.title).to.equal("THIS SPOT HAS BEEN UPDATED");
+      });
+      it("not successful if no user", async () => {
+        const updateTitleOfSpot = {
+          title: "THIS SPOT HAS BEEN UPDATED",
+        };
+        const spot = await generateSpot();
+        const response = await request(app)
+          .patch(`/api/spots/${spot.id}`)
+          .set("Content-Type", "application/json")
+          .send(updateTitleOfSpot);
+
+        expect(response.statusCode).to.equal(401);
+        expect(response.body.msg).to.equal("No token, Authorization denied");
+      });
+    });
+
+    //  PATCH a particular spot
+    //  POST add a new like to spots
+  });
 });
