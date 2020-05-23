@@ -40,7 +40,7 @@ router.post("/:id/likeRemove", auth, async (req, res) => {
     const likesByUserId = spot.likes.map((like) => like.userId);
 
     if (!likesByUserId.includes(req.user.id)) {
-      return res.send("Can't unlike something you haven't liked");
+      return res.json({ msg: "Can't unlike something you haven't liked" });
     }
 
     const filteredLikes = spot.likes.filter(
@@ -50,7 +50,6 @@ router.post("/:id/likeRemove", auth, async (req, res) => {
     const likeFields = {
       likes: filteredLikes,
     };
-    console.log("Like fields is?", likeFields);
 
     spot = await Spots.findByIdAndUpdate(
       req.params.id,
