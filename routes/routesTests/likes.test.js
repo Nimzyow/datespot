@@ -84,7 +84,7 @@ describe("Like routes", async () => {
     it.only("same user likes a spot twice", async () => {
       const spotWithLike = await createSpot(newSpot);
 
-      const response = request(app)
+      const response = await request(app)
         .post(`/api/spots/${spotWithLike.id}/like`)
         .set({
           "Content-Type": "application/json",
