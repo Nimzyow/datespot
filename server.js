@@ -15,5 +15,6 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/spots", require("./routes/spots"));
 app.use("/api/tags", require("./routes/tags"));
 app.use("/api/spots", require("./routes/likes"));
+app.use("/api/spots", require("./routes/comments"));
 
 module.exports = app;
