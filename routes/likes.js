@@ -14,6 +14,12 @@ router.post("/:id/like", auth, async (req, res) => {
     let spot = await Spots.findById(req.params.id);
     if (!spot) return res.status(404).json({ msg: "Spot not found" });
 
+    const likesByUserId = spot.likes.map((like) => like.userId);
+
+    if (likesByUserId.includes(req.user.id)) {
+      return res.json({ msg: "Can't like the same Spot twice" });
+    }
+
     const likeFields = {
       likes: [...spot.likes, req.body],
     };
