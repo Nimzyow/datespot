@@ -81,7 +81,7 @@ describe("Like routes", async () => {
 
       expect(response.body.msg).to.equal("Can't unlike something you haven't liked");
     });
-    it.only("same user likes a spot twice", async () => {
+    it("same user likes a spot twice", async () => {
       const spotWithLike = await createSpot(newSpot);
 
       const response = await request(app)
