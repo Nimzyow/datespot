@@ -19,6 +19,9 @@ const generateToken = (id) => new Promise((resolve, reject) => {
   );
 });
 
+const verify = async (token) => jwt.decode(token, config.get("jwtSecret"));
+
 module.exports = {
   generateToken,
+  verify,
 };
