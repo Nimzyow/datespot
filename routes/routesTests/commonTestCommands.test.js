@@ -26,7 +26,7 @@ const createDBUser = async (user) => {
   }
 };
 
-const generateSpot = async (spot) => {
+const createSpot = async (spot) => {
   const spotToSave = spot || {
     title: "a default title",
     description: "a default description",
@@ -70,5 +70,5 @@ const generateToken = (id) => new Promise((resolve, reject) => {
 module.exports = {
   createDBUser,
   generateToken,
-  generateSpot,
+  createSpot,
 };

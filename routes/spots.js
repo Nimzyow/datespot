@@ -80,39 +80,6 @@ router.patch("/:id", auth, async (req, res) => {
   }
 });
 
-// @route   POST api/spots/like/:id
-// @Desc    Add new like to spots
-// @access  Private
-
-router.put("/like/:id", auth, async (req, res) => {
-  const {
-    like,
-  } = req.body;
-
-  const likeFields = {};
-
-  if (like) likeFields.like = like;
-  try {
-    let spot = await Spots.findById(req.params.id);
-    if (!spot) return res.status(404).json({ msg: "Contact not found" });
-
-    if (spot && like) {
-      likeFields.likes = [...spot.likes, like];
-    }
-    spot = await Spots.findByIdAndUpdate(
-      req.params.id,
-      {
-        $set: likeFields,
-      },
-      { new: true },
-    );
-    res.json(spot);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
-});
-
 router.delete("/:id", auth, async (req, res) => {
   try {
     await Spots.findByIdAndRemove(req.params.id);
