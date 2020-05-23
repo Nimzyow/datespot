@@ -34,8 +34,7 @@ router.post("/:id/comments", auth, async (req, res) => {
       },
       { new: true },
     );
-
-    return res.status(200).json({ msg: "Comment added to spot" });
+    return res.status(200).json({ spot, msg: "Comment added to spot" });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ msg: "Server error" });
