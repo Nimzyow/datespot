@@ -46,9 +46,19 @@ export default (state, action) => {
         filteredByLiked: action.payload,
       };
     case Types.ADD_TO_LIKE_TABLE:
+      const spotsToFilter = [...state.spots];
+      const spotFiltered = spotsToFilter.filter((spot) => spot._id === action.payload.spot._id)
+
+      const addLikeToSpotsFiltered =
+        spotFiltered[0].likes = [...action.payload.likes]
+
+      state.spots.filter((spot) => spot._id === action.payload.spot._id)[0].likes = addLikeToSpotsFiltered
+
       return {
         ...state,
-        likes: [...state.likes, action.payload],
+        spots: [
+          ...state.spots
+        ],
       };
     case Types.REMOVE_FROM_LIKE_TABLE:
       return {

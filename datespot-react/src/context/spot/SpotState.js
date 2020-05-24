@@ -133,11 +133,14 @@ const SpotState = (props) => {
     };
     try {
       const res = await axios.post(`http://localhost:4000/api/spots/${spotId}/like`, toSend, config);
-      console.log("***********************", res)
+
+      console.log("What is the data?", res.data)
+
       dispatch({
         type: Types.ADD_TO_LIKE_TABLE,
         payload: res.data,
       });
+
     } catch (err) {
       dispatch({
         type: Types.LIKES_ERROR,

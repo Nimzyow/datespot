@@ -31,7 +31,7 @@ router.post("/:id/like", auth, async (req, res) => {
       },
       { new: true },
     );
-    return res.status(200).json(spot);
+    return res.status(200).json({ spot, likes: spot.likes });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
