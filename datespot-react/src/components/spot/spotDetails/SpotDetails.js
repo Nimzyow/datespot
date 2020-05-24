@@ -14,7 +14,7 @@ const SpotDetails = (props) => {
   console.log(1, props.location.aboutProps);
   const spotContext = useContext(SpotContext);
   const authContext = useContext(AuthContext);
-  const { getCommentBasedOnSpot, comments, clearComments } = spotContext;
+  const { getCommentBasedOnSpot, clearComments } = spotContext;
   const { user, loadUser } = authContext;
   const properties = props.location.aboutProps;
   useEffect(() => {
@@ -25,15 +25,15 @@ const SpotDetails = (props) => {
   }, []);
 
   const getComments = () => {
-    if (comments) {
-      if (comments.length === 0) {
+    if (properties.comments) {
+      if (properties.comments.length === 0) {
         return (
           <div>
             <h5>No comments to display for this spot...yet</h5>
           </div>
         );
       } else {
-        return comments.map((comment) => (
+        return properties.comments.map((obj) => (
           <div
             style={{
               border: "1px solid black",
@@ -43,7 +43,7 @@ const SpotDetails = (props) => {
               padding: "10px",
             }}
           >
-            {comment.body}
+            {obj.comment}
           </div>
         ));
       }

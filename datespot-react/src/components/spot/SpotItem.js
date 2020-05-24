@@ -12,7 +12,7 @@ const SpotItem = (props) => {
   return (
     <Card data-test="card-container" className="shadow">
       <Card.Img variant="top" src={props.url} />
-      <CardBody title={props.title} summary={props.summary} id={props.id} />
+      <CardBody title={props.title} summary={props.summary} spotId={props.spotId} likes={props.likes} />
       <Card.Footer class="spotFooter">
         <div className="spotButton">
           <Button variant="primary">
@@ -26,13 +26,15 @@ const SpotItem = (props) => {
                   latitude: props.latitude,
                   longitude: props.longitude,
                   location: props.location,
-                  avg_cost: props.avg_cost,
+                  avgCost: props.avg_cost,
                   summary: props.summary,
                   address: props.address,
                   dress: props.dress,
-                  best_times: props.best_times,
+                  bestTimes: props.best_times,
                   advice: props.advice,
-                  id: props.id,
+                  spotId: props.spotId,
+                  likes: props.likes,
+                  comments: props.comments
                 },
               }}
               onClick={clearFilter}

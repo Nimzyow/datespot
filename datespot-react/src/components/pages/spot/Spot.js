@@ -32,23 +32,26 @@ const Spot = () => {
   };
 
   const spotItem = (toFilter) => {
+    //console.log("What is the spot id?", toFilter[0]._id)
     return toFilter.map((spot) => (
       <SpotItem
         key={spot.id}
         title={spot.title}
         location={spot.location}
         description={spot.description}
-        ave_cost={spot.ave_cost}
+        aveCost={spot.ave_cost}
         url={spot.url}
         latitude={spot.latitude}
         longitude={spot.longitude}
-        avg_cost={spot.avg_cost}
-        id={spot.id}
+        avgCost={spot.avg_cost}
+        spotId={spot._id}
         summary={spot.summary}
         address={spot.address}
         dress={spot.dress}
-        best_times={spot.best_times}
+        bestTimes={spot.best_times}
         advice={spot.advice}
+        likes={spot.likes}
+        comments={spot.comments}
       />
     ));
   };

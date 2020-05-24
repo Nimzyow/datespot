@@ -12,9 +12,6 @@ const SpotState = (props) => {
     filteredByLiked: null,
     filteredByTag: null,
     filterId: null,
-    comments: null,
-    tags_spots: null,
-    likes: null,
   };
 
   const [state, dispatch] = useReducer(SpotReducer, initialState);
@@ -35,23 +32,6 @@ const SpotState = (props) => {
       );
       dispatch({
         type: Types.ADD_COMMENT,
-        payload: res.data,
-      });
-    } catch (err) {
-      dispatch({
-        type: Types.SPOTS_ERROR,
-        payload: err,
-      });
-    }
-  };
-
-  //get comment associated with spot
-
-  const getCommentBasedOnSpot = async (spotId) => {
-    try {
-      const res = await axios.get(`/api/v1/spots/${spotId}/comments`);
-      dispatch({
-        type: Types.GET_COMMENTS,
         payload: res.data,
       });
     } catch (err) {
@@ -130,7 +110,6 @@ const SpotState = (props) => {
   const getSpots = async () => {
     try {
       const res = await axios.get("http://localhost:4000/api/spots");
-      getLikes();
       dispatch({
         type: Types.GET_SPOTS,
         payload: res.data,
@@ -143,30 +122,18 @@ const SpotState = (props) => {
     }
   };
 
-  //get likes
-  const getLikes = async () => {
-    try {
-      const res = await axios.get("http://localhost:4000/api/v1/likes");
-      dispatch({
-        type: Types.GET_LIKES,
-        payload: res.data,
-      });
-    } catch (err) {
-      dispatch({
-        type: Types.LIKES_ERROR,
-        payload: err,
-      });
-    }
-  };
-
   const addToLikeCount = async (toAdd) => {
+    const { spotId, userId } = toAdd;
+    const toSend = { userId }
+    console.log("the userId", toSend)
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
     try {
-      const res = await axios.post("http://localhost:4000/api/v1/likes", toAdd, config);
+      const res = await axios.post(`http://localhost:4000/api/spots/${spotId}/like`, toSend, config);
+      console.log("***********************", res)
       dispatch({
         type: Types.ADD_TO_LIKE_TABLE,
         payload: res.data,
@@ -212,11 +179,8 @@ const SpotState = (props) => {
         filteredByTag: state.filteredByTag,
         filterId: state.filterId,
         filteredByLiked: state.filteredByLiked,
-        likes: state.likes,
-        comments: state.comments,
         postComment,
         clearComments,
-        getCommentBasedOnSpot,
         filterSpotsByTags,
         clearFilterSpotsByTags,
         filterSpots,
@@ -225,7 +189,6 @@ const SpotState = (props) => {
         filterSpotsBasedOnLike,
         addToLikeCount,
         removeFromLikeCount,
-        getLikes,
       }}
     >
       {props.children}

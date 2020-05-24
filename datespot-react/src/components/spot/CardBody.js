@@ -5,10 +5,10 @@ import Like from "./Like";
 import SpotContext from "../../context/spot/SpotContext";
 import AuthContext from "../../context/auth/AuthContext";
 
-const CardBody = ({ title, summary, id }) => {
+const CardBody = ({ title, summary, spotId, likes }) => {
   const spotContext = useContext(SpotContext);
   const authContext = useContext(AuthContext);
-  const { likes, addToLikeCount, removeFromLikeCount } = spotContext;
+  const { spots, addToLikeCount, removeFromLikeCount } = spotContext;
   const { user } = authContext;
 
   useEffect(() => {
@@ -17,22 +17,14 @@ const CardBody = ({ title, summary, id }) => {
 
   const [color, setColor] = useState("");
 
-  const likeCount = () => {
-    if (likes !== null) {
-      return likes.filter((like) => like.spot_id === id).length;
-    } else {
-      return 0;
-    }
-  };
-
   const setColorOfHeart = () => {
-    if (likes == null) {
+    if (likes === []) {
       setColor("black");
     } else {
-      let count = likes.filter(
-        (like) => like.spot_id === id && like.user_id === 1
+      let currentUserLikedSpot = likes.filter(
+        (like) => like.userId === user._id
       ).length;
-      if (count === 0) {
+      if (currentUserLikedSpot === 0) {
         setColor("black");
       } else {
         setColor("red");
@@ -40,11 +32,19 @@ const CardBody = ({ title, summary, id }) => {
     }
   };
 
+  const likeCount = () => {
+    if (likes.length !== 0) {
+      return likes.length;
+    } else {
+      return 0;
+    }
+  };
+
   const setLikeState = () => {
     if (color === "black") {
-      addToLikeCount({ spot_id: id, user_id: user.id });
+      addToLikeCount({ spotId: spotId, userId: user._id });
     } else {
-      removeFromLikeCount({ spot_id: id, user_id: user.id });
+      removeFromLikeCount({ spotId: spotId, user_id: user._id });
     }
   };
 
