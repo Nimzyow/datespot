@@ -147,13 +147,16 @@ const SpotState = (props) => {
   };
 
   const removeFromLikeCount = async (toRemove) => {
-    let toDelete = state.likes.filter(
-      (spot) =>
-        spot.spot_id === toRemove.spot_id && spot.user_id === toRemove.user_id
-    );
-    let idToDelete = toDelete[0].id;
+    const { spotId, userId } = toRemove;
+
+    const toSend = { userId }
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
     try {
-      await axios.delete(`http://localhost:4000/api/v1/likes/${idToDelete}`);
+      await axios.post(`http://localhost:4000/api/spots/${spotId}/likeRemove`, toSend, config);
       dispatch({
         type: Types.REMOVE_FROM_LIKE_TABLE,
         payload: toRemove,

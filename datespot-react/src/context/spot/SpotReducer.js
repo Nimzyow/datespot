@@ -61,15 +61,20 @@ export default (state, action) => {
         ],
       };
     case Types.REMOVE_FROM_LIKE_TABLE:
+
+      const spotsToFilterForRemoval = [...state.spots]
+      const spotFilteredForRemoval = spotsToFilterForRemoval.filter((spot) => spot._id === action.payload.spotId)
+
+      const removeLikeFromSpotsFiltered =
+        spotFilteredForRemoval[0].likes.filter((like) => like.userId !== action.payload.userId)
+
+      state.spots.filter((spot) => spot._id === action.payload.spotId)[0].likes = removeLikeFromSpotsFiltered
+
       return {
         ...state,
-        likes: state.likes.filter(
-          (like) =>
-            !(
-              like.spot_id === action.payload.spot_id &&
-              like.user_id === action.payload.user_id
-            )
-        ),
+        spots: [
+          ...state.spots
+        ]
       };
     case Types.CLEAR_LIKED_ARRAY:
       return {

@@ -44,7 +44,7 @@ const CardBody = ({ title, summary, spotId, likes }) => {
     if (color === "black") {
       addToLikeCount({ spotId: spotId, userId: user._id });
     } else {
-      removeFromLikeCount({ spotId: spotId, user_id: user._id });
+      removeFromLikeCount({ spotId: spotId, userId: user._id });
     }
   };
 
