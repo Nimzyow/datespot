@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const config = require("config");
 
 const generateToken = (id) => new Promise((resolve, reject) => {
   const payload = {
@@ -10,7 +9,7 @@ const generateToken = (id) => new Promise((resolve, reject) => {
 
   jwt.sign(
     payload,
-    config.get("jwtSecret"),
+    process.env.datespotJwtSecret,
     { expiresIn: 360000 },
     (err, token) => {
       if (err) { reject(err); }
@@ -19,6 +18,9 @@ const generateToken = (id) => new Promise((resolve, reject) => {
   );
 });
 
+const verify = async (token) => jwt.decode(token, process.env.datespotJwtSecret);
+
 module.exports = {
   generateToken,
+  verify,
 };

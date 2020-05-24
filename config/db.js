@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const config = require("config");
 
 const connectDB = async (uri) => {
   try {
@@ -17,14 +16,21 @@ const connectDB = async (uri) => {
 
 const connect = () => {
   if (process.env.NODE_ENV === "test") {
-    return connectDB(config.get("testURI")).then(() => {
+    return connectDB(process.env.testURI).then(() => {
       // eslint-disable-next-line no-console
       console.log(`Connected to ${process.env.NODE_ENV} db`);
       // eslint-disable-next-line no-console
     }).catch((err) => console.log(err.message));
   }
   if (process.env.NODE_ENV === "production") {
-    return connectDB(config.get("productionURI")).then(() => {
+    return connectDB(process.env.productionURI).then(() => {
+      // eslint-disable-next-line no-console
+      console.log(`Connected to ${process.env.NODE_ENV} db`);
+      // eslint-disable-next-line no-console
+    }).catch((err) => console.log(err.message));
+  }
+  if (process.env.NODE_ENV === "development") {
+    return connectDB(process.env.developmentURI).then(() => {
       // eslint-disable-next-line no-console
       console.log(`Connected to ${process.env.NODE_ENV} db`);
       // eslint-disable-next-line no-console

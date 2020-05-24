@@ -1,6 +1,5 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const config = require("config");
 
 const User = require("../../models/User");
 const Spot = require("../../models/Spot");
@@ -58,7 +57,7 @@ const generateToken = (id) => new Promise((resolve, reject) => {
 
   jwt.sign(
     payload,
-    config.get("jwtSecret"),
+    process.env.datespotJwtSecret,
     { expiresIn: 360000 },
     (err, token) => {
       if (err) { reject(err); }
