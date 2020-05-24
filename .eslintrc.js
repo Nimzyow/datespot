@@ -17,6 +17,10 @@ module.exports = {
     ecmaVersion: 11,
   },
   rules: {
-    quotes: [2, "double"]
+    quotes: [2, "double"],
+    "consistent-return": 'off',
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    "no-console": ["error", { allow: ["warn", "error"] }],
+    "allowForLoopAfterthoughts": true
   },
 };
