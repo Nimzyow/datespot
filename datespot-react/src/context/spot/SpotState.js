@@ -125,7 +125,6 @@ const SpotState = (props) => {
   const addToLikeCount = async (toAdd) => {
     const { spotId, userId } = toAdd;
     const toSend = { userId }
-    console.log("the userId", toSend)
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -133,8 +132,6 @@ const SpotState = (props) => {
     };
     try {
       const res = await axios.post(`http://localhost:4000/api/spots/${spotId}/like`, toSend, config);
-
-      console.log("What is the data?", res.data)
 
       dispatch({
         type: Types.ADD_TO_LIKE_TABLE,
