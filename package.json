@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "NODE_ENV=production nodemon index.js",
-    "test": "NODE_ENV=test mocha ./routes/routesTests/*.test.js"
+    "server-dev": "NODE_ENV=development nodemon index.js",
+    "server-prod": "NODE_ENV=production nodemon index.js",
+    "test": "NODE_ENV=test mocha ./routes/routesTests/*.test.js",
+    "datespot": "npm start --prefix datespot-react",
+    "dev": "concurrently \"npm run server-dev\" \"npm run datespot\""
   },
   "keywords": [],
   "author": "",
