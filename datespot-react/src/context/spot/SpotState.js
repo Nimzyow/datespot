@@ -128,10 +128,8 @@ const SpotState = (props) => {
   };
 
   const getSpots = async () => {
-    console.log("hello")
     try {
       const res = await axios.get("http://localhost:4000/api/spots");
-      console.log(res.data)
       getLikes();
       dispatch({
         type: Types.GET_SPOTS,

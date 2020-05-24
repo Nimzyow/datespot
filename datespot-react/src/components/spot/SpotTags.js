@@ -1,14 +1,15 @@
 import React, { useContext, useEffect } from "react";
 import TagContext from "../../context/tag/TagContext";
+import AuthContext from "../../context/auth/AuthContext"
 import TagItem from "./TagItem";
 import { Spinner } from "react-bootstrap";
 
 const SpotTags = () => {
   const tagContext = useContext(TagContext);
-
+  const authContext = useContext(AuthContext)
   const { getTags, tags } = tagContext;
-
   useEffect(() => {
+    authContext.loadUser()
     getTags();
   }, []);
 
@@ -17,8 +18,8 @@ const SpotTags = () => {
       {tags !== null ? (
         tags.map((tag) => <TagItem key={tag.id} tag={tag.tag} tagId={tag.id} />)
       ) : (
-        <Spinner animation="border" variant="danger" />
-      )}
+          <Spinner animation="border" variant="danger" />
+        )}
     </div>
   );
 };

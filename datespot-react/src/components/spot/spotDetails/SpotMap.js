@@ -7,7 +7,6 @@ const mapStyles = {
 };
 
 const SpotMap = (props) => {
-  console.log(props);
   return (
     <Map
       google={props.google}

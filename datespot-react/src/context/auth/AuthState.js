@@ -84,8 +84,6 @@ const AuthState = (props) => {
     try {
       const res = await axios.post("http://localhost:4000/api/auth", formData, config);
 
-      console.log(res.data)
-
       dispatch({
         type: Types.LOGIN_SUCCESS,
         payload: res.data,

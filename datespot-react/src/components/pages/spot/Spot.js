@@ -71,10 +71,10 @@ const Spot = () => {
               {spotItemToDisplay()}
             </CardColumns>
           ) : (
-            <div className="text-center" style={{ marginTop: "300px" }}>
-              <Spinner animation="border" variant="danger" />
-            </div>
-          )}
+              <div className="text-center" style={{ marginTop: "300px" }}>
+                <Spinner animation="border" variant="danger" />
+              </div>
+            )}
         </div>
       </Container>
     </div>
