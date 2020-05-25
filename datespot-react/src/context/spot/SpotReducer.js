@@ -56,9 +56,6 @@ export default (state, action) => {
 
       return {
         ...state,
-        spots: [
-          ...state.spots
-        ],
       };
     case Types.REMOVE_FROM_LIKE_TABLE:
 
@@ -71,10 +68,7 @@ export default (state, action) => {
       state.spots.filter((spot) => spot._id === action.payload.spotId)[0].likes = removeLikeFromSpotsFiltered
 
       return {
-        ...state,
-        spots: [
-          ...state.spots
-        ]
+        ...state
       };
     case Types.CLEAR_LIKED_ARRAY:
       return {
