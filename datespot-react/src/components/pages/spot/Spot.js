@@ -1,12 +1,13 @@
 import React, { useContext, useEffect } from "react";
-import SpotContext from "../../../context/spot/SpotContext";
-import AuthContext from "../../../context/auth/AuthContext"
-import { CardColumns, Jumbotron, Container } from "react-bootstrap";
-import { Spinner } from "react-bootstrap";
-import SpotItem from "../../spot/SpotItem";
-import Search from "../../spot/Search";
+import { CardColumns, Jumbotron, Container, Spinner } from "react-bootstrap";
 import table from "../../../assets/images/table.jpg";
 import "./Spot.css";
+
+import SpotContext from "../../../context/spot/SpotContext";
+import AuthContext from "../../../context/auth/AuthContext"
+
+import SpotItem from "../../spot/SpotItem";
+import Search from "../../spot/Search";
 
 const Spot = () => {
   const spotContext = useContext(SpotContext);

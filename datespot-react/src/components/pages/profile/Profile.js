@@ -1,19 +1,33 @@
 import React, { Fragment, useContext, useEffect } from "react";
+
+import { Spinner } from "react-bootstrap";
+
 import Header from "../../profile/Header";
+
 import AuthContext from "../../../context/auth/AuthContext";
 import SpotContext from "../../../context/spot/SpotContext";
+
 import SpotItemHeartless from "../../spot/SpotItemHeartless";
 import UserAccountDetail from "./UserAccountDetail";
 
 import "./Profile.css";
 
 const Profile = () => {
-  const { user } = useContext(AuthContext);
-  const { filterSpotsBasedOnLike, filteredByLiked } = useContext(SpotContext);
+  const authContext = useContext(AuthContext);
+  const { filterSpotsBasedOnLike, filteredByLiked, getSpots, spots } = useContext(SpotContext);
+  const { user } = authContext
+
+  useEffect(() => {
+    authContext.loadUser()
+    if (!spots) {
+      console.log("here");
+      getSpots();
+    }
+  }, []);
 
   useEffect(() => {
     filterSpotsBasedOnLike(user);
-  }, []);
+  }, [spots])
 
   const SpotsLiked = () => {
     return filteredByLiked == null ? (
@@ -32,12 +46,15 @@ const Profile = () => {
         <Fragment>
           <div
             style={{ marginTop: "30px", display: "flex", flexDirection: "row" }}
-          >
-            <UserAccountDetail user={user} />
+          >{user ? (<UserAccountDetail user={user} />) : (
+            <div className="text-center" style={{ marginTop: "300px" }}>
+              <Spinner animation="border" variant="danger" />
+            </div>)}
+
             <div xs={6} md={6} id="likedContainer">
               {SpotsLiked()}
               {/**this is where we display the cards which the user liked */}
-              {filteredByLiked && (
+              {filteredByLiked ? (
                 filteredByLiked.map((spot) => (
                   <SpotItemHeartless
                     key={spot._id}
@@ -56,7 +73,10 @@ const Profile = () => {
                     advice={spot.advice}
                   />
                 ))
-              )}
+              ) : <div className="text-center" style={{ marginTop: "300px" }}>
+                  <Spinner animation="border" variant="danger" />
+                </div>
+              }
             </div>
           </div>
         </Fragment>

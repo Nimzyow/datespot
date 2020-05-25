@@ -93,19 +93,21 @@ const SpotState = (props) => {
 
   const filterSpotsBasedOnLike = (user) => {
     let filterBasedOnUserLike = [];
+    if (state.spots !== null) {
+      for (let i = 0; i < state.spots.length; i++) {
+        state.spots[i].likes.map((like) => {
+          if (like.userId === user._id) {
+            filterBasedOnUserLike.push(state.spots[i])
+          };
+        });
+      };
 
-    for (let i = 0; i < state.spots.length; i++) {
-      state.spots[i].likes.map((like) => {
-        if (like.userId === user._id) {
-          filterBasedOnUserLike.push(state.spots[i])
-        };
+      dispatch({
+        type: Types.FILTER_BY_USER_LIKES,
+        payload: filterBasedOnUserLike,
       });
-    };
+    }
 
-    dispatch({
-      type: Types.FILTER_BY_USER_LIKES,
-      payload: filterBasedOnUserLike,
-    });
   };
 
   //filter spot
