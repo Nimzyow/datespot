@@ -1,20 +1,22 @@
 import React, { useContext, useEffect } from "react";
-import SpotContext from "../../../context/spot/SpotContext";
-import AuthContext from "../../../context/auth/AuthContext"
-import { CardColumns, Jumbotron, Container } from "react-bootstrap";
-import { Spinner } from "react-bootstrap";
-import SpotItem from "../../spot/SpotItem";
-import Search from "../../spot/Search";
+import { CardColumns, Jumbotron, Container, Spinner } from "react-bootstrap";
 import table from "../../../assets/images/table.jpg";
 import "./Spot.css";
+
+import SpotContext from "../../../context/spot/SpotContext";
+import AuthContext from "../../../context/auth/AuthContext"
+
+import SpotItem from "../../spot/SpotItem";
+import Search from "../../spot/Search";
 
 const Spot = () => {
   const spotContext = useContext(SpotContext);
   const authContext = useContext(AuthContext);
-  const { spots, filtered, getSpots, filteredByTag } = spotContext;
+  const { spots, filtered, getSpots, filteredByTag, clearSpotDetail } = spotContext;
   useEffect(() => {
     authContext.loadUser();
     getSpots();
+    clearSpotDetail();
   }, []);
 
   const spotItemToDisplay = () => {
@@ -32,23 +34,26 @@ const Spot = () => {
   };
 
   const spotItem = (toFilter) => {
+    //console.log("What is the spot id?", toFilter[0]._id)
     return toFilter.map((spot) => (
       <SpotItem
         key={spot.id}
         title={spot.title}
         location={spot.location}
         description={spot.description}
-        ave_cost={spot.ave_cost}
+        aveCost={spot.ave_cost}
         url={spot.url}
         latitude={spot.latitude}
         longitude={spot.longitude}
-        avg_cost={spot.avg_cost}
-        id={spot.id}
+        avgCost={spot.avgCost}
+        spotId={spot._id}
         summary={spot.summary}
         address={spot.address}
         dress={spot.dress}
-        best_times={spot.best_times}
+        bestTimes={spot.bestTimes}
         advice={spot.advice}
+        likes={spot.likes}
+        comments={spot.comments}
       />
     ));
   };

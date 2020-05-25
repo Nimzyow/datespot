@@ -25,7 +25,7 @@ const SpotItemHeartless = ({
         <Card.Title data-test="text-container">{title}</Card.Title>
         <Card.Text data-test="description-container">{summary}</Card.Text>
       </Card.Body>
-      <Card.Footer class="spotFooter">
+      <Card.Footer className="spotFooter">
         <div className="spotButton">
           <Button variant="primary">
             <Link

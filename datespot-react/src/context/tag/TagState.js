@@ -28,12 +28,6 @@ const TagState = (props) => {
     }
   };
 
-  const clearFilteredTagSearch = (tag) => {
-    dispatch({
-      type: Types.REMOVE_FILTER,
-    });
-  };
-
   return (
     <TagContext.Provider
       value={{

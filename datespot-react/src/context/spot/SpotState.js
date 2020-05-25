@@ -12,16 +12,37 @@ const SpotState = (props) => {
     filteredByLiked: null,
     filteredByTag: null,
     filterId: null,
-    comments: null,
-    tags_spots: null,
-    likes: null,
+    spotDetail: null,
   };
 
   const [state, dispatch] = useReducer(SpotReducer, initialState);
 
+
+  // set spotDetail
+
+  const setSpotDetail = (id) => {
+    const filterById = state.spots.filter((spot) => spot._id === id)
+    dispatch({
+      type: Types.ADD_SPOT_DETAIL,
+      payload: filterById[0]
+    })
+  }
+
+  // clear spotDetailId
+
+  const clearSpotDetail = () => {
+    dispatch({
+      type: Types.CLEAR_SPOT_DETAIL
+    })
+  }
+
   //post comment
 
-  const postComment = async (toSend) => {
+  const postComment = async (data) => {
+    const toSend = {
+      comment: data.comment,
+      userId: data.userId
+    };
     try {
       const config = {
         headers: {
@@ -29,7 +50,7 @@ const SpotState = (props) => {
         },
       };
       const res = await axios.post(
-        `/api/v1/spots/${toSend.spot_id}/comments`,
+        `http://localhost:4000/api/spots/${data.spotId}/comments`,
         toSend,
         config
       );
@@ -45,39 +66,14 @@ const SpotState = (props) => {
     }
   };
 
-  //get comment associated with spot
-
-  const getCommentBasedOnSpot = async (spotId) => {
-    try {
-      const res = await axios.get(`/api/v1/spots/${spotId}/comments`);
-      dispatch({
-        type: Types.GET_COMMENTS,
-        payload: res.data,
-      });
-    } catch (err) {
-      dispatch({
-        type: Types.SPOTS_ERROR,
-        payload: err,
-      });
-    }
-  };
-
-  //clear comment associated with spot
-
-  const clearComments = () => {
-    dispatch({
-      type: Types.CLEAR_COMMENTS,
-    });
-  };
-
   //filter spot based on tags
 
-  const filterSpotsByTags = async (tagId) => {
+  const filterSpotsByTags = async (tagId, tag) => {
     try {
-      const res = await axios.get(`/api/v1/tagged_spot?tagid=${tagId}`);
+      const filterByTag = state.spots.filter((spot) => spot.tags.includes(tag))
       dispatch({
         type: Types.FILTER_BY_SPOT_TAGS,
-        payload: res.data,
+        payload: filterByTag,
       });
       dispatch({
         type: Types.ADD_FILTER_ID,
@@ -87,6 +83,8 @@ const SpotState = (props) => {
       console.error(err);
     }
   };
+
+  // clear filter spot based on tags
 
   const clearFilterSpotsByTags = () => {
     dispatch({
@@ -98,23 +96,22 @@ const SpotState = (props) => {
   };
 
   const filterSpotsBasedOnLike = (user) => {
-    let filterOutLikes = state.likes.filter((like) => like.user_id === user.id);
-    let filterBasedOnUserLike = filterOutLikes.map((liked_spot) => {
+    let filterBasedOnUserLike = [];
+    if (state.spots !== null) {
       for (let i = 0; i < state.spots.length; i++) {
-        if (state.spots[i].id === liked_spot.spot_id) {
-          return state.spots[i];
-        }
-      }
-    });
+        state.spots[i].likes.map((like) => {
+          if (like.userId === user._id) {
+            filterBasedOnUserLike.push(state.spots[i])
+          };
+        });
+      };
 
-    if (filterBasedOnUserLike.length === 0) {
-      filterBasedOnUserLike = null;
+      dispatch({
+        type: Types.FILTER_BY_USER_LIKES,
+        payload: filterBasedOnUserLike,
+      });
     }
 
-    dispatch({
-      type: Types.FILTER_BY_USER_LIKES,
-      payload: filterBasedOnUserLike,
-    });
   };
 
   //filter spot
@@ -130,7 +127,6 @@ const SpotState = (props) => {
   const getSpots = async () => {
     try {
       const res = await axios.get("http://localhost:4000/api/spots");
-      getLikes();
       dispatch({
         type: Types.GET_SPOTS,
         payload: res.data,
@@ -143,34 +139,22 @@ const SpotState = (props) => {
     }
   };
 
-  //get likes
-  const getLikes = async () => {
-    try {
-      const res = await axios.get("http://localhost:4000/api/v1/likes");
-      dispatch({
-        type: Types.GET_LIKES,
-        payload: res.data,
-      });
-    } catch (err) {
-      dispatch({
-        type: Types.LIKES_ERROR,
-        payload: err,
-      });
-    }
-  };
-
   const addToLikeCount = async (toAdd) => {
+    const { spotId, userId } = toAdd;
+    const toSend = { userId }
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
     try {
-      const res = await axios.post("http://localhost:4000/api/v1/likes", toAdd, config);
+      const res = await axios.post(`http://localhost:4000/api/spots/${spotId}/like`, toSend, config);
+
       dispatch({
         type: Types.ADD_TO_LIKE_TABLE,
         payload: res.data,
       });
+
     } catch (err) {
       dispatch({
         type: Types.LIKES_ERROR,
@@ -180,13 +164,16 @@ const SpotState = (props) => {
   };
 
   const removeFromLikeCount = async (toRemove) => {
-    let toDelete = state.likes.filter(
-      (spot) =>
-        spot.spot_id === toRemove.spot_id && spot.user_id === toRemove.user_id
-    );
-    let idToDelete = toDelete[0].id;
+    const { spotId, userId } = toRemove;
+
+    const toSend = { userId }
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
     try {
-      await axios.delete(`http://localhost:4000/api/v1/likes/${idToDelete}`);
+      await axios.post(`http://localhost:4000/api/spots/${spotId}/likeRemove`, toSend, config);
       dispatch({
         type: Types.REMOVE_FROM_LIKE_TABLE,
         payload: toRemove,
@@ -212,11 +199,10 @@ const SpotState = (props) => {
         filteredByTag: state.filteredByTag,
         filterId: state.filterId,
         filteredByLiked: state.filteredByLiked,
-        likes: state.likes,
-        comments: state.comments,
+        spotDetail: state.spotDetail,
+        clearSpotDetail,
+        setSpotDetail,
         postComment,
-        clearComments,
-        getCommentBasedOnSpot,
         filterSpotsByTags,
         clearFilterSpotsByTags,
         filterSpots,
@@ -225,7 +211,6 @@ const SpotState = (props) => {
         filterSpotsBasedOnLike,
         addToLikeCount,
         removeFromLikeCount,
-        getLikes,
       }}
     >
       {props.children}

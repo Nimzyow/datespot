@@ -49,21 +49,7 @@ const AuthState = (props) => {
         payload: res.data,
       });
 
-      setAuthToken(localStorage.token);
-
-      dispatch({
-        type: Types.USER_LOADED,
-        payload: res.data,
-      });
-
-      setAuthToken(localStorage.token);
-
-      dispatch({
-        type: Types.USER_LOADED,
-        payload: res.data,
-      });
-
-      //loadUser();
+      loadUser();
     } catch (err) {
       dispatch({
         type: Types.REGISTER_FAIL,

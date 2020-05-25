@@ -1,19 +1,33 @@
 import React, { Fragment, useContext, useEffect } from "react";
+
+import { Spinner } from "react-bootstrap";
+
 import Header from "../../profile/Header";
+
 import AuthContext from "../../../context/auth/AuthContext";
 import SpotContext from "../../../context/spot/SpotContext";
+
 import SpotItemHeartless from "../../spot/SpotItemHeartless";
 import UserAccountDetail from "./UserAccountDetail";
 
 import "./Profile.css";
 
 const Profile = () => {
-  const { user } = useContext(AuthContext);
-  const { filterSpotsBasedOnLike, filteredByLiked } = useContext(SpotContext);
+  const authContext = useContext(AuthContext);
+  const { filterSpotsBasedOnLike, filteredByLiked, getSpots, spots } = useContext(SpotContext);
+  const { user } = authContext
+
+  useEffect(() => {
+    authContext.loadUser()
+    if (!spots) {
+      console.log("here");
+      getSpots();
+    }
+  }, []);
 
   useEffect(() => {
     filterSpotsBasedOnLike(user);
-  }, []);
+  }, [spots])
 
   const SpotsLiked = () => {
     return filteredByLiked == null ? (
@@ -21,8 +35,8 @@ const Profile = () => {
         Spots you liked will appear here :)
       </h5>
     ) : (
-      <h5 style={{ textAlign: "center" }}>You liked the following Spots:</h5>
-    );
+        <h5 style={{ textAlign: "center" }}>You liked the following Spots:</h5>
+      );
   };
 
   return (
@@ -32,32 +46,37 @@ const Profile = () => {
         <Fragment>
           <div
             style={{ marginTop: "30px", display: "flex", flexDirection: "row" }}
-          >
-            <UserAccountDetail user={user} />
+          >{user ? (<UserAccountDetail user={user} />) : (
+            <div className="text-center" style={{ marginTop: "300px" }}>
+              <Spinner animation="border" variant="danger" />
+            </div>)}
+
             <div xs={6} md={6} id="likedContainer">
               {SpotsLiked()}
               {/**this is where we display the cards which the user liked */}
-              {filteredByLiked && (
+              {filteredByLiked ? (
                 filteredByLiked.map((spot) => (
                   <SpotItemHeartless
-                    key={spot.id}
+                    key={spot._id}
                     title={spot.title}
                     location={spot.location}
                     description={spot.description}
-                    ave_cost={spot.ave_cost}
+                    ave_cost={spot.aveCost}
                     url={spot.url}
                     latitude={spot.latitude}
                     longitude={spot.longitude}
-                    avg_cost={spot.avg_cost}
-                    id={spot.id}
+                    id={spot._id}
                     summary={spot.summary}
                     address={spot.address}
                     dress={spot.dress}
-                    best_times={spot.best_times}
+                    best_times={spot.bestTimes}
                     advice={spot.advice}
                   />
                 ))
-              ) }
+              ) : <div className="text-center" style={{ marginTop: "300px" }}>
+                  <Spinner animation="border" variant="danger" />
+                </div>
+              }
             </div>
           </div>
         </Fragment>

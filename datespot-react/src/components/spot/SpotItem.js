@@ -7,35 +7,22 @@ import CardBody from "./CardBody";
 
 const SpotItem = (props) => {
   const spotContext = useContext(SpotContext);
-  const { clearFilter } = spotContext;
+  const { clearFilter, setSpotDetail } = spotContext;
 
+  const spotDetailSetup = () => {
+    setSpotDetail(props.spotId);
+    clearFilter();
+  }
   return (
     <Card data-test="card-container" className="shadow">
       <Card.Img variant="top" src={props.url} />
-      <CardBody title={props.title} summary={props.summary} id={props.id} />
+      <CardBody title={props.title} summary={props.summary} spotId={props.spotId} likes={props.likes} />
       <Card.Footer class="spotFooter">
         <div className="spotButton">
           <Button variant="primary">
             <Link
-              to={{
-                pathname: "/spotdetails",
-                aboutProps: {
-                  title: props.title,
-                  description: props.description,
-                  url: props.url,
-                  latitude: props.latitude,
-                  longitude: props.longitude,
-                  location: props.location,
-                  avg_cost: props.avg_cost,
-                  summary: props.summary,
-                  address: props.address,
-                  dress: props.dress,
-                  best_times: props.best_times,
-                  advice: props.advice,
-                  id: props.id,
-                },
-              }}
-              onClick={clearFilter}
+              onClick={spotDetailSetup}
+              to="/spotdetails"
               className="link"
             >
               More information

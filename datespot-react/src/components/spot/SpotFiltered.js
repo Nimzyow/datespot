@@ -1,6 +1,5 @@
 import React, { useContext, useRef, useEffect, Fragment } from "react";
 import SpotContext from "../../context/spot/SpotContext";
-import SpotTags from "./SpotTags";
 import "./css/SpotFiltered.css";
 
 const SpotFiltered = () => {

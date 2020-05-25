@@ -3,7 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import SpotContext from "../../../context/spot/SpotContext";
 import AuthContext from "../../../context/auth/AuthContext";
 
-const Comment = ({ spot_id }) => {
+const Comment = ({ spotId }) => {
   const [text, setText] = useState("");
   const [postError, setPostError] = useState(false);
   const spotContext = useContext(SpotContext);
@@ -18,12 +18,12 @@ const Comment = ({ spot_id }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (text !== "") {
-      let toSend = {
-        body: text,
-        user_id: user.id,
-        spot_id: spot_id,
+      let data = {
+        comment: text,
+        userId: user.id,
+        spotId: spotId,
       };
-      postComment(toSend);
+      postComment(data);
       setPostError(false);
       setText("");
     } else {

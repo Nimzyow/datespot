@@ -22,11 +22,11 @@ export default (state, action) => {
         ...state,
         comments: action.payload,
       };
-    case Types.ADD_COMMENT:
+    case Types.ADD_SPOT_DETAIL:
       return {
         ...state,
-        comments: [...state.comments, action.payload],
-      };
+        spotDetail: action.payload
+      }
     case Types.FILTER_SPOTS:
       return {
         ...state,
@@ -45,21 +45,40 @@ export default (state, action) => {
         ...state,
         filteredByLiked: action.payload,
       };
-    case Types.ADD_TO_LIKE_TABLE:
+    case Types.ADD_COMMENT:
+      const spotsToFilterComment = [...state.spots];
+      const spotFilteredComment = spotsToFilterComment.filter((spot) => spot._id === action.payload.spot._id)
+      const addCommentToSpotsFiltered =
+        spotFilteredComment[0].comments = [...action.payload.comments]
+
+      state.spots.filter((spot) => spot._id === action.payload.spot._id)[0].comments = addCommentToSpotsFiltered
+
       return {
         ...state,
-        likes: [...state.likes, action.payload],
+      };
+    case Types.ADD_TO_LIKE_TABLE:
+      const spotsToFilter = [...state.spots];
+      const spotFiltered = spotsToFilter.filter((spot) => spot._id === action.payload.spot._id)
+
+      const addLikeToSpotsFiltered =
+        spotFiltered[0].likes = [...action.payload.likes]
+
+      state.spots.filter((spot) => spot._id === action.payload.spot._id)[0].likes = addLikeToSpotsFiltered
+
+      return {
+        ...state,
       };
     case Types.REMOVE_FROM_LIKE_TABLE:
+      const spotsToFilterForRemoval = [...state.spots]
+      const spotFilteredForRemoval = spotsToFilterForRemoval.filter((spot) => spot._id === action.payload.spotId)
+
+      const removeLikeFromSpotsFiltered =
+        spotFilteredForRemoval[0].likes.filter((like) => like.userId !== action.payload.userId)
+
+      state.spots.filter((spot) => spot._id === action.payload.spotId)[0].likes = removeLikeFromSpotsFiltered
+
       return {
-        ...state,
-        likes: state.likes.filter(
-          (like) =>
-            !(
-              like.spot_id === action.payload.spot_id &&
-              like.user_id === action.payload.user_id
-            )
-        ),
+        ...state
       };
     case Types.CLEAR_LIKED_ARRAY:
       return {
@@ -85,6 +104,11 @@ export default (state, action) => {
       return {
         ...state,
         filterId: null,
+      };
+    case Types.CLEAR_SPOT_DETAIL:
+      return {
+        ...state,
+        spotDetail: null,
       };
     case Types.SPOTS_ERROR:
       return {
