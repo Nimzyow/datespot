@@ -2,10 +2,12 @@ import React, { Fragment, useEffect, useContext } from "react";
 import { Jumbotron, Container, Row, Col, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
-import "../css/SpotDetails.css";
-import SpotMap from "./SpotMap.js";
-import SpotContext from "../../../context/spot/SpotContext";
+
 import AuthContext from "../../../context/auth/AuthContext";
+
+import "../css/SpotDetails.css";
+
+import SpotMap from "./SpotMap.js";
 import Comment from "./Comment";
 import SpotDetailsAbout from "./SpotDetailsAbout";
 import CommentsHeader from "./CommentsHeader";
@@ -21,7 +23,7 @@ const SpotDetails = (props) => {
   }, []);
 
   const getComments = () => {
-    if (properties.comments) {
+    if (properties) {
       if (properties.comments.length === 0) {
         return (
           <div>
@@ -53,31 +55,31 @@ const SpotDetails = (props) => {
   };
 
   return (
-    <Fragment>
-      <Jumbotron
-        fluid
-        className="shadow"
-        style={{
-          backgroundImage: `url(${properties.url})`,
-          backgroundPosition: "center",
-          backgroundAttachment: "fixed",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          height: "375px",
-        }}
-      >
-        <Container>
-          <h1>
-            <span>{properties.title}</span>
-          </h1>
-          <h3>
-            <span>{properties.summary}</span>
-          </h3>
-          <h6>
-            <span>{properties.location}</span>
-          </h6>
-        </Container>
-      </Jumbotron>
+
+    <div>{properties ? (<div><Jumbotron
+      fluid
+      className="shadow"
+      style={{
+        backgroundImage: `url(${properties.url})`,
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        height: "375px",
+      }}
+    >
+      <Container>
+        <h1>
+          <span>{properties.title}</span>
+        </h1>
+        <h3>
+          <span>{properties.summary}</span>
+        </h3>
+        <h6>
+          <span>{properties.location}</span>
+        </h6>
+      </Container>
+    </Jumbotron>
       <div class="container">
         <Container className="cont">
           <Row>
@@ -111,7 +113,13 @@ const SpotDetails = (props) => {
           </Row>
         </Container>
       </div>
-    </Fragment>
+    </div>) :
+      (
+        <div className="text-center" style={{ marginTop: "300px" }}>
+          <Spinner animation="border" variant="danger" />
+        </div>
+      )}
+    </div>
   );
 };
 
