@@ -111,7 +111,6 @@ const SpotState = (props) => {
         payload: filterBasedOnUserLike,
       });
     }
-
   };
 
   //filter spot

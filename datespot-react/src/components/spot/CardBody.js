@@ -17,8 +17,6 @@ const CardBody = ({ title, summary, spotId, likes }) => {
     }
   }, [likes]);
 
-
-
   const [color, setColor] = useState("");
 
   const setColorOfHeart = () => {
