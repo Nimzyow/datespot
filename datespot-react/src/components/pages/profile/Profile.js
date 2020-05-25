@@ -21,8 +21,8 @@ const Profile = () => {
         Spots you liked will appear here :)
       </h5>
     ) : (
-      <h5 style={{ textAlign: "center" }}>You liked the following Spots:</h5>
-    );
+        <h5 style={{ textAlign: "center" }}>You liked the following Spots:</h5>
+      );
   };
 
   return (
@@ -40,24 +40,23 @@ const Profile = () => {
               {filteredByLiked && (
                 filteredByLiked.map((spot) => (
                   <SpotItemHeartless
-                    key={spot.id}
+                    key={spot._id}
                     title={spot.title}
                     location={spot.location}
                     description={spot.description}
-                    ave_cost={spot.ave_cost}
+                    ave_cost={spot.aveCost}
                     url={spot.url}
                     latitude={spot.latitude}
                     longitude={spot.longitude}
-                    avg_cost={spot.avg_cost}
-                    id={spot.id}
+                    id={spot._id}
                     summary={spot.summary}
                     address={spot.address}
                     dress={spot.dress}
-                    best_times={spot.best_times}
+                    best_times={spot.bestTimes}
                     advice={spot.advice}
                   />
                 ))
-              ) }
+              )}
             </div>
           </div>
         </Fragment>

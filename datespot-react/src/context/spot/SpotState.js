@@ -92,18 +92,15 @@ const SpotState = (props) => {
   };
 
   const filterSpotsBasedOnLike = (user) => {
-    let filterOutLikes = state.likes.filter((like) => like.user_id === user.id);
-    let filterBasedOnUserLike = filterOutLikes.map((liked_spot) => {
-      for (let i = 0; i < state.spots.length; i++) {
-        if (state.spots[i].id === liked_spot.spot_id) {
-          return state.spots[i];
-        }
-      }
-    });
+    let filterBasedOnUserLike = [];
 
-    if (filterBasedOnUserLike.length === 0) {
-      filterBasedOnUserLike = null;
-    }
+    for (let i = 0; i < state.spots.length; i++) {
+      state.spots[i].likes.map((like) => {
+        if (like.userId === user._id) {
+          filterBasedOnUserLike.push(state.spots[i])
+        };
+      });
+    };
 
     dispatch({
       type: Types.FILTER_BY_USER_LIKES,
