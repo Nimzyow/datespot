@@ -9,8 +9,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const SpotDetailsAbout = ({
-  avg_cost,
-  best_times,
+  avgCost,
+  bestTimes,
   dress,
   description,
   advice,
@@ -20,10 +20,10 @@ const SpotDetailsAbout = ({
   return (
     <Col>
       <p>
-        <FontAwesomeIcon icon={faMoneyBillWave} /> : £{avg_cost}
+        <FontAwesomeIcon icon={faMoneyBillWave} /> : £{avgCost}
       </p>
       <p>
-        <FontAwesomeIcon icon={faClock} /> : {best_times}
+        <FontAwesomeIcon icon={faClock} /> : {bestTimes}
       </p>
       <p>
         <FontAwesomeIcon icon={faUserTie} /> : {dress}

@@ -8,17 +8,21 @@ import AuthContext from "../../context/auth/AuthContext";
 const CardBody = ({ title, summary, spotId, likes }) => {
   const spotContext = useContext(SpotContext);
   const authContext = useContext(AuthContext);
-  const { spots, addToLikeCount, removeFromLikeCount } = spotContext;
+  const { addToLikeCount, removeFromLikeCount } = spotContext;
   const { user } = authContext;
 
   useEffect(() => {
-    setColorOfHeart();
+    if (user) {
+      setColorOfHeart();
+    }
   }, [likes]);
+
+
 
   const [color, setColor] = useState("");
 
   const setColorOfHeart = () => {
-    if (likes === []) {
+    if (likes.length === 0 || likes === null) {
       setColor("black");
     } else {
       let currentUserLikedSpot = likes.filter(

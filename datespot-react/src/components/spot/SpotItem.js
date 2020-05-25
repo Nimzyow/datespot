@@ -13,7 +13,6 @@ const SpotItem = (props) => {
     setSpotDetail(props.spotId);
     clearFilter();
   }
-
   return (
     <Card data-test="card-container" className="shadow">
       <Card.Img variant="top" src={props.url} />

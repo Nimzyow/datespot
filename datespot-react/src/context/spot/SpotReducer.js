@@ -22,11 +22,6 @@ export default (state, action) => {
         ...state,
         comments: action.payload,
       };
-    case Types.ADD_COMMENT:
-      return {
-        ...state,
-        comments: [...state.comments, action.payload],
-      };
     case Types.ADD_SPOT_DETAIL:
       return {
         ...state,
@@ -49,6 +44,17 @@ export default (state, action) => {
       return {
         ...state,
         filteredByLiked: action.payload,
+      };
+    case Types.ADD_COMMENT:
+      const spotsToFilterComment = [...state.spots];
+      const spotFilteredComment = spotsToFilterComment.filter((spot) => spot._id === action.payload.spot._id)
+      const addCommentToSpotsFiltered =
+        spotFilteredComment[0].comments = [...action.payload.comments]
+
+      state.spots.filter((spot) => spot._id === action.payload.spot._id)[0].comments = addCommentToSpotsFiltered
+
+      return {
+        ...state,
       };
     case Types.ADD_TO_LIKE_TABLE:
       const spotsToFilter = [...state.spots];

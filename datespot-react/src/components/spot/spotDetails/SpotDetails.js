@@ -39,6 +39,7 @@ const SpotDetails = (props) => {
       } else {
         return spotDetail.comments.map((obj) => (
           <div
+            key={obj._id}
             style={{
               border: "1px solid black",
               marginTop: "10px",
@@ -90,8 +91,8 @@ const SpotDetails = (props) => {
         <Container className="cont">
           <Row>
             <SpotDetailsAbout
-              avg_cost={spotDetail.avgCost}
-              best_times={spotDetail.bestTimes}
+              avgCost={spotDetail.avgCost}
+              bestTimes={spotDetail.bestTimes}
               dress={spotDetail.dress}
               description={spotDetail.description}
               advice={spotDetail.advice}
@@ -114,7 +115,7 @@ const SpotDetails = (props) => {
               </div>
               <CommentsHeader />
               <div>{getComments()}</div>
-              {user && <Comment spot_id={spotDetail.id} />}
+              {user && <Comment spotId={spotDetail._id} />}
             </Col>
           </Row>
         </Container>

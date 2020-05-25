@@ -38,7 +38,11 @@ const SpotState = (props) => {
 
   //post comment
 
-  const postComment = async (toSend) => {
+  const postComment = async (data) => {
+    const toSend = {
+      comment: data.comment,
+      userId: data.userId
+    };
     try {
       const config = {
         headers: {
@@ -46,7 +50,7 @@ const SpotState = (props) => {
         },
       };
       const res = await axios.post(
-        `/api/v1/spots/${toSend.spot_id}/comments`,
+        `http://localhost:4000/api/spots/${data.spotId}/comments`,
         toSend,
         config
       );
