@@ -7,6 +7,7 @@ const mapStyles = {
 };
 
 const SpotMap = (props) => {
+  console.log("GOOGLE MAPS API", process.env.REACT_APP_GOOGLE_API_KEY)
   return (
     <Map
       google={props.google}
@@ -20,5 +21,5 @@ const SpotMap = (props) => {
 };
 
 export default GoogleApiWrapper({
-  apiKey: "",
+  apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
 })(SpotMap);
