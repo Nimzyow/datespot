@@ -27,6 +27,11 @@ export default (state, action) => {
         ...state,
         comments: [...state.comments, action.payload],
       };
+    case Types.ADD_SPOT_DETAIL:
+      return {
+        ...state,
+        spotDetail: action.payload
+      }
     case Types.FILTER_SPOTS:
       return {
         ...state,
@@ -94,6 +99,11 @@ export default (state, action) => {
       return {
         ...state,
         filterId: null,
+      };
+    case Types.CLEAR_SPOT_DETAIL:
+      return {
+        ...state,
+        spotDetail: null,
       };
     case Types.SPOTS_ERROR:
       return {

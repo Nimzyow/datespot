@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
 
 import AuthContext from "../../../context/auth/AuthContext";
+import SpotContext from "../../../context/spot/SpotContext"
 
 import "../css/SpotDetails.css";
 
@@ -13,25 +14,30 @@ import SpotDetailsAbout from "./SpotDetailsAbout";
 import CommentsHeader from "./CommentsHeader";
 
 const SpotDetails = (props) => {
-  console.log(1, props.location.aboutProps);
   const authContext = useContext(AuthContext);
+  const spotContext = useContext(SpotContext);
+
   const { user, loadUser } = authContext;
-  const properties = props.location.aboutProps;
+  const { spotDetail } = spotContext;
+
   useEffect(() => {
     loadUser();
     getComments();
+    if (!spotDetail) {
+      props.history.push("/spots")
+    }
   }, []);
 
   const getComments = () => {
-    if (properties) {
-      if (properties.comments.length === 0) {
+    if (spotDetail) {
+      if (spotDetail.comments.length === 0) {
         return (
           <div>
             <h5>No comments to display for this spot...yet</h5>
           </div>
         );
       } else {
-        return properties.comments.map((obj) => (
+        return spotDetail.comments.map((obj) => (
           <div
             style={{
               border: "1px solid black",
@@ -56,11 +62,11 @@ const SpotDetails = (props) => {
 
   return (
 
-    <div>{properties ? (<div><Jumbotron
+    <div>{spotDetail ? (<div><Jumbotron
       fluid
       className="shadow"
       style={{
-        backgroundImage: `url(${properties.url})`,
+        backgroundImage: `url(${spotDetail.url})`,
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
         backgroundSize: "cover",
@@ -70,13 +76,13 @@ const SpotDetails = (props) => {
     >
       <Container>
         <h1>
-          <span>{properties.title}</span>
+          <span>{spotDetail.title}</span>
         </h1>
         <h3>
-          <span>{properties.summary}</span>
+          <span>{spotDetail.summary}</span>
         </h3>
         <h6>
-          <span>{properties.location}</span>
+          <span>{spotDetail.location}</span>
         </h6>
       </Container>
     </Jumbotron>
@@ -84,17 +90,17 @@ const SpotDetails = (props) => {
         <Container className="cont">
           <Row>
             <SpotDetailsAbout
-              avg_cost={properties.avgCost}
-              best_times={properties.bestTimes}
-              dress={properties.dress}
-              description={properties.description}
-              advice={properties.advice}
+              avg_cost={spotDetail.avgCost}
+              best_times={spotDetail.bestTimes}
+              dress={spotDetail.dress}
+              description={spotDetail.description}
+              advice={spotDetail.advice}
             />
             <Col>
               <div className="map shadow">
                 <SpotMap
-                  longitude={properties.longitude}
-                  latitude={properties.latitude}
+                  longitude={spotDetail.longitude}
+                  latitude={spotDetail.latitude}
                 ></SpotMap>
               </div>
             </Col>
@@ -104,11 +110,11 @@ const SpotDetails = (props) => {
             <Col>
               <div className="address">
                 <FontAwesomeIcon icon={faLocationArrow} /> :{" "}
-                {properties.address}{" "}
+                {spotDetail.address}{" "}
               </div>
               <CommentsHeader />
               <div>{getComments()}</div>
-              {user && <Comment spot_id={properties.id} />}
+              {user && <Comment spot_id={spotDetail.id} />}
             </Col>
           </Row>
         </Container>

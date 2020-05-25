@@ -11,10 +11,11 @@ import "./Spot.css";
 const Spot = () => {
   const spotContext = useContext(SpotContext);
   const authContext = useContext(AuthContext);
-  const { spots, filtered, getSpots, filteredByTag } = spotContext;
+  const { spots, filtered, getSpots, filteredByTag, clearSpotDetail } = spotContext;
   useEffect(() => {
     authContext.loadUser();
     getSpots();
+    clearSpotDetail();
   }, []);
 
   const spotItemToDisplay = () => {

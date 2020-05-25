@@ -7,7 +7,12 @@ import CardBody from "./CardBody";
 
 const SpotItem = (props) => {
   const spotContext = useContext(SpotContext);
-  const { clearFilter } = spotContext;
+  const { clearFilter, setSpotDetail } = spotContext;
+
+  const spotDetailSetup = () => {
+    setSpotDetail(props.spotId);
+    clearFilter();
+  }
 
   return (
     <Card data-test="card-container" className="shadow">
@@ -17,27 +22,8 @@ const SpotItem = (props) => {
         <div className="spotButton">
           <Button variant="primary">
             <Link
-              to={{
-                pathname: "/spotdetails",
-                aboutProps: {
-                  title: props.title,
-                  description: props.description,
-                  url: props.url,
-                  latitude: props.latitude,
-                  longitude: props.longitude,
-                  location: props.location,
-                  avgCost: props.avgCost,
-                  summary: props.summary,
-                  address: props.address,
-                  dress: props.dress,
-                  bestTimes: props.bestTimes,
-                  advice: props.advice,
-                  spotId: props.spotId,
-                  likes: props.likes,
-                  comments: props.comments
-                },
-              }}
-              onClick={clearFilter}
+              onClick={spotDetailSetup}
+              to="/spotdetails"
               className="link"
             >
               More information

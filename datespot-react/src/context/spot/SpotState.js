@@ -12,9 +12,29 @@ const SpotState = (props) => {
     filteredByLiked: null,
     filteredByTag: null,
     filterId: null,
+    spotDetail: null,
   };
 
   const [state, dispatch] = useReducer(SpotReducer, initialState);
+
+
+  // set spotDetail
+
+  const setSpotDetail = (id) => {
+    const filterById = state.spots.filter((spot) => spot._id === id)
+    dispatch({
+      type: Types.ADD_SPOT_DETAIL,
+      payload: filterById[0]
+    })
+  }
+
+  // clear spotDetailId
+
+  const clearSpotDetail = () => {
+    dispatch({
+      type: Types.CLEAR_SPOT_DETAIL
+    })
+  }
 
   //post comment
 
@@ -176,6 +196,9 @@ const SpotState = (props) => {
         filteredByTag: state.filteredByTag,
         filterId: state.filterId,
         filteredByLiked: state.filteredByLiked,
+        spotDetail: state.spotDetail,
+        clearSpotDetail,
+        setSpotDetail,
         postComment,
         filterSpotsByTags,
         clearFilterSpotsByTags,

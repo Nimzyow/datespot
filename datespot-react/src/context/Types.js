@@ -16,6 +16,8 @@ export const CLEAR_LIKED_ARRAY = "CLEAR_LIKED_ARRAY";
 export const GET_COMMENTS = "GET_COMMENTS";
 export const CLEAR_COMMENTS = "CLEAR_COMMENTS";
 export const ADD_COMMENT = "ADD_COMMENT";
+export const ADD_SPOT_DETAIL = "ADD_SPOT_DETAIL";
+export const CLEAR_SPOT_DETAIL = "CLEAR_SPOT_DETAIL";
 
 //Types for Tag state
 export const ADD_TAG = "ADD_TAG";
