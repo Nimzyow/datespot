@@ -52,12 +52,12 @@ const SpotState = (props) => {
 
   //filter spot based on tags
 
-  const filterSpotsByTags = async (tagId) => {
+  const filterSpotsByTags = async (tagId, tag) => {
     try {
-      const res = await axios.get(`/api/v1/tagged_spot?tagid=${tagId}`);
+      const filterByTag = state.spots.filter((spot) => spot.tags.includes(tag))
       dispatch({
         type: Types.FILTER_BY_SPOT_TAGS,
-        payload: res.data,
+        payload: filterByTag,
       });
       dispatch({
         type: Types.ADD_FILTER_ID,

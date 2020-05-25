@@ -46,7 +46,7 @@ const SpotSchema = mongoose.Schema(
       required: true,
     },
     tags: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "tag" },
+      { type: String },
     ],
     comments: [
       { comment: { type: String }, date: { type: Date, default: Date.now }, userId: { type: mongoose.Schema.Types.ObjectId, ref: "user" } },

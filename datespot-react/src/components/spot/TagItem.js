@@ -11,7 +11,7 @@ const TagItem = ({ tag, tagId }) => {
 
   const onClick = () => {
     if (filterId !== tagId) {
-      filterSpotsByTags(tagId);
+      filterSpotsByTags(tagId, tag);
     } else {
       clearFilterSpotsByTags();
     }
