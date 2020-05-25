@@ -1,14 +1,16 @@
 {
   "name": "datespot",
   "version": "1.0.0",
-  "description": "",
+  "description": "helping you find the best dating locations",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "server-dev": "NODE_ENV=development nodemon index.js",
     "server-prod": "NODE_ENV=production nodemon index.js",
     "test": "NODE_ENV=test mocha ./routes/routesTests/*.test.js",
     "datespot": "npm start --prefix datespot-react",
-    "dev": "concurrently \"npm run server-dev\" \"npm run datespot\""
+    "dev": "concurrently \"npm run server-dev\" \"npm run datespot\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix datespot-react && npm run build --prefix datespot-react"
   },
   "keywords": [],
   "author": "",
