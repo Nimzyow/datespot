@@ -12,15 +12,11 @@ import CommentsHeader from "./CommentsHeader";
 
 const SpotDetails = (props) => {
   console.log(1, props.location.aboutProps);
-  const spotContext = useContext(SpotContext);
   const authContext = useContext(AuthContext);
-  const { getCommentBasedOnSpot, clearComments } = spotContext;
   const { user, loadUser } = authContext;
   const properties = props.location.aboutProps;
   useEffect(() => {
     loadUser();
-    clearComments();
-    getCommentBasedOnSpot(props.location.aboutProps.id);
     getComments();
   }, []);
 
@@ -86,8 +82,8 @@ const SpotDetails = (props) => {
         <Container className="cont">
           <Row>
             <SpotDetailsAbout
-              avg_cost={properties.avg_cost}
-              best_times={properties.best_times}
+              avg_cost={properties.avgCost}
+              best_times={properties.bestTimes}
               dress={properties.dress}
               description={properties.description}
               advice={properties.advice}

@@ -43,12 +43,12 @@ const Spot = () => {
         url={spot.url}
         latitude={spot.latitude}
         longitude={spot.longitude}
-        avgCost={spot.avg_cost}
+        avgCost={spot.avgCost}
         spotId={spot._id}
         summary={spot.summary}
         address={spot.address}
         dress={spot.dress}
-        bestTimes={spot.best_times}
+        bestTimes={spot.bestTimes}
         advice={spot.advice}
         likes={spot.likes}
         comments={spot.comments}

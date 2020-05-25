@@ -42,14 +42,6 @@ const SpotState = (props) => {
     }
   };
 
-  //clear comment associated with spot
-
-  const clearComments = () => {
-    dispatch({
-      type: Types.CLEAR_COMMENTS,
-    });
-  };
-
   //filter spot based on tags
 
   const filterSpotsByTags = async (tagId, tag) => {
@@ -67,6 +59,8 @@ const SpotState = (props) => {
       console.error(err);
     }
   };
+
+  // clear filter spot based on tags
 
   const clearFilterSpotsByTags = () => {
     dispatch({
@@ -183,7 +177,6 @@ const SpotState = (props) => {
         filterId: state.filterId,
         filteredByLiked: state.filteredByLiked,
         postComment,
-        clearComments,
         filterSpotsByTags,
         clearFilterSpotsByTags,
         filterSpots,
