@@ -63,7 +63,6 @@ export default (state, action) => {
         ...state,
       };
     case Types.REMOVE_FROM_LIKE_TABLE:
-
       const spotsToFilterForRemoval = [...state.spots]
       const spotFilteredForRemoval = spotsToFilterForRemoval.filter((spot) => spot._id === action.payload.spotId)
 
