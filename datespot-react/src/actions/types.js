@@ -1,0 +1,20 @@
+//Types for Spot state
+export const FILTER_SPOTS = "FILTER_SPOTS";
+export const ADD_FILTER_ID = "ADD_FILTER_ID";
+export const CLEAR_FILTER_ID = "CLEAR_FILTER_ID";
+export const CLEAR_FILTER = "CLEAR_FILTER";
+export const FILTER_BY_SPOT_TAGS = "FILTER_BY_SPOT_TAGS";
+export const CLEAR_FILTER_BY_SPOT_TAGS = "CLEAR_FILTER_BY_SPOT_TAGS";
+export const FILTER_BY_USER_LIKES = "FILTER_BY_USER_LIKES";
+export const ADD_TO_LIKE_TABLE = "ADD_TO_LIKE_TABLE";
+export const REMOVE_FROM_LIKE_TABLE = "REMOVE_FROM_LIKE_TABLE";
+export const GET_LIKES = "GET_LIKES";
+export const GET_SPOTS = "GET_SPOTS";
+export const LIKES_ERROR = "LIKES_ERROR";
+export const SPOTS_ERROR = "SPOTS_ERROR";
+export const CLEAR_LIKED_ARRAY = "CLEAR_LIKED_ARRAY";
+export const GET_COMMENTS = "GET_COMMENTS";
+export const CLEAR_COMMENTS = "CLEAR_COMMENTS";
+export const ADD_COMMENT = "ADD_COMMENT";
+export const ADD_SPOT_DETAIL = "ADD_SPOT_DETAIL";
+export const CLEAR_SPOT_DETAIL = "CLEAR_SPOT_DETAIL";
