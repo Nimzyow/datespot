@@ -16,3 +16,9 @@ export const getSpots = () => async (dispatch) => {
     });
   }
 };
+
+export const clearSpotDetail = () => (dispatch) => {
+  dispatch({
+    type: Types.CLEAR_SPOT_DETAIL,
+  });
+};

@@ -6,18 +6,19 @@ import { CardColumns, Jumbotron, Container, Spinner } from "react-bootstrap";
 import table from "../../../assets/images/table.jpg";
 import "./Spot.css";
 
-import { getSpots } from "../../../actions/spotActions";
+import { getSpots, clearSpotDetail } from "../../../actions/spotActions";
 
-import SpotContext from "../../../context/spot/SpotContext";
 import AuthContext from "../../../context/auth/AuthContext";
 
 import SpotItem from "../../spot/SpotItem";
 import Search from "../../spot/Search";
 
-const Spot = ({ spot: { spots, filtered, filteredByTag }, getSpots }) => {
-  const spotContext = useContext(SpotContext);
+const Spot = ({
+  spot: { spots, filtered, filteredByTag },
+  getSpots,
+  clearSpotDetail,
+}) => {
   const authContext = useContext(AuthContext);
-  const { clearSpotDetail } = spotContext;
   useEffect(() => {
     authContext.loadUser();
     getSpots();
@@ -93,10 +94,12 @@ const Spot = ({ spot: { spots, filtered, filteredByTag }, getSpots }) => {
 
 Spot.propTypes = {
   spot: PropTypes.object.isRequired,
+  getSpots: PropTypes.func.isRequired,
+  clearSpotDetail: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   spot: state.spot,
 });
 
-export default connect(mapStateToProps, { getSpots })(Spot);
+export default connect(mapStateToProps, { getSpots, clearSpotDetail })(Spot);

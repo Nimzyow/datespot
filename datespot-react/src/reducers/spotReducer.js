@@ -23,6 +23,11 @@ export default (state = initialState, action) => {
         ...state,
         error: action.payload,
       };
+    case Types.CLEAR_SPOT_DETAIL:
+      return {
+        ...state,
+        spotDetail: null,
+      };
     default:
       return state;
   }
