@@ -45,83 +45,83 @@ const Register = (props) => {
       setAlert("Passwords do not match", "danger");
     } else {
       register({
-          username,
-          email,
-          password,  
+        username,
+        email,
+        password,
       });
     }
   };
 
   return (
-    <div className="container cont" style={{paddingTop: '30px'}}>
+    <div className="container cont" style={{ paddingTop: '30px' }}>
 
-<Row>
-  <Col>
-    <img src={champagne} className="shadow" style={{maxWidth: '100%'}}></img>
-  </Col>
-  <Col>
-      <Form onSubmit={onSubmit} style={{ flexGrow: "1" }}>
-          <Form.Group controlId="formBasicUsername">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter username"
-              name="username"
-              value={username}
-              onChange={onChange}
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              name="email"
-              value={email}
-              onChange={onChange}
-              required
-            />
-            <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
+      <Row>
+        <Col>
+          <img src={champagne} className="shadow" style={{ maxWidth: '100%' }}></img>
+        </Col>
+        <Col>
+          <Form onSubmit={onSubmit} style={{ flexGrow: "1" }}>
+            <Form.Group controlId="formBasicUsername">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter username"
+                name="username"
+                value={username}
+                onChange={onChange}
+                required
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                name="email"
+                value={email}
+                onChange={onChange}
+                required
+              />
+              <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
             </Form.Text>
-          </Form.Group>
+            </Form.Group>
 
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              name="password"
-              value={password}
-              onChange={onChange}
-              minLength="6"
-              required
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicPassword2">
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Confirm Password"
-              name="password2"
-              value={password2}
-              onChange={onChange}
-              minLength="6"
-              required
-            />
-          </Form.Group>
-          <div class="spotButton">
-            <Button variant="primary" type="submit">
-              Submit
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={password}
+                onChange={onChange}
+                minLength="6"
+                required
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicPassword2">
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Confirm Password"
+                name="password2"
+                value={password2}
+                onChange={onChange}
+                minLength="6"
+                required
+              />
+            </Form.Group>
+            <div className="spotButton">
+              <Button variant="primary" type="submit">
+                Submit
             </Button>
-          </div>
-          <p className="text-center">
-            Already Signed up? Go for a cheeky <Link to="/login">Sign in!</Link>
-          </p>
-        </Form>
-  </Col>
-</Row>
+            </div>
+            <p className="text-center">
+              Already Signed up? Go for a cheeky <Link to="/login">Sign in!</Link>
+            </p>
+          </Form>
+        </Col>
+      </Row>
 
 
     </div>

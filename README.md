@@ -41,9 +41,22 @@ $ npm install
 Great! That's it for the front end!
 
 ## Database
-In the root of the project, cd into date_spot-rails and type the following in your terminal:
 
-INSTRUCTIONS TO BE GIVEN HERE AS TO HOW TO SETUP MONGODB AND SEED INTO THE DB
+You will need to sign up to MongoDB and create a cluster. 
+
+Once you have created a cluster, you will need to find what the connection URI is.
+
+Click on connect when viewing your cluster and a model should pop up with 3 options. click on "Connect your application" to see your MongoURI.
+
+You will need to create 4 environmental variables.
+
+1) datespotJwtSecret (can be a secret word of your choice)
+
+2) testURI (this will be your MongoURI)
+
+3) developmentURI (this will be your MongoURI except that the word "test" in the MongoURI needs to be replaced with "development")
+
+4) REACT_APP_GOOGLE_API_KEY (Sign up to Google Maps API and obtain your Google maps api key and set it as this environment variable )
 
 ## Testing
 
@@ -73,17 +86,27 @@ You should be able to see the tests performed in React
 
 ## Running the application
 
-Follow these steps to run the server:
+To run the Server and application at the same time:
+
+```
+$ npm run dev
+```
+
+aaaaand That's it! 
+
+If you want to run the backend or front end seperately, follow these instructions:
+
+To run the server:
 
 1. In the root of the project, type the following in your terminal:
 
 ```
-$ npm run server
+$ npm run server-dev
 ```
 
-Yay! You just turned on the server for this project! This won't do us much good though as you won't be able to see anything. Time to fire up the front end.
+Yay! You just turned on the server for this project! This won't do us much good though as you won't be able to see anything. Good if you want to test the end points in Postman though! But hey, let's fire up the front end.
 
-Open another instance of your terminal and Follow these steps to run tests in the front end:
+Open another instance of your terminal and Follow these steps to run the front end:
 
 1. In the root of the project, cd into datespot-react and type the following in your terminal:
 
@@ -91,9 +114,8 @@ Open another instance of your terminal and Follow these steps to run tests in th
 $ npm start
 ```
 
-Great! So now you have both the backend and frontend working! Now feel free to play around with the application on localhost 4000.
+Great! So now you have both the backend and frontend working! Now feel free to play around with the application on localhost 3000.
 
-FUTURE PLANS: I will use concurrently so that in the root all you have to do is type npm run dev to run both the backend and the frontend at the same time.
 
 ## Planning
 

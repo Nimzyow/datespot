@@ -37,7 +37,7 @@ const Spot = () => {
     //console.log("What is the spot id?", toFilter[0]._id)
     return toFilter.map((spot) => (
       <SpotItem
-        key={spot.id}
+        key={spot._id}
         title={spot.title}
         location={spot.location}
         description={spot.description}

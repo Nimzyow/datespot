@@ -17,7 +17,7 @@ const SpotItem = (props) => {
     <Card data-test="card-container" className="shadow">
       <Card.Img variant="top" src={props.url} />
       <CardBody title={props.title} summary={props.summary} spotId={props.spotId} likes={props.likes} />
-      <Card.Footer class="spotFooter">
+      <Card.Footer className="spotFooter">
         <div className="spotButton">
           <Button variant="primary">
             <Link

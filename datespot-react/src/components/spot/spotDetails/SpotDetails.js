@@ -87,7 +87,7 @@ const SpotDetails = (props) => {
         </h6>
       </Container>
     </Jumbotron>
-      <div class="container">
+      <div className="container">
         <Container className="cont">
           <Row>
             <SpotDetailsAbout

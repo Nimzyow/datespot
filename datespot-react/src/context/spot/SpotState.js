@@ -50,7 +50,7 @@ const SpotState = (props) => {
         },
       };
       const res = await axios.post(
-        `/api/spots/${data.spotId}/comments`,
+        `http://localhost:4000/api/spots/${data.spotId}/comments`,
         toSend,
         config
       );
@@ -125,7 +125,7 @@ const SpotState = (props) => {
 
   const getSpots = async () => {
     try {
-      const res = await axios.get("/api/spots");
+      const res = await axios.get("http://localhost:4000/api/spots");
       dispatch({
         type: Types.GET_SPOTS,
         payload: res.data,
@@ -147,7 +147,7 @@ const SpotState = (props) => {
       },
     };
     try {
-      const res = await axios.post(`/api/spots/${spotId}/like`, toSend, config);
+      const res = await axios.post(`http://localhost:4000/api/spots/${spotId}/like`, toSend, config);
 
       dispatch({
         type: Types.ADD_TO_LIKE_TABLE,
@@ -172,7 +172,7 @@ const SpotState = (props) => {
       }
     }
     try {
-      await axios.post(`/api/spots/${spotId}/likeRemove`, toSend, config);
+      await axios.post(`http://localhost:4000/api/spots/${spotId}/likeRemove`, toSend, config);
       dispatch({
         type: Types.REMOVE_FROM_LIKE_TABLE,
         payload: toRemove,
