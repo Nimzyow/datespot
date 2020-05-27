@@ -17,8 +17,21 @@ export const getSpots = () => async (dispatch) => {
   }
 };
 
+export const addSpotDetail = (id) => (dispatch) => {
+  dispatch({
+    type: Types.ADD_SPOT_DETAIL,
+    payload: id,
+  });
+};
+
 export const clearSpotDetail = () => (dispatch) => {
   dispatch({
     type: Types.CLEAR_SPOT_DETAIL,
+  });
+};
+
+export const clearFilter = () => (dispatch) => {
+  dispatch({
+    type: Types.CLEAR_FILTER,
   });
 };
