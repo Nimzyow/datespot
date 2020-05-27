@@ -30,3 +30,7 @@ export const LOGOUT = "LOGOUT";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const SPINNER_SHOW = "SPINNER_SHOW";
 export const SPINNER_NOSHOW = "SPINNER_NOSHOW";
+
+//Types for Tag state
+export const GET_TAGS = "GET_TAGS";
+export const TAGS_ERROR = "TAGS_ERROR";

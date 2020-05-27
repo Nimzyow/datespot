@@ -6,10 +6,9 @@ import { Spinner } from "react-bootstrap";
 import { connect } from "react-redux";
 
 import { loadUser } from "../../actions/authActions";
+import { getTags } from "../../actions/tagActions";
 
-const SpotTags = ({ loadUser }) => {
-  const tagContext = useContext(TagContext);
-  const { getTags, tags } = tagContext;
+const SpotTags = ({ loadUser, getTags, tag: {tags} }) => {
   useEffect(() => {
     loadUser();
     getTags();
@@ -28,6 +27,8 @@ const SpotTags = ({ loadUser }) => {
   );
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+  tag: state.tag
+});
 
-export default connect(mapStateToProps, { loadUser })(SpotTags);
+export default connect(mapStateToProps, { loadUser, getTags })(SpotTags);
