@@ -86,6 +86,22 @@ export default (state = initialState, action) => {
           return spot.title.match(regex) || spot.description.match(regex);
         }),
       };
+    case Types.FILTER_BY_USER_LIKES:
+      let filterBasedOnUserLike = [];
+      if (state.spots !== null) {
+        for (let i = 0; i < state.spots.length; i++) {
+          state.spots[i].likes.map((like) => {
+            if (like.userId === action.payload._id) {
+              filterBasedOnUserLike.push(state.spots[i]);
+            }
+          });
+        }
+        return {
+          ...state,
+          filteredByLiked: filterBasedOnUserLike,
+        };
+      }
+      return state;
     case Types.CLEAR_FILTER:
       return {
         ...state,

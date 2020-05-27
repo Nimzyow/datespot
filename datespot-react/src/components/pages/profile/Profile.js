@@ -5,20 +5,26 @@ import { Spinner } from "react-bootstrap";
 import Header from "../../profile/Header";
 
 import AuthContext from "../../../context/auth/AuthContext";
-import SpotContext from "../../../context/spot/SpotContext";
 
 import SpotItemHeartless from "../../spot/SpotItemHeartless";
 import UserAccountDetail from "./UserAccountDetail";
 
 import "./Profile.css";
 
-const Profile = () => {
+import { connect } from "react-redux";
+
+import { filterSpotsBasedOnLike, getSpots } from "../../../actions/spotActions";
+
+const Profile = ({
+  filterSpotsBasedOnLike,
+  getSpots,
+  spot: { filteredByLiked, spots },
+}) => {
   const authContext = useContext(AuthContext);
-  const { filterSpotsBasedOnLike, filteredByLiked, getSpots, spots } = useContext(SpotContext);
-  const { user } = authContext
+  const { user } = authContext;
 
   useEffect(() => {
-    authContext.loadUser()
+    authContext.loadUser();
     if (!spots) {
       console.log("here");
       getSpots();
@@ -27,7 +33,7 @@ const Profile = () => {
 
   useEffect(() => {
     filterSpotsBasedOnLike(user);
-  }, [spots])
+  }, [spots]);
 
   const SpotsLiked = () => {
     return filteredByLiked == null ? (
@@ -35,8 +41,8 @@ const Profile = () => {
         Spots you liked will appear here :)
       </h5>
     ) : (
-        <h5 style={{ textAlign: "center" }}>You liked the following Spots:</h5>
-      );
+      <h5 style={{ textAlign: "center" }}>You liked the following Spots:</h5>
+    );
   };
 
   return (
@@ -46,10 +52,14 @@ const Profile = () => {
         <Fragment>
           <div
             style={{ marginTop: "30px", display: "flex", flexDirection: "row" }}
-          >{user ? (<UserAccountDetail user={user} />) : (
-            <div className="text-center" style={{ marginTop: "300px" }}>
-              <Spinner animation="border" variant="danger" />
-            </div>)}
+          >
+            {user ? (
+              <UserAccountDetail user={user} />
+            ) : (
+              <div className="text-center" style={{ marginTop: "300px" }}>
+                <Spinner animation="border" variant="danger" />
+              </div>
+            )}
 
             <div xs={6} md={6} id="likedContainer">
               {SpotsLiked()}
@@ -73,10 +83,11 @@ const Profile = () => {
                     advice={spot.advice}
                   />
                 ))
-              ) : <div className="text-center" style={{ marginTop: "300px" }}>
+              ) : (
+                <div className="text-center" style={{ marginTop: "300px" }}>
                   <Spinner animation="border" variant="danger" />
                 </div>
-              }
+              )}
             </div>
           </div>
         </Fragment>
@@ -85,4 +96,10 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+const mapStateToProps = (state) => ({
+  spot: state.spot,
+});
+
+export default connect(mapStateToProps, { filterSpotsBasedOnLike, getSpots })(
+  Profile
+);

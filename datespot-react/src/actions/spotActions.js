@@ -153,3 +153,10 @@ export const clearFilterSpotsByTags = () => (dispatch) => {
     type: Types.CLEAR_FILTER_BY_SPOT_TAGS,
   });
 };
+
+export const filterSpotsBasedOnLike = (user) => (dispatch) => {
+  dispatch({
+    type: Types.FILTER_BY_USER_LIKES,
+    payload: user,
+  });
+};
