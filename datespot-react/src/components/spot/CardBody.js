@@ -2,8 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { Card } from "react-bootstrap";
 import Like from "./Like";
 
-import AuthContext from "../../context/auth/AuthContext";
-
 import { connect } from "react-redux";
 
 import { addToLikeCount, removeFromLikeCount } from "../../actions/spotActions";
@@ -15,10 +13,8 @@ const CardBody = ({
   likes,
   addToLikeCount,
   removeFromLikeCount,
+  auth: { user },
 }) => {
-  const authContext = useContext(AuthContext);
-  const { user } = authContext;
-
   useEffect(() => {
     if (user) {
       setColorOfHeart();
@@ -75,6 +71,7 @@ const CardBody = ({
 
 const mapStateToProps = (state) => ({
   spot: state.spot,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, {
