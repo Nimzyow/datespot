@@ -33,7 +33,6 @@ export default (state = initialState, action) => {
         spotDetail: filterById[0],
       };
     case Types.ADD_TO_LIKE_TABLE:
-
       const spotsToFilter = [...state.spots];
       const spotFiltered = spotsToFilter.filter(
         (spot) => spot._id === action.payload.spot._id
@@ -50,6 +49,36 @@ export default (state = initialState, action) => {
       return {
         ...state,
       };
+    case Types.REMOVE_FROM_LIKE_TABLE:
+      const spotsToFilterForRemoval = [...state.spots];
+      const spotFilteredForRemoval = spotsToFilterForRemoval.filter(
+        (spot) => spot._id === action.payload.spotId
+      );
+
+      const removeLikeFromSpotsFiltered = spotFilteredForRemoval[0].likes.filter(
+        (like) => like.userId !== action.payload.userId
+      );
+
+      state.spots.filter(
+        (spot) => spot._id === action.payload.spotId
+      )[0].likes = removeLikeFromSpotsFiltered;
+      return {
+        ...state,
+        filteredByLiked: null,
+      };
+    case Types.LIKES_ERROR:
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case Types.CLEAR_LIKED_ARRAY:
+      if (state.filteredByLiked.length === 0) {
+        return {
+          ...state,
+          filteredByLiked: null,
+        };
+      }
+      return;
     case Types.CLEAR_SPOT_DETAIL:
       return {
         ...state,

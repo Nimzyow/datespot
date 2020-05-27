@@ -6,9 +6,16 @@ import AuthContext from "../../context/auth/AuthContext";
 
 import { connect } from "react-redux";
 
-import { addToLikeCount } from "../../actions/spotActions";
+import { addToLikeCount, removeFromLikeCount } from "../../actions/spotActions";
 
-const CardBody = ({ title, summary, spotId, likes, addToLikeCount }) => {
+const CardBody = ({
+  title,
+  summary,
+  spotId,
+  likes,
+  addToLikeCount,
+  removeFromLikeCount,
+}) => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
 
@@ -47,7 +54,7 @@ const CardBody = ({ title, summary, spotId, likes, addToLikeCount }) => {
     if (color === "black") {
       addToLikeCount({ spotId: spotId, userId: user._id });
     } else {
-      //removeFromLikeCount({ spotId: spotId, userId: user._id });
+      removeFromLikeCount({ spotId: spotId, userId: user._id });
     }
   };
 
@@ -72,4 +79,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   addToLikeCount,
+  removeFromLikeCount,
 })(CardBody);
