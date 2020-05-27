@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import SpotState from "./context/spot/SpotState";
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
 import TagState from "./context/tag/TagState";
@@ -24,32 +23,30 @@ function App() {
   return (
     <Provider store={store}>
       <AuthState>
-        <SpotState>
-          <TagState>
-            <AlertState>
-              <Router>
-                <Fragment>
-                  <NavigationBar />
-                  <Alerts />
-                  <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/about" component={About} />
-                    <PrivateRoute exact path="/spots" component={Spot} />
-                    <PrivateRoute
-                      exact
-                      path="/spotdetails"
-                      component={SpotDetails}
-                    />
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/register" component={Register} />
-                    <PrivateRoute exact path="/profile" component={Profile} />
-                  </Switch>
-                  <Footer />
-                </Fragment>
-              </Router>
-            </AlertState>
-          </TagState>
-        </SpotState>
+        <TagState>
+          <AlertState>
+            <Router>
+              <Fragment>
+                <NavigationBar />
+                <Alerts />
+                <Switch>
+                  <Route exact path="/" component={Home} />
+                  <Route exact path="/about" component={About} />
+                  <PrivateRoute exact path="/spots" component={Spot} />
+                  <PrivateRoute
+                    exact
+                    path="/spotdetails"
+                    component={SpotDetails}
+                  />
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/register" component={Register} />
+                  <PrivateRoute exact path="/profile" component={Profile} />
+                </Switch>
+                <Footer />
+              </Fragment>
+            </Router>
+          </AlertState>
+        </TagState>
       </AuthState>
     </Provider>
   );
