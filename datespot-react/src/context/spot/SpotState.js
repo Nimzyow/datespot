@@ -17,31 +17,30 @@ const SpotState = (props) => {
 
   const [state, dispatch] = useReducer(SpotReducer, initialState);
 
-
   // set spotDetail
 
   const setSpotDetail = (id) => {
-    const filterById = state.spots.filter((spot) => spot._id === id)
+    const filterById = state.spots.filter((spot) => spot._id === id);
     dispatch({
       type: Types.ADD_SPOT_DETAIL,
-      payload: filterById[0]
-    })
-  }
+      payload: filterById[0],
+    });
+  };
 
   // clear spotDetailId
 
   const clearSpotDetail = () => {
     dispatch({
-      type: Types.CLEAR_SPOT_DETAIL
-    })
-  }
+      type: Types.CLEAR_SPOT_DETAIL,
+    });
+  };
 
   //post comment
 
   const postComment = async (data) => {
     const toSend = {
       comment: data.comment,
-      userId: data.userId
+      userId: data.userId,
     };
     try {
       const config = {
@@ -70,7 +69,7 @@ const SpotState = (props) => {
 
   const filterSpotsByTags = async (tagId, tag) => {
     try {
-      const filterByTag = state.spots.filter((spot) => spot.tags.includes(tag))
+      const filterByTag = state.spots.filter((spot) => spot.tags.includes(tag));
       dispatch({
         type: Types.FILTER_BY_SPOT_TAGS,
         payload: filterByTag,
@@ -101,10 +100,10 @@ const SpotState = (props) => {
       for (let i = 0; i < state.spots.length; i++) {
         state.spots[i].likes.map((like) => {
           if (like.userId === user._id) {
-            filterBasedOnUserLike.push(state.spots[i])
-          };
+            filterBasedOnUserLike.push(state.spots[i]);
+          }
         });
-      };
+      }
 
       dispatch({
         type: Types.FILTER_BY_USER_LIKES,
@@ -140,20 +139,23 @@ const SpotState = (props) => {
 
   const addToLikeCount = async (toAdd) => {
     const { spotId, userId } = toAdd;
-    const toSend = { userId }
+    const toSend = { userId };
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
     try {
-      const res = await axios.post(`http://localhost:4000/api/spots/${spotId}/like`, toSend, config);
+      const res = await axios.post(
+        `http://localhost:4000/api/spots/${spotId}/like`,
+        toSend,
+        config
+      );
 
       dispatch({
         type: Types.ADD_TO_LIKE_TABLE,
         payload: res.data,
       });
-
     } catch (err) {
       dispatch({
         type: Types.LIKES_ERROR,
@@ -165,14 +167,18 @@ const SpotState = (props) => {
   const removeFromLikeCount = async (toRemove) => {
     const { spotId, userId } = toRemove;
 
-    const toSend = { userId }
+    const toSend = { userId };
     const config = {
       headers: {
-        "Content-Type": "application/json"
-      }
-    }
+        "Content-Type": "application/json",
+      },
+    };
     try {
-      await axios.post(`http://localhost:4000/api/spots/${spotId}/likeRemove`, toSend, config);
+      await axios.post(
+        `http://localhost:4000/api/spots/${spotId}/likeRemove`,
+        toSend,
+        config
+      );
       dispatch({
         type: Types.REMOVE_FROM_LIKE_TABLE,
         payload: toRemove,

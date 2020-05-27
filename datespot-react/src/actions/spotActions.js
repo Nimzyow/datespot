@@ -35,3 +35,31 @@ export const clearFilter = () => (dispatch) => {
     type: Types.CLEAR_FILTER,
   });
 };
+
+export const addToLikeCount = (toAdd) => async (dispatch) => {
+  console.log(toAdd);
+  const { spotId, userId } = toAdd;
+  const toSend = { userId };
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const res = await axios.post(
+      `http://localhost:4000/api/spots/${spotId}/like`,
+      toSend,
+      config
+    );
+    console.log("RES", res.data);
+    dispatch({
+      type: Types.ADD_TO_LIKE_TABLE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: Types.LIKES_ERROR,
+      payload: err,
+    });
+  }
+};
