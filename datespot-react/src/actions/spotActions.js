@@ -125,3 +125,31 @@ export const postComment = (data) => async (dispatch) => {
     });
   }
 };
+
+//filter spot based on tags
+
+export const filterSpotsByTags = (tagId, tag) => async (dispatch) => {
+  try {
+    dispatch({
+      type: Types.FILTER_BY_SPOT_TAGS,
+      payload: tag,
+    });
+    dispatch({
+      type: Types.ADD_FILTER_ID,
+      payload: tagId,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// clear filter spot based on tags
+
+export const clearFilterSpotsByTags = () => (dispatch) => {
+  dispatch({
+    type: Types.CLEAR_FILTER_ID,
+  });
+  dispatch({
+    type: Types.CLEAR_FILTER_BY_SPOT_TAGS,
+  });
+};

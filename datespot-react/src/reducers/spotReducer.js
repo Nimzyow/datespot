@@ -65,6 +65,19 @@ export default (state = initialState, action) => {
       return {
         ...state,
       };
+    case Types.FILTER_BY_SPOT_TAGS:
+      const filterByTag = state.spots.filter((spot) =>
+        spot.tags.includes(action.payload)
+      );
+      return {
+        ...state,
+        filteredByTag: filterByTag,
+      };
+    case Types.ADD_FILTER_ID:
+      return {
+        ...state,
+        filterId: action.payload,
+      };
     case Types.FILTER_SPOTS:
       return {
         ...state,
@@ -117,6 +130,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         filtered: null,
+      };
+    case Types.CLEAR_FILTER_ID:
+      return {
+        ...state,
+        filterId: null,
+      };
+    case Types.CLEAR_FILTER_BY_SPOT_TAGS:
+      return {
+        ...state,
+        filteredByTag: null,
       };
     default:
       return state;
