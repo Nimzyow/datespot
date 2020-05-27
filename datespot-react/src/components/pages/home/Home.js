@@ -3,14 +3,15 @@ import { Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./Home.css";
 import logo from "../../../assets/images/logo.png";
-import AuthContext from "../../../context/auth/AuthContext"
 
-const Home = () => {
-  const authContext = useContext(AuthContext)
+import { connect } from "react-redux";
 
+import { loadUser } from "../../../actions/authActions";
+
+const Home = ({ loadUser }) => {
   useEffect(() => {
-    authContext.loadUser()
-  }, [])
+    loadUser();
+  }, []);
 
   return (
     <div className="bg">
@@ -44,4 +45,6 @@ const Home = () => {
   );
 };
 
-export default Home;
+const mapStateToProps = () => ({});
+
+export default connect(mapStateToProps, { loadUser })(Home);

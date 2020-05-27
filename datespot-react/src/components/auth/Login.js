@@ -1,27 +1,30 @@
-import React, { useState, useContext, useEffect } from "react";
-import AuthContext from "../../context/auth/AuthContext";
-import AlertContext from "../../context/alert/AlertContext";
+import React, { useState, useEffect } from "react";
 import { Spinner, Form, Button, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import fireworks from "../../assets/images/fireworks.jpg";
 
-const Login = (props) => {
-  const alertContext = useContext(AlertContext);
-  const authContext = useContext(AuthContext);
+import { connect } from "react-redux";
 
-  const { setAlert } = alertContext;
-  const { login, error, clearErrors, isAuthenticated, spinner } = authContext;
+import { login, clearErrors } from "../../actions/authActions";
+import { setAlert } from "../../actions/alertActions";
 
+const Login = ({
+  history,
+  login,
+  clearErrors,
+  setAlert,
+  auth: { error, isAuthenticated, spinner },
+}) => {
   useEffect(() => {
     if (isAuthenticated) {
-      props.history.push("/spots");
+      history.push("/spots");
     }
     if (error === "Invalid Credentials") {
       setAlert(error, "danger");
       clearErrors();
     }
     // eslint-disable-next-line
-  }, [error, isAuthenticated, props.history]);
+  }, [error, isAuthenticated, history]);
 
   const [user, setUser] = useState({
     email: "",
@@ -44,11 +47,14 @@ const Login = (props) => {
   };
 
   return (
-
-    <div className="container cont" style={{paddingTop: '30px'}}>
+    <div className="container cont" style={{ paddingTop: "30px" }}>
       <Row>
         <Col>
-            <img src={fireworks} style={{ maxWidth: "100%" }} className="shadow"></img>
+          <img
+            src={fireworks}
+            style={{ maxWidth: "100%" }}
+            className="shadow"
+          ></img>
         </Col>
         <Col>
           <Form onSubmit={onSubmit} style={{ flexGrow: "1" }}>
@@ -100,4 +106,10 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { login, clearErrors, setAlert })(
+  Login
+);

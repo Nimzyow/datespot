@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import AlertContext from "../../context/alert/AlertContext";
 
+import { connect } from "react-redux";
+
 const Alerts = () => {
   const alertContext = useContext(AlertContext);
 
@@ -14,4 +16,8 @@ const Alerts = () => {
   );
 };
 
-export default Alerts;
+const mapStateToProps = (state) => ({
+  alert: state.alert,
+});
+
+export default connect(mapStateToProps)(Alerts);

@@ -1,20 +1,26 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+
 import { CardColumns, Jumbotron, Container, Spinner } from "react-bootstrap";
 import table from "../../../assets/images/table.jpg";
 import "./Spot.css";
 
-import SpotContext from "../../../context/spot/SpotContext";
-import AuthContext from "../../../context/auth/AuthContext"
-
 import SpotItem from "../../spot/SpotItem";
 import Search from "../../spot/Search";
 
-const Spot = () => {
-  const spotContext = useContext(SpotContext);
-  const authContext = useContext(AuthContext);
-  const { spots, filtered, getSpots, filteredByTag, clearSpotDetail } = spotContext;
+import { connect } from "react-redux";
+
+import { getSpots, clearSpotDetail } from "../../../actions/spotActions";
+import { loadUser } from "../../../actions/authActions";
+
+const Spot = ({
+  spot: { spots, filtered, filteredByTag },
+  getSpots,
+  clearSpotDetail,
+  loadUser,
+}) => {
   useEffect(() => {
-    authContext.loadUser();
+    loadUser();
     getSpots();
     clearSpotDetail();
   }, []);
@@ -76,14 +82,28 @@ const Spot = () => {
               {spotItemToDisplay()}
             </CardColumns>
           ) : (
-              <div className="text-center" style={{ marginTop: "300px" }}>
-                <Spinner animation="border" variant="danger" />
-              </div>
-            )}
+            <div className="text-center" style={{ marginTop: "300px" }}>
+              <Spinner animation="border" variant="danger" />
+            </div>
+          )}
         </div>
       </Container>
     </div>
   );
 };
 
-export default Spot;
+Spot.propTypes = {
+  spot: PropTypes.object.isRequired,
+  getSpots: PropTypes.func.isRequired,
+  clearSpotDetail: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  spot: state.spot,
+});
+
+export default connect(mapStateToProps, {
+  getSpots,
+  clearSpotDetail,
+  loadUser,
+})(Spot);

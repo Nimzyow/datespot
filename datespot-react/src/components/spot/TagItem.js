@@ -1,14 +1,22 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Badge } from "react-bootstrap";
-import SpotContext from "../../context/spot/SpotContext";
 
 import "./css/TagItem.css";
 
-const TagItem = ({ tag, tagId }) => {
-  const spotContext = useContext(SpotContext);
+import { connect } from "react-redux";
 
-  const { filterSpotsByTags, filterId, clearFilterSpotsByTags } = spotContext;
+import {
+  filterSpotsByTags,
+  clearFilterSpotsByTags,
+} from "../../actions/spotActions";
 
+const TagItem = ({
+  tag,
+  tagId,
+  filterSpotsByTags,
+  clearFilterSpotsByTags,
+  spot: { filterId },
+}) => {
   const onClick = () => {
     if (filterId !== tagId) {
       filterSpotsByTags(tagId, tag);
@@ -32,4 +40,11 @@ const TagItem = ({ tag, tagId }) => {
   );
 };
 
-export default TagItem;
+const mapStateToProps = (state) => ({
+  spot: state.spot,
+});
+
+export default connect(mapStateToProps, {
+  filterSpotsByTags,
+  clearFilterSpotsByTags,
+})(TagItem);

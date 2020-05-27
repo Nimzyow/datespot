@@ -1,6 +1,16 @@
-import * as Types from "../Types";
+import * as Types from "../actions/types";
 
-export default (state, action) => {
+const initialState = {
+  token: localStorage.getItem("token"),
+  isAuthenticated: null,
+  loading: true,
+  user: null,
+  error: null,
+  spinner: false,
+  spinnerComment: "",
+};
+
+export default (state = initialState, action) => {
   switch (action.type) {
     case Types.USER_LOADED:
       return {
@@ -29,6 +39,8 @@ export default (state, action) => {
       };
     case Types.LOGIN_SUCCESS:
       localStorage.setItem("token", action.payload.token);
+      console.log("PAYLOAD MATE", action.payload);
+
       return {
         ...state,
         ...action.payload,
@@ -80,8 +92,8 @@ export default (state, action) => {
       return {
         ...state,
         spinner: false,
+        spinnerComment: "",
       };
-
     default:
       return state;
   }

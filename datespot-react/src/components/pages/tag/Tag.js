@@ -1,25 +1,20 @@
-import React, { useContext, useEffect } from "react";
-import TagContext from "../../../context/tag/TagContext";
+import React, { useEffect } from "react";
 import TagItem from "../../tag/TagItem";
 
+import { connect } from "react-redux";
 
-const Tag = () => {
-    const tagContext = useContext(TagContext);
+import { getTags } from "../../../actions/tagActions";
 
-    const {tags, getTags} = tagContext;
+const Tag = ({ getTags, tag: { tags } }) => {
+  useEffect(() => {
+    getTags();
+  }, []);
 
-    useEffect(() => {
-        getTags();
-    }, []);
-
-    return (
-        
-        tags.map((tag) => <TagItem 
-        key={tag.id}
-        tag={tag.tag} 
-        />)
-        
-    );
+  return tags.map((tag) => <TagItem key={tag.id} tag={tag.tag} />);
 };
 
-export default Tag;
+const mapStateToProps = (state) => ({
+  tag: state.tag,
+});
+
+export default connect(mapStateToProps, { getTags })(Tag);
