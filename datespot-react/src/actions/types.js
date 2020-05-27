@@ -34,3 +34,7 @@ export const SPINNER_NOSHOW = "SPINNER_NOSHOW";
 //Types for Tag state
 export const GET_TAGS = "GET_TAGS";
 export const TAGS_ERROR = "TAGS_ERROR";
+
+//Types for Alert state
+export const SET_ALERT = "SET_ALERT";
+export const REMOVE_ALERT = "REMOVE_ALERT";

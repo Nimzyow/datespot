@@ -92,6 +92,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         spinner: false,
+        spinnerComment: "",
       };
     default:
       return state;

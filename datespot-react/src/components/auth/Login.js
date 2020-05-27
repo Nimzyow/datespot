@@ -1,5 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
-import AlertContext from "../../context/alert/AlertContext";
+import React, { useState, useEffect } from "react";
 import { Spinner, Form, Button, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import fireworks from "../../assets/images/fireworks.jpg";
@@ -7,17 +6,15 @@ import fireworks from "../../assets/images/fireworks.jpg";
 import { connect } from "react-redux";
 
 import { login, clearErrors } from "../../actions/authActions";
+import { setAlert } from "../../actions/alertActions";
 
 const Login = ({
   history,
   login,
   clearErrors,
+  setAlert,
   auth: { error, isAuthenticated, spinner },
 }) => {
-  const alertContext = useContext(AlertContext);
-
-  const { setAlert } = alertContext;
-
   useEffect(() => {
     if (isAuthenticated) {
       history.push("/spots");
@@ -113,4 +110,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { login, clearErrors })(Login);
+export default connect(mapStateToProps, { login, clearErrors, setAlert })(
+  Login
+);

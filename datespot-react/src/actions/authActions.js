@@ -56,6 +56,8 @@ export const login = (formData) => async (dispatch) => {
     },
   };
 
+  dispatch({ type: Types.SPINNER_SHOW });
+
   try {
     const res = await axios.post(
       "http://localhost:4000/api/auth",
@@ -85,7 +87,8 @@ export const login = (formData) => async (dispatch) => {
       type: Types.LOGIN_FAIL,
       payload: "Invalid Credentials",
     });
-    noShowSpinner();
+    dispatch({ type: Types.SPINNER_NOSHOW });
+    //noShowSpinner();
   }
 };
 

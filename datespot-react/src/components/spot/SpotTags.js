@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import TagContext from "../../context/tag/TagContext";
 import TagItem from "./TagItem";
 import { Spinner } from "react-bootstrap";
 
@@ -8,7 +7,7 @@ import { connect } from "react-redux";
 import { loadUser } from "../../actions/authActions";
 import { getTags } from "../../actions/tagActions";
 
-const SpotTags = ({ loadUser, getTags, tag: {tags} }) => {
+const SpotTags = ({ loadUser, getTags, tag: { tags } }) => {
   useEffect(() => {
     loadUser();
     getTags();
@@ -28,7 +27,7 @@ const SpotTags = ({ loadUser, getTags, tag: {tags} }) => {
 };
 
 const mapStateToProps = (state) => ({
-  tag: state.tag
+  tag: state.tag,
 });
 
 export default connect(mapStateToProps, { loadUser, getTags })(SpotTags);
