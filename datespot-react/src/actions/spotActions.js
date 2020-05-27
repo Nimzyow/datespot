@@ -95,3 +95,33 @@ export const filterSpots = (text) => (dispatch) => {
 export const clearFilter = () => (dispatch) => {
   dispatch({ type: Types.CLEAR_FILTER });
 };
+
+//post comment
+
+export const postComment = (data) => async (dispatch) => {
+  const toSend = {
+    comment: data.comment,
+    userId: data.userId,
+  };
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    const res = await axios.post(
+      `http://localhost:4000/api/spots/${data.spotId}/comments`,
+      toSend,
+      config
+    );
+    dispatch({
+      type: Types.ADD_COMMENT,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: Types.SPOTS_ERROR,
+      payload: err,
+    });
+  }
+};
