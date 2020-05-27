@@ -18,3 +18,15 @@ export const CLEAR_COMMENTS = "CLEAR_COMMENTS";
 export const ADD_COMMENT = "ADD_COMMENT";
 export const ADD_SPOT_DETAIL = "ADD_SPOT_DETAIL";
 export const CLEAR_SPOT_DETAIL = "CLEAR_SPOT_DETAIL";
+
+//Types for Auth state
+export const USER_LOADED = "USER_LOADED";
+export const AUTH_ERROR = "AUTH_ERROR";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const REGISTER_FAIL = "REGISTER_FAIL";
+export const LOGIN_FAIL = "LOGIN_FAIL";
+export const LOGOUT = "LOGOUT";
+export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const SPINNER_SHOW = "SPINNER_SHOW";
+export const SPINNER_NOSHOW = "SPINNER_NOSHOW";
