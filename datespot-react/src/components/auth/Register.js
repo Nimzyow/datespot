@@ -1,28 +1,33 @@
 import React, { useState, useContext, useEffect } from "react";
-import AuthContext from "../../context/auth/AuthContext";
 import AlertContext from "../../context/alert/AlertContext";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import champagne from "../../assets/images/champagne.jpg";
 
-const Register = (props) => {
+import { connect } from "react-redux";
+
+import { register, clearErrors } from "../../actions/authActions";
+
+const Register = ({
+  history,
+  register,
+  clearErrors,
+  auth: { error, isAuthenticated },
+}) => {
   const alertContext = useContext(AlertContext);
-  const authContext = useContext(AuthContext);
 
   const { setAlert } = alertContext;
 
-  const { register, error, clearErrors, isAuthenticated } = authContext;
-
   useEffect(() => {
     if (isAuthenticated) {
-      props.history.push("/");
+      history.push("/spots");
     }
     if (error === "User already exists") {
       setAlert(error, "danger");
       clearErrors();
     }
     // eslint-disable-next-line
-  }, [error, isAuthenticated, props.history]);
+  }, [error, isAuthenticated, history]);
 
   const [user, setUser] = useState({
     username: "",
@@ -53,11 +58,14 @@ const Register = (props) => {
   };
 
   return (
-    <div className="container cont" style={{ paddingTop: '30px' }}>
-
+    <div className="container cont" style={{ paddingTop: "30px" }}>
       <Row>
         <Col>
-          <img src={champagne} className="shadow" style={{ maxWidth: '100%' }}></img>
+          <img
+            src={champagne}
+            className="shadow"
+            style={{ maxWidth: "100%" }}
+          ></img>
         </Col>
         <Col>
           <Form onSubmit={onSubmit} style={{ flexGrow: "1" }}>
@@ -84,7 +92,7 @@ const Register = (props) => {
               />
               <Form.Text className="text-muted">
                 We'll never share your email with anyone else.
-            </Form.Text>
+              </Form.Text>
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
@@ -114,18 +122,21 @@ const Register = (props) => {
             <div className="spotButton">
               <Button variant="primary" type="submit">
                 Submit
-            </Button>
+              </Button>
             </div>
             <p className="text-center">
-              Already Signed up? Go for a cheeky <Link to="/login">Sign in!</Link>
+              Already Signed up? Go for a cheeky{" "}
+              <Link to="/login">Sign in!</Link>
             </p>
           </Form>
         </Col>
       </Row>
-
-
     </div>
   );
 };
 
-export default Register;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { register, clearErrors })(Register);
