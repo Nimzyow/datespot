@@ -1,26 +1,26 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
-import { connect } from "react-redux";
 import { CardColumns, Jumbotron, Container, Spinner } from "react-bootstrap";
 import table from "../../../assets/images/table.jpg";
 import "./Spot.css";
 
-import { getSpots, clearSpotDetail } from "../../../actions/spotActions";
-
-import AuthContext from "../../../context/auth/AuthContext";
-
 import SpotItem from "../../spot/SpotItem";
 import Search from "../../spot/Search";
+
+import { connect } from "react-redux";
+
+import { getSpots, clearSpotDetail } from "../../../actions/spotActions";
+import { loadUser } from "../../../actions/authActions";
 
 const Spot = ({
   spot: { spots, filtered, filteredByTag },
   getSpots,
   clearSpotDetail,
+  loadUser,
 }) => {
-  const authContext = useContext(AuthContext);
   useEffect(() => {
-    authContext.loadUser();
+    loadUser();
     getSpots();
     clearSpotDetail();
   }, []);
@@ -102,4 +102,8 @@ const mapStateToProps = (state) => ({
   spot: state.spot,
 });
 
-export default connect(mapStateToProps, { getSpots, clearSpotDetail })(Spot);
+export default connect(mapStateToProps, {
+  getSpots,
+  clearSpotDetail,
+  loadUser,
+})(Spot);

@@ -67,9 +67,19 @@ export const login = (formData) => async (dispatch) => {
       type: Types.LOGIN_SUCCESS,
       payload: res.data,
     });
-    noShowSpinner();
+    //noShowSpinner();
 
-    loadUser();
+    dispatch({ type: Types.SPINNER_NOSHOW });
+
+    //loadUser();
+    setAuthToken(localStorage.token);
+
+    const resLoad = await axios.get("http://localhost:4000/api/auth");
+
+    dispatch({
+      type: Types.USER_LOADED,
+      payload: resLoad.data,
+    });
   } catch (err) {
     dispatch({
       type: Types.LOGIN_FAIL,

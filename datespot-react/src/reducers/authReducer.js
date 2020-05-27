@@ -39,6 +39,8 @@ export default (state = initialState, action) => {
       };
     case Types.LOGIN_SUCCESS:
       localStorage.setItem("token", action.payload.token);
+      console.log("PAYLOAD MATE", action.payload);
+
       return {
         ...state,
         ...action.payload,
