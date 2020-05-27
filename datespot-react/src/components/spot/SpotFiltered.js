@@ -1,10 +1,11 @@
-import React, { useContext, useRef, useEffect, Fragment } from "react";
-import SpotContext from "../../context/spot/SpotContext";
+import React, { useRef, useEffect, Fragment } from "react";
 import "./css/SpotFiltered.css";
 
-const SpotFiltered = () => {
-  const spotContext = useContext(SpotContext);
-  const { filtered, filterSpots, clearFilter } = spotContext;
+import { connect } from "react-redux";
+
+import { filterSpots, clearFilter } from "../../actions/spotActions";
+
+const SpotFiltered = ({ spot: { filtered }, filterSpots, clearFilter }) => {
   const text = useRef("");
 
   useEffect(() => {
@@ -41,4 +42,10 @@ const SpotFiltered = () => {
   );
 };
 
-export default SpotFiltered;
+const mapStateToProps = (state) => ({
+  spot: state.spot,
+});
+
+export default connect(mapStateToProps, { filterSpots, clearFilter })(
+  SpotFiltered
+);

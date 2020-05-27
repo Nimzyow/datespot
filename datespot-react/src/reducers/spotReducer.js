@@ -49,6 +49,19 @@ export default (state = initialState, action) => {
       return {
         ...state,
       };
+    case Types.FILTER_SPOTS:
+      return {
+        ...state,
+        filtered: state.spots.filter((spot) => {
+          const regex = new RegExp(`${action.payload}`, "gi");
+          return spot.title.match(regex) || spot.description.match(regex);
+        }),
+      };
+    case Types.CLEAR_FILTER:
+      return {
+        ...state,
+        filtered: null,
+      };
     case Types.REMOVE_FROM_LIKE_TABLE:
       const spotsToFilterForRemoval = [...state.spots];
       const spotFilteredForRemoval = spotsToFilterForRemoval.filter(

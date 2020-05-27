@@ -30,12 +30,6 @@ export const clearSpotDetail = () => (dispatch) => {
   });
 };
 
-export const clearFilter = () => (dispatch) => {
-  dispatch({
-    type: Types.CLEAR_FILTER,
-  });
-};
-
 export const addToLikeCount = (toAdd) => async (dispatch) => {
   console.log(toAdd);
   const { spotId, userId } = toAdd;
@@ -89,4 +83,15 @@ export const removeFromLikeCount = (toRemove) => async (dispatch) => {
       payload: toRemove,
     });
   }
+};
+
+//filter spot
+
+export const filterSpots = (text) => (dispatch) => {
+  dispatch({ type: Types.FILTER_SPOTS, payload: text });
+};
+
+//clear filter
+export const clearFilter = () => (dispatch) => {
+  dispatch({ type: Types.CLEAR_FILTER });
 };
