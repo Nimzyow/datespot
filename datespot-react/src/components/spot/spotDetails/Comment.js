@@ -1,16 +1,13 @@
 import React, { useState, useContext, Fragment } from "react";
 import { Form, Button } from "react-bootstrap";
-import AuthContext from "../../../context/auth/AuthContext";
 
 import { connect } from "react-redux";
 
 import { postComment } from "../../../actions/spotActions";
 
-const Comment = ({ spotId, postComment }) => {
+const Comment = ({ spotId, postComment, auth: { user } }) => {
   const [text, setText] = useState("");
   const [postError, setPostError] = useState(false);
-  const authContext = useContext(AuthContext);
-  const { user } = authContext;
 
   const onChange = (e) => {
     setText(e.target.value);
@@ -59,6 +56,8 @@ const Comment = ({ spotId, postComment }) => {
   );
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
 
 export default connect(mapStateToProps, { postComment })(Comment);
