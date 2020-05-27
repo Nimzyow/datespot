@@ -1,10 +1,8 @@
-import React, { Fragment, useContext, useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 
 import { Spinner } from "react-bootstrap";
 
 import Header from "../../profile/Header";
-
-import AuthContext from "../../../context/auth/AuthContext";
 
 import SpotItemHeartless from "../../spot/SpotItemHeartless";
 import UserAccountDetail from "./UserAccountDetail";
@@ -14,17 +12,17 @@ import "./Profile.css";
 import { connect } from "react-redux";
 
 import { filterSpotsBasedOnLike, getSpots } from "../../../actions/spotActions";
+import { loadUser } from "../../../actions/authActions";
 
 const Profile = ({
   filterSpotsBasedOnLike,
   getSpots,
+  loadUser,
   spot: { filteredByLiked, spots },
+  auth: { user },
 }) => {
-  const authContext = useContext(AuthContext);
-  const { user } = authContext;
-
   useEffect(() => {
-    authContext.loadUser();
+    loadUser();
     if (!spots) {
       console.log("here");
       getSpots();
@@ -98,8 +96,11 @@ const Profile = ({
 
 const mapStateToProps = (state) => ({
   spot: state.spot,
+  auth: state.auth,
 });
 
-export default connect(mapStateToProps, { filterSpotsBasedOnLike, getSpots })(
-  Profile
-);
+export default connect(mapStateToProps, {
+  filterSpotsBasedOnLike,
+  getSpots,
+  loadUser,
+})(Profile);
