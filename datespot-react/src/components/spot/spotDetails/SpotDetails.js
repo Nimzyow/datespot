@@ -1,9 +1,7 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { Jumbotron, Container, Row, Col, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
-
-import AuthContext from "../../../context/auth/AuthContext";
 
 import "../css/SpotDetails.css";
 
@@ -14,11 +12,14 @@ import CommentsHeader from "./CommentsHeader";
 
 import { connect } from "react-redux";
 
-const SpotDetails = ({ history, spot: { spotDetail } }) => {
-  const authContext = useContext(AuthContext);
+import { loadUser } from "../../../actions/authActions";
 
-  const { user, loadUser } = authContext;
-
+const SpotDetails = ({
+  history,
+  spot: { spotDetail },
+  auth: { user },
+  loadUser,
+}) => {
   useEffect(() => {
     loadUser();
     getComments();
@@ -134,6 +135,7 @@ const SpotDetails = ({ history, spot: { spotDetail } }) => {
 
 const mapStateToProps = (state) => ({
   spot: state.spot,
+  auth: state.auth,
 });
 
-export default connect(mapStateToProps)(SpotDetails);
+export default connect(mapStateToProps, { loadUser })(SpotDetails);
