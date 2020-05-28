@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 
 import { clearFilter, addSpotDetail } from "../../actions/spotActions";
 
-const SpotItem = ({
+export const SpotItem = ({
   spotId,
   title,
   summary,
@@ -23,12 +23,17 @@ const SpotItem = ({
   };
   return (
     <Card data-test="card-container" className="shadow">
-      <Card.Img variant="top" src={url} />
+      <Card.Img data-test="card-image" variant="top" src={url} />
       <CardBody title={title} summary={summary} spotId={spotId} likes={likes} />
       <Card.Footer class="spotFooter">
         <div className="spotButton">
           <Button variant="primary">
-            <Link onClick={spotDetailSetup} to="/spotdetails" className="link">
+            <Link
+              data-test="card-button-message"
+              onClick={spotDetailSetup}
+              to="/spotdetails"
+              className="link"
+            >
               More information
             </Link>
           </Button>

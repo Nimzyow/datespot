@@ -49,8 +49,8 @@ const About = () => {
       },
     ];
 
-    return individual.map((ind) => (
-      <Tab eventKey={ind.eventKey} title={ind.titleAndName}>
+    return individual.map((ind, index) => (
+      <Tab key={index} eventKey={ind.eventKey} title={ind.titleAndName}>
         <Individual
           name={ind.titleAndName}
           img={ind.img}

@@ -5,7 +5,7 @@ import { CardColumns, Jumbotron, Container, Spinner } from "react-bootstrap";
 import table from "../../../assets/images/table.jpg";
 import "./Spot.css";
 
-import SpotItem from "../../spot/SpotItem";
+import { SpotItem } from "../../spot/SpotItem";
 import Search from "../../spot/Search";
 
 import { connect } from "react-redux";
