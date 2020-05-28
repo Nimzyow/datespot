@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import AlertState from "./context/alert/AlertState";
 import "./App.css";
 import Spot from "./components/pages/spot/Spot";
 import SpotDetails from "./components/spot/spotDetails/SpotDetails";
@@ -20,7 +19,6 @@ import store from "./store";
 function App() {
   return (
     <Provider store={store}>
-      <AlertState>
         <Router>
           <Fragment>
             <NavigationBar />
@@ -37,7 +35,6 @@ function App() {
             <Footer />
           </Fragment>
         </Router>
-      </AlertState>
     </Provider>
   );
 }
