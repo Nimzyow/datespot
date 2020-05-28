@@ -7,14 +7,17 @@ import { connect } from "react-redux";
 import { loadUser } from "../../actions/authActions";
 import { getTags } from "../../actions/tagActions";
 
-const SpotTags = ({ loadUser, getTags, tag: { tags } }) => {
+export const SpotTags = ({ loadUser, getTags, tag: { tags } }) => {
   useEffect(() => {
     loadUser();
     getTags();
   }, []);
 
   return (
-    <div style={{ fontSize: "17px", textAlign: "center" }}>
+    <div
+      data-test="spot-tags-container"
+      style={{ fontSize: "17px", textAlign: "center" }}
+    >
       {tags !== null ? (
         tags.map((tag) => (
           <TagItem key={tag._id} tag={tag.tag} tagId={tag._id} />
