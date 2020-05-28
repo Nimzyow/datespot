@@ -16,4 +16,9 @@ describe("SpotFiltered.js", () => {
       expect(header.length).toBe(1);
     });
   });
+  test("displays correct title", () => {
+    const wrapper = setup();
+    const header = findTestByAttr(wrapper, "header-container");
+    expect(header.text()).toBe("Date Spots");
+  });
 });
