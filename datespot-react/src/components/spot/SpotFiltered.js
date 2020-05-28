@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, Fragment } from "react";
 import "./css/SpotFiltered.css";
+import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 
@@ -45,6 +46,12 @@ const SpotFiltered = ({ spot: { filtered }, filterSpots, clearFilter }) => {
 const mapStateToProps = (state) => ({
   spot: state.spot,
 });
+
+SpotFiltered.propTypes = {
+  spot: PropTypes.object.isRequired,
+  filterSpots: PropTypes.func.isRequired,
+  clearFilter: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps, { filterSpots, clearFilter })(
   SpotFiltered
