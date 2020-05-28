@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import AlertContext from "../../context/alert/AlertContext";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import champagne from "../../assets/images/champagne.jpg";
@@ -8,15 +7,15 @@ import { connect } from "react-redux";
 
 import { register, clearErrors } from "../../actions/authActions";
 
+import { setAlert } from "../../actions/alertActions";
+
 const Register = ({
   history,
   register,
   clearErrors,
+  setAlert,
   auth: { error, isAuthenticated },
 }) => {
-  const alertContext = useContext(AlertContext);
-
-  const { setAlert } = alertContext;
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -137,6 +136,7 @@ const Register = ({
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  alert: state.alert
 });
 
-export default connect(mapStateToProps, { register, clearErrors })(Register);
+export default connect(mapStateToProps, { register, clearErrors, setAlert })(Register);
