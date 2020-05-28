@@ -1,10 +1,10 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { findTestByAttr, checkProps } from "../../test/TestUtils";
-import SpotFiltered from "./SpotFiltered";
+import { findTestByAttr, checkProps, storeFactory } from "../../test/TestUtils";
+import { SpotFiltered } from "./SpotFiltered";
 
 describe.only("SpotFiltered", () => {
-  const filterSpotsSpy = jest.fn();
+  const filterSpots = jest.fn();
   const clearFilter = jest.fn();
 
   const defaultProps = {
@@ -24,7 +24,7 @@ describe.only("SpotFiltered", () => {
         },
       ],
     },
-    filterSpotsSpy,
+    filterSpots,
     clearFilter,
   };
 
@@ -36,6 +36,7 @@ describe.only("SpotFiltered", () => {
   describe("renders correctly", () => {
     test("SpotFiltered", () => {
       const wrapper = setup();
+
       const filterContainer = findTestByAttr(wrapper, "filter-container");
       expect(filterContainer.length).toBe(1);
     });

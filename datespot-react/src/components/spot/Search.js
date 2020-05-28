@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import SpotItemHeader from "./SpotItemHeader";
-import SpotFiltered from "./SpotFiltered";
+import { SpotFiltered } from "./SpotFiltered";
 import SpotTags from "./SpotTags";
 import "./css/Search.css";
 

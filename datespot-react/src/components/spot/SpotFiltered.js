@@ -6,7 +6,11 @@ import { connect } from "react-redux";
 
 import { filterSpots, clearFilter } from "../../actions/spotActions";
 
-const SpotFiltered = ({ spot: { filtered }, filterSpots, clearFilter }) => {
+export const SpotFiltered = ({
+  spot: { filtered },
+  filterSpots,
+  clearFilter,
+}) => {
   const text = useRef("");
 
   useEffect(() => {
