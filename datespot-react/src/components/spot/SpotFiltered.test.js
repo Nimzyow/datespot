@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
-import { findTestByAttr, checkProps } from "../../test/TestUtils";
-import SpotFiltered from "./SpotFiltered";
+import { findTestByAttr, checkProps, storeFactory } from "../../test/TestUtils";
+import { SpotFiltered } from "./SpotFiltered";
 
 describe.only("SpotFiltered", () => {
   const filterSpotsSpy = jest.fn();
@@ -36,6 +36,8 @@ describe.only("SpotFiltered", () => {
   describe("renders correctly", () => {
     test("SpotFiltered", () => {
       const wrapper = setup();
+      console.log("WRAPPER", wrapper);
+
       const filterContainer = findTestByAttr(wrapper, "filter-container");
       expect(filterContainer.length).toBe(1);
     });

@@ -19,22 +19,22 @@ import store from "./store";
 function App() {
   return (
     <Provider store={store}>
-        <Router>
-          <Fragment>
-            <NavigationBar />
-            <Alerts />
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/about" component={About} />
-              <PrivateRoute exact path="/spots" component={Spot} />
-              <PrivateRoute exact path="/spotdetails" component={SpotDetails} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/register" component={Register} />
-              <PrivateRoute exact path="/profile" component={Profile} />
-            </Switch>
-            <Footer />
-          </Fragment>
-        </Router>
+      <Router>
+        <Fragment>
+          <NavigationBar />
+          <Alerts />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/about" component={About} />
+            <PrivateRoute exact path="/spots" component={Spot} />
+            <PrivateRoute exact path="/spotdetails" component={SpotDetails} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
+            <PrivateRoute exact path="/profile" component={Profile} />
+          </Switch>
+          <Footer />
+        </Fragment>
+      </Router>
     </Provider>
   );
 }

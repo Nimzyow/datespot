@@ -4,7 +4,7 @@ import { findTestByAttr, checkProps } from "../../test/TestUtils";
 
 import SpotItem from "./SpotItem";
 
-describe("SpotFiltered.js", () => {
+describe("SpotItem.js", () => {
   const defaultProps = {
     title: "great location",
     description: "turned on by the sciences",

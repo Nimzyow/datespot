@@ -1,5 +1,19 @@
 import checkPropTypes from "check-prop-types";
 
+import rootReducer from "../reducers/index";
+import { createStore } from "redux";
+
+/**
+ * Create a testing store with imported reducers, middleware and initial state.
+ *
+ * @param {object} initialState - initial state for store
+ * @function storeFactory
+ * @returns {Store} - Redux store
+ */
+export const storeFactory = (initialState) => {
+  createStore(rootReducer, initialState);
+};
+
 /**
  *
  * @param {ShallowWrapper} wrapper - Enzyme Shallow Wrapper
