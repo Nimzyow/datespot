@@ -20,10 +20,15 @@ export const SpotTags = ({ loadUser, getTags, tag: { tags } }) => {
     >
       {tags !== null ? (
         tags.map((tag) => (
-          <TagItem key={tag._id} tag={tag.tag} tagId={tag._id} />
+          <TagItem
+            data-test="tag-item-container"
+            key={tag._id}
+            tag={tag.tag}
+            tagId={tag._id}
+          />
         ))
       ) : (
-        <Spinner animation="border" variant="danger" />
+        <Spinner data-test="spinner" animation="border" variant="danger" />
       )}
     </div>
   );
