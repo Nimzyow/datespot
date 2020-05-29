@@ -10,7 +10,7 @@ import {
   clearFilterSpotsByTags,
 } from "../../actions/spotActions";
 
-const TagItem = ({
+export const TagItem = ({
   tag,
   tagId,
   filterSpotsByTags,
@@ -30,10 +30,8 @@ const TagItem = ({
       variant="light"
       className="tag"
       onClick={onClick}
-      style={{
-        border: `2px solid ${filterId === tagId ? "red" : "black"}`,
-        color: `${filterId === tagId ? "red" : "black"}`,
-      }}
+      className={filterId === tagId ? "badgeRed" : "badgeBlack"}
+      data-test="badge-container"
     >
       {tag}
     </Badge>
