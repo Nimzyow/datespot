@@ -5,10 +5,14 @@ import { findTestByAttr, checkProps } from "../../test/TestUtils";
 import { SpotItem } from "./SpotItem";
 
 describe("SpotItem.js", () => {
+  let addSpotDetail = jest.fn();
+  let clearFilter = jest.fn();
   const defaultProps = {
     title: "great location",
     description: "turned on by the sciences",
-    image: "some link",
+    image: "www.google.com",
+    addSpotDetail,
+    clearFilter,
   };
 
   const setup = (props = {}) => {
@@ -32,6 +36,16 @@ describe("SpotItem.js", () => {
     test("button displays text", () => {
       const cardButtonText = findTestByAttr(wrapper, "card-button-message");
       expect(cardButtonText.text().length).not.toBe(0);
+    });
+  });
+
+  describe("clicking link calls functions for adding spot detail", () => {
+    test("image", () => {
+      const wrapper = setup();
+      const cardButtonText = findTestByAttr(wrapper, "card-button-message");
+      cardButtonText.simulate("click");
+      expect(addSpotDetail).toHaveBeenCalledTimes(1);
+      expect(clearFilter).toHaveBeenCalledTimes(1);
     });
   });
 
