@@ -36,6 +36,8 @@ export const SpotFiltered = ({
       >
         <input
           id="search-bar"
+          name="search"
+          data-test="input-element"
           ref={text}
           type="text"
           placeholder="Filter spots..."

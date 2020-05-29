@@ -4,9 +4,10 @@ import { findTestByAttr, checkProps, storeFactory } from "../../test/TestUtils";
 import { SpotFiltered } from "./SpotFiltered";
 
 describe.only("SpotFiltered", () => {
-  const filterSpots = jest.fn();
-  const clearFilter = jest.fn();
+  let filterSpots = jest.fn();
+  let clearFilter = jest.fn();
 
+  beforeEach(() => {});
   const defaultProps = {
     spot: {
       filtered: [
@@ -39,6 +40,17 @@ describe.only("SpotFiltered", () => {
 
       const filterContainer = findTestByAttr(wrapper, "filter-container");
       expect(filterContainer.length).toBe(1);
+    });
+  });
+  describe("onChange", () => {
+    test("calls filterSpots when text is not empty", () => {
+      const wrapper = setup();
+      const inputElement = findTestByAttr(wrapper, "input-element");
+      inputElement.simulate("change", {
+        target: { name: "search", value: "london" },
+      });
+      expect(filterSpots).toHaveBeenCalledTimes(1);
+      expect(clearFilter).toHaveBeenCalledTimes(0);
     });
   });
 });
