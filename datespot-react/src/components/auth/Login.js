@@ -55,6 +55,7 @@ export const Login = ({
       <Row>
         <Col>
           <img
+            data-test="image-element"
             src={fireworks}
             style={{ maxWidth: "100%" }}
             className="shadow"
@@ -65,6 +66,7 @@ export const Login = ({
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control
+                data-test="email-input"
                 type="email"
                 placeholder="Enter email"
                 name="email"
@@ -80,6 +82,7 @@ export const Login = ({
             <Form.Group controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
+                data-test="password-input"
                 type="password"
                 placeholder="Password"
                 name="password"
@@ -89,11 +92,11 @@ export const Login = ({
               />
             </Form.Group>
             <div className="spotButton">
-              <Button variant="primary" type="submit">
+              <Button data-test="submit-button" variant="primary" type="submit">
                 Submit
               </Button>
             </div>
-            <p className="text-center">
+            <p data-test="sign-up-mess" className="text-center">
               Never Signed up? Let's
               <Link to="/register"> Sign you up!</Link>
             </p>

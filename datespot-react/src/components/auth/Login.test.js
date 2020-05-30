@@ -34,19 +34,53 @@ describe("Login.js", () => {
 
     expect(loginContainer.length).toBe(1);
   });
+
+  describe("displays", () => {
+    let wrapper;
+    beforeEach(() => {
+      wrapper = setup();
+    });
+    test("image", () => {
+      const imageElement = findTestByAttr(wrapper, "image-element");
+
+      expect(imageElement.length).toBe(1);
+    });
+    test("email input", () => {
+      const emailInput = findTestByAttr(wrapper, "email-input");
+
+      expect(emailInput.length).toBe(1);
+    });
+    test("password input", () => {
+      const passwordInput = findTestByAttr(wrapper, "password-input");
+
+      expect(passwordInput.length).toBe(1);
+    });
+    test("submit button", () => {
+      const submitButton = findTestByAttr(wrapper, "submit-button");
+
+      expect(submitButton.length).toBe(1);
+    });
+    test("never signed up message", () => {
+      const signUpMessage = findTestByAttr(wrapper, "sign-up-mess");
+
+      expect(signUpMessage.length).toBe(1);
+    });
+  });
+  describe("form functionality", () => {
+    test("filling in email triggers onChange", () => {
+      const wrapper = setup();
+      let emailInput = findTestByAttr(wrapper, "email-input");
+
+      emailInput.simulate("change", {
+        target: { name: "email", value: "test@test.com" },
+      });
+
+      emailInput = findTestByAttr(wrapper, "email-input");
+
+      expect(emailInput.props().value).toBe("test@test.com");
+    });
+  });
 });
-
-//renders login without error
-
-// displays image
-
-// displays email input
-
-//displays passowrd input
-
-//displays submit button
-
-//displays never signed up message
 
 //typing in email triggers onChange with value change
 
