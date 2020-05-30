@@ -1,3 +1,5 @@
+![travis](https://travis-ci.org/Nimzyow/datespot.svg?branch=master)
+
 # DateSpot
 
 So you're in a relationship, or perhaps you matched in an online dating app. That's fantastic but what do you do now? Where do you go for your date? Isn't it stressful to setup and plan the date? Well, stress no more as we have you covered with curated dates based on the location of your choosing!:) :)
