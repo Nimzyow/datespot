@@ -24,7 +24,6 @@ export const Profile = ({
   useEffect(() => {
     loadUser();
     if (!spots) {
-      console.log("here");
       getSpots();
     }
   }, []);
@@ -34,27 +33,33 @@ export const Profile = ({
   }, [spots]);
 
   const SpotsLiked = () => {
-    return filteredByLiked == null ? (
-      <h5 style={{ textAlign: "center" }}>
+    return filteredByLiked == null || filteredByLiked.length === 0 ? (
+      <h5 data-test="not-liked-header" style={{ textAlign: "center" }}>
         Spots you liked will appear here :)
       </h5>
     ) : (
-      <h5 style={{ textAlign: "center" }}>You liked the following Spots:</h5>
+      <h5 data-test="liked-header" style={{ textAlign: "center" }}>
+        You liked the following Spots:
+      </h5>
     );
   };
 
   return (
-    <div>
-      <Header />
+    <div data-test="profile-container">
+      <Header data-test="header-element" />
       <div className="container cont">
         <Fragment>
           <div
             style={{ marginTop: "30px", display: "flex", flexDirection: "row" }}
           >
             {user ? (
-              <UserAccountDetail user={user} />
+              <UserAccountDetail data-test="useraccount-element" user={user} />
             ) : (
-              <div className="text-center" style={{ marginTop: "300px" }}>
+              <div
+                data-test="spinner-element"
+                className="text-center"
+                style={{ marginTop: "300px" }}
+              >
                 <Spinner animation="border" variant="danger" />
               </div>
             )}
@@ -65,6 +70,7 @@ export const Profile = ({
               {filteredByLiked ? (
                 filteredByLiked.map((spot) => (
                   <SpotItemHeartless
+                    data-test="spotItem-element"
                     key={spot._id}
                     title={spot.title}
                     location={spot.location}
@@ -82,7 +88,11 @@ export const Profile = ({
                   />
                 ))
               ) : (
-                <div className="text-center" style={{ marginTop: "300px" }}>
+                <div
+                  data-test="spinner-liked-loading-element"
+                  className="text-center"
+                  style={{ marginTop: "300px" }}
+                >
                   <Spinner animation="border" variant="danger" />
                 </div>
               )}
