@@ -57,13 +57,18 @@ export const CardBody = ({
 
   return (
     <Card.Body data-test="card-container">
-      <Card.Title data-test="text-container" className="spotText">
+      <Card.Title data-test="card-title" className="spotText">
         <span>{title}</span>
       </Card.Title>
-      <Card.Text data-test="description-container" className="spotText">
+      <Card.Text data-test="card-summary" className="spotText">
         <span>{summary}</span>
       </Card.Text>
-      <Like setLikeState={setLikeState} likeCount={likeCount} color={color} />
+      <Like
+        data-test="like"
+        setLikeState={setLikeState}
+        likeCount={likeCount}
+        color={color}
+      />
     </Card.Body>
   );
 };
