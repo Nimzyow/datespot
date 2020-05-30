@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { login, clearErrors } from "../../actions/authActions";
 import { setAlert } from "../../actions/alertActions";
 
-const Login = ({
+export const Login = ({
   history,
   login,
   clearErrors,
@@ -47,7 +47,11 @@ const Login = ({
   };
 
   return (
-    <div className="container cont" style={{ paddingTop: "30px" }}>
+    <div
+      data-test="login-container"
+      className="container cont"
+      style={{ paddingTop: "30px" }}
+    >
       <Row>
         <Col>
           <img
