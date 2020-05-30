@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import { postComment } from "../../../actions/spotActions";
 
-const Comment = ({ spotId, postComment, auth: { user } }) => {
+export const Comment = ({ spotId, postComment, auth: { user } }) => {
   const [text, setText] = useState("");
   const [postError, setPostError] = useState(false);
 
@@ -13,12 +13,11 @@ const Comment = ({ spotId, postComment, auth: { user } }) => {
     setText(e.target.value);
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
     if (text !== "") {
       let data = {
         comment: text,
-        userId: user.id,
+        userId: user._id,
         spotId: spotId,
       };
       postComment(data);
@@ -31,10 +30,12 @@ const Comment = ({ spotId, postComment, auth: { user } }) => {
 
   return (
     <Fragment>
-      <Form onSubmit={onSubmit}>
+      <Form data-test="form-container" onSubmit={onSubmit}>
         <Form.Group controlId="exampleForm.ControlTextarea1">
-          <Form.Label>Comment</Form.Label>
+          <Form.Label data-test="label-element">Comment</Form.Label>
           <Form.Control
+            data-test="text-area"
+            name="textarea"
             as="textarea"
             rows="6"
             value={text}
@@ -42,13 +43,17 @@ const Comment = ({ spotId, postComment, auth: { user } }) => {
           />
         </Form.Group>
         <div className="spotButton">
-          <Button variant="primary" type="submit">
+          <Button
+            data-test="button-element"
+            variant="primary"
+            onClick={onSubmit}
+          >
             Submit
           </Button>
         </div>
       </Form>
       {postError && (
-        <div style={{ marginTop: "10px" }}>
+        <div data-test="error-element" style={{ marginTop: "10px" }}>
           <h5>Please enter a comment before posting</h5>
         </div>
       )}
