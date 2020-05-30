@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { login, clearErrors } from "../../actions/authActions";
 import { setAlert } from "../../actions/alertActions";
 
-const Login = ({
+export const Login = ({
   history,
   login,
   clearErrors,
@@ -37,8 +37,7 @@ const Login = ({
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
     if (email === "" || password === "") {
       setAlert("Please fill in all fields", "danger");
     } else {
@@ -47,20 +46,26 @@ const Login = ({
   };
 
   return (
-    <div className="container cont" style={{ paddingTop: "30px" }}>
+    <div
+      data-test="login-container"
+      className="container cont"
+      style={{ paddingTop: "30px" }}
+    >
       <Row>
         <Col>
           <img
+            data-test="image-element"
             src={fireworks}
             style={{ maxWidth: "100%" }}
             className="shadow"
           ></img>
         </Col>
         <Col>
-          <Form onSubmit={onSubmit} style={{ flexGrow: "1" }}>
+          <Form style={{ flexGrow: "1" }}>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control
+                data-test="email-input"
                 type="email"
                 placeholder="Enter email"
                 name="email"
@@ -76,6 +81,7 @@ const Login = ({
             <Form.Group controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
               <Form.Control
+                data-test="password-input"
                 type="password"
                 placeholder="Password"
                 name="password"
@@ -85,11 +91,15 @@ const Login = ({
               />
             </Form.Group>
             <div className="spotButton">
-              <Button variant="primary" type="submit">
+              <Button
+                data-test="submit-button"
+                variant="primary"
+                onClick={onSubmit}
+              >
                 Submit
               </Button>
             </div>
-            <p className="text-center">
+            <p data-test="sign-up-mess" className="text-center">
               Never Signed up? Let's
               <Link to="/register"> Sign you up!</Link>
             </p>
@@ -98,6 +108,7 @@ const Login = ({
       </Row>
 
       <div
+        data-test="spinner-element"
         style={{ display: "flex", justifyContent: "center", marginTop: "30px" }}
       >
         {spinner && <Spinner animation="border" variant="danger" />}
