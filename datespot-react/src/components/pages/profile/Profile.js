@@ -14,7 +14,7 @@ import { connect } from "react-redux";
 import { filterSpotsBasedOnLike, getSpots } from "../../../actions/spotActions";
 import { loadUser } from "../../../actions/authActions";
 
-const Profile = ({
+export const Profile = ({
   filterSpotsBasedOnLike,
   getSpots,
   loadUser,
