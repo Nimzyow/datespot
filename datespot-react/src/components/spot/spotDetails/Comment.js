@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import { postComment } from "../../../actions/spotActions";
 
-const Comment = ({ spotId, postComment, auth: { user } }) => {
+export const Comment = ({ spotId, postComment, auth: { user } }) => {
   const [text, setText] = useState("");
   const [postError, setPostError] = useState(false);
 
@@ -18,7 +18,7 @@ const Comment = ({ spotId, postComment, auth: { user } }) => {
     if (text !== "") {
       let data = {
         comment: text,
-        userId: user.id,
+        userId: user._id,
         spotId: spotId,
       };
       postComment(data);
@@ -31,9 +31,9 @@ const Comment = ({ spotId, postComment, auth: { user } }) => {
 
   return (
     <Fragment>
-      <Form onSubmit={onSubmit}>
+      <Form data-test="form-container" onSubmit={onSubmit}>
         <Form.Group controlId="exampleForm.ControlTextarea1">
-          <Form.Label>Comment</Form.Label>
+          <Form.Label data-test="label-element">Comment</Form.Label>
           <Form.Control
             as="textarea"
             rows="6"
