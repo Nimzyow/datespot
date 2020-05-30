@@ -6,6 +6,7 @@ import { Jumbotron, Container } from "react-bootstrap";
 const Header = () => {
   return (
     <Jumbotron
+      data-test="jumbotron"
       fluid
       className="shadow"
       style={{
@@ -18,7 +19,7 @@ const Header = () => {
       }}
     >
       <Container>
-        <div className="spotHeader">
+        <div data-test="profile-header" className="spotHeader">
           <h1>
             <span>Profile</span>
           </h1>
