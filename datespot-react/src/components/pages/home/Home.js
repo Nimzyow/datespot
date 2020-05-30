@@ -8,28 +8,28 @@ import { connect } from "react-redux";
 
 import { loadUser } from "../../../actions/authActions";
 
-const Home = ({ loadUser }) => {
+export const Home = ({ loadUser }) => {
   useEffect(() => {
     loadUser();
   }, []);
 
   return (
-    <div className="bg">
+    <div data-test="home-container" className="bg">
       <div className="v-centre">
         <Row className="align-middle">
           <Col>
             <div className="welcome">
-              <img src={logo} />
+              <img data-test="image-container" src={logo} />
               <Row>
                 <Col>
                   <div className="homeButton">
-                    <Button>
+                    <Button data-test="sign-in-button">
                       <Link to="/login" className="link">
                         Sign in
                       </Link>
                     </Button>{" "}
                     &nbsp; &nbsp;{" "}
-                    <Button>
+                    <Button data-test="register-button">
                       <Link to="/register" className="link">
                         Sign up
                       </Link>
