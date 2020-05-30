@@ -4,7 +4,7 @@ import axios from "axios";
 // get spots from server
 export const getSpots = () => async (dispatch) => {
   try {
-    const res = await axios.get("http://localhost:4000/api/spots");
+    const res = await axios.get("/api/spots");
     dispatch({
       type: Types.GET_SPOTS,
       payload: res.data,
@@ -40,11 +40,7 @@ export const addToLikeCount = (toAdd) => async (dispatch) => {
     },
   };
   try {
-    const res = await axios.post(
-      `http://localhost:4000/api/spots/${spotId}/like`,
-      toSend,
-      config
-    );
+    const res = await axios.post(`/api/spots/${spotId}/like`, toSend, config);
     console.log("RES", res.data);
     dispatch({
       type: Types.ADD_TO_LIKE_TABLE,
@@ -68,11 +64,7 @@ export const removeFromLikeCount = (toRemove) => async (dispatch) => {
     },
   };
   try {
-    await axios.post(
-      `http://localhost:4000/api/spots/${spotId}/likeRemove`,
-      toSend,
-      config
-    );
+    await axios.post(`/api/spots/${spotId}/likeRemove`, toSend, config);
     dispatch({
       type: Types.REMOVE_FROM_LIKE_TABLE,
       payload: toRemove,
@@ -110,7 +102,7 @@ export const postComment = (data) => async (dispatch) => {
       },
     };
     const res = await axios.post(
-      `http://localhost:4000/api/spots/${data.spotId}/comments`,
+      `/api/spots/${data.spotId}/comments`,
       toSend,
       config
     );

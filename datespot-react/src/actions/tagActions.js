@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const getTags = () => async (dispatch) => {
   try {
-    const res = await axios.get("http://localhost:4000/api/tags");
+    const res = await axios.get("/api/tags");
     dispatch({
       type: Types.GET_TAGS,
       payload: res.data,

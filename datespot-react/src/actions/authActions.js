@@ -6,7 +6,7 @@ import setAuthToken from "../Utils/SetAuthToken";
 export const loadUser = () => async (dispatch) => {
   setAuthToken(localStorage.token);
   try {
-    const res = await axios.get("http://localhost:4000/api/auth");
+    const res = await axios.get("/api/auth");
 
     dispatch({
       type: Types.USER_LOADED,
@@ -28,11 +28,7 @@ export const register = (formData) => async (dispatch) => {
   };
 
   try {
-    const res = await axios.post(
-      "http://localhost:4000/api/users",
-      formData,
-      config
-    );
+    const res = await axios.post("/api/users", formData, config);
 
     dispatch({
       type: Types.REGISTER_SUCCESS,
@@ -62,11 +58,7 @@ export const login = (formData) => async (dispatch) => {
   dispatch({ type: Types.SPINNER_SHOW });
 
   try {
-    const res = await axios.post(
-      "http://localhost:4000/api/auth",
-      formData,
-      config
-    );
+    const res = await axios.post("/api/auth", formData, config);
 
     dispatch({
       type: Types.LOGIN_SUCCESS,
@@ -79,7 +71,7 @@ export const login = (formData) => async (dispatch) => {
     //loadUser();
     setAuthToken(localStorage.token);
 
-    const resLoad = await axios.get("http://localhost:4000/api/auth");
+    const resLoad = await axios.get("/api/auth");
 
     dispatch({
       type: Types.USER_LOADED,
