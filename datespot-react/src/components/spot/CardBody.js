@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "react-bootstrap";
 import Like from "./Like";
 import PropTypes from "prop-types";

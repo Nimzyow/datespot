@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import TagItem from "./TagItem";
 import { Spinner } from "react-bootstrap";
 
