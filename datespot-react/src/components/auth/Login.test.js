@@ -11,6 +11,7 @@ describe("Login.js", () => {
   let setAlert = jest.fn();
   let defaultProps;
   beforeEach(() => {
+    jest.clearAllMocks();
     defaultProps = {
       login,
       clearErrors,
@@ -67,8 +68,11 @@ describe("Login.js", () => {
     });
   });
   describe("form functionality", () => {
+    let wrapper;
+    beforeEach(() => {
+      wrapper = setup();
+    });
     test("filling in email triggers onChange", () => {
-      const wrapper = setup();
       let emailInput = findTestByAttr(wrapper, "email-input");
 
       emailInput.simulate("change", {
@@ -80,7 +84,6 @@ describe("Login.js", () => {
       expect(emailInput.props().value).toBe("test@test.com");
     });
     test("filling in password triggers onChange", () => {
-      const wrapper = setup();
       let passwordInput = findTestByAttr(wrapper, "password-input");
 
       passwordInput.simulate("change", {
@@ -92,8 +95,6 @@ describe("Login.js", () => {
       expect(passwordInput.props().value).toBe("123456");
     });
     test("filling in email and password triggers login function", () => {
-      const wrapper = setup();
-
       let emailInput = findTestByAttr(wrapper, "email-input");
       emailInput.simulate("change", {
         target: { name: "email", value: "test@test.com" },
@@ -109,14 +110,38 @@ describe("Login.js", () => {
 
       expect(login).toHaveBeenCalledTimes(1);
     });
+    test("filling only email triggers setAlert function once", () => {
+      let emailInput = findTestByAttr(wrapper, "email-input");
+
+      emailInput.simulate("change", {
+        target: { name: "email", value: "test@test.com" },
+      });
+
+      const submitButton = findTestByAttr(wrapper, "submit-button");
+      submitButton.simulate("click");
+
+      expect(setAlert).toHaveBeenCalledTimes(1);
+    });
+    test("filling only password triggers setAlert function once", () => {
+      let passwordInput = findTestByAttr(wrapper, "password-input");
+
+      passwordInput.simulate("change", {
+        target: { name: "password", value: "123456" },
+      });
+
+      const submitButton = findTestByAttr(wrapper, "submit-button");
+      submitButton.simulate("click");
+
+      expect(setAlert).toHaveBeenCalledTimes(1);
+    });
+    test("Submitting no email or password triggers setAlert function once", () => {
+      const submitButton = findTestByAttr(wrapper, "submit-button");
+      submitButton.simulate("click");
+
+      expect(setAlert).toHaveBeenCalledTimes(1);
+    });
   });
 });
-
-//fill in email and password and submitting calls login function once
-
-//only email filled in will call setAlert function once
-
-//only password filled in will call setAlert function once
 
 //nothing filled in will call setAlert function once
 
