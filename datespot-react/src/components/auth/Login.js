@@ -37,8 +37,7 @@ export const Login = ({
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
     if (email === "" || password === "") {
       setAlert("Please fill in all fields", "danger");
     } else {
@@ -62,7 +61,7 @@ export const Login = ({
           ></img>
         </Col>
         <Col>
-          <Form onSubmit={onSubmit} style={{ flexGrow: "1" }}>
+          <Form style={{ flexGrow: "1" }}>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control
@@ -92,7 +91,11 @@ export const Login = ({
               />
             </Form.Group>
             <div className="spotButton">
-              <Button data-test="submit-button" variant="primary" type="submit">
+              <Button
+                data-test="submit-button"
+                variant="primary"
+                onClick={onSubmit}
+              >
                 Submit
               </Button>
             </div>

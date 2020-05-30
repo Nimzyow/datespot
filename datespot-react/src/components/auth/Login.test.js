@@ -79,12 +79,38 @@ describe("Login.js", () => {
 
       expect(emailInput.props().value).toBe("test@test.com");
     });
+    test("filling in password triggers onChange", () => {
+      const wrapper = setup();
+      let passwordInput = findTestByAttr(wrapper, "password-input");
+
+      passwordInput.simulate("change", {
+        target: { name: "password", value: "123456" },
+      });
+
+      passwordInput = findTestByAttr(wrapper, "password-input");
+
+      expect(passwordInput.props().value).toBe("123456");
+    });
+    test("filling in email and password triggers login function", () => {
+      const wrapper = setup();
+
+      let emailInput = findTestByAttr(wrapper, "email-input");
+      emailInput.simulate("change", {
+        target: { name: "email", value: "test@test.com" },
+      });
+
+      let passwordInput = findTestByAttr(wrapper, "password-input");
+      passwordInput.simulate("change", {
+        target: { name: "password", value: "123456" },
+      });
+
+      const submitButton = findTestByAttr(wrapper, "submit-button");
+      submitButton.simulate("click");
+
+      expect(login).toHaveBeenCalledTimes(1);
+    });
   });
 });
-
-//typing in email triggers onChange with value change
-
-//typing in password triggers onChange with value change
 
 //fill in email and password and submitting calls login function once
 
