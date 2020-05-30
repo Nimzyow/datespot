@@ -10,4 +10,3 @@ script:
   - cd datespot-react
   - npm install
   - npm test
-  - npm run build
