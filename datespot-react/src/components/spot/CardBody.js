@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Card } from "react-bootstrap";
 import Like from "./Like";
+import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 
 import { addToLikeCount, removeFromLikeCount } from "../../actions/spotActions";
 
-const CardBody = ({
+export const CardBody = ({
   title,
   summary,
   spotId,
@@ -55,16 +56,19 @@ const CardBody = ({
   };
 
   return (
-    <Card.Body>
-      <Card.Title data-test="text-container" className="spotText">
+    <Card.Body data-test="card-container">
+      <Card.Title data-test="card-title" className="spotText">
         <span>{title}</span>
       </Card.Title>
-      <Card.Text data-test="description-container" className="spotText">
+      <Card.Text data-test="card-summary" className="spotText">
         <span>{summary}</span>
       </Card.Text>
-      {user && (
-        <Like setLikeState={setLikeState} likeCount={likeCount} color={color} />
-      )}
+      <Like
+        data-test="like"
+        setLikeState={setLikeState}
+        likeCount={likeCount}
+        color={color}
+      />
     </Card.Body>
   );
 };
@@ -73,6 +77,16 @@ const mapStateToProps = (state) => ({
   spot: state.spot,
   auth: state.auth,
 });
+
+CardBody.propTypes = {
+  title: PropTypes.string.isRequired,
+  summary: PropTypes.string.isRequired,
+  spotId: PropTypes.string.isRequired,
+  likes: PropTypes.array.isRequired,
+  addToLikeCount: PropTypes.func.isRequired,
+  removeFromLikeCount: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
 
 export default connect(mapStateToProps, {
   addToLikeCount,

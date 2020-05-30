@@ -13,7 +13,6 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case Types.GET_SPOTS:
-      console.log("GET SPOTS");
       return {
         ...state,
         spots: action.payload,
