@@ -42,7 +42,7 @@ Great! That's it for the front end!
 
 ## Database
 
-You will need to sign up to MongoDB and create a cluster. 
+You will need to sign up to MongoDB and create a cluster.
 
 Once you have created a cluster, you will need to find what the connection URI is.
 
@@ -50,13 +50,13 @@ Click on connect when viewing your cluster and a model should pop up with 3 opti
 
 You will need to create 4 environmental variables.
 
-1) datespotJwtSecret (can be a secret word of your choice)
+1. datespotJwtSecret (can be a secret word of your choice)
 
-2) testURI (this will be your MongoURI)
+2. testURI (this will be your MongoURI)
 
-3) developmentURI (this will be your MongoURI except that the word "test" in the MongoURI needs to be replaced with "development")
+3. developmentURI (this will be your MongoURI except that the word "test" in the MongoURI needs to be replaced with "development")
 
-4) REACT_APP_GOOGLE_API_KEY (Sign up to Google Maps API and obtain your Google maps api key and set it as this environment variable )
+4. REACT_APP_GOOGLE_API_KEY (Sign up to Google Maps API and obtain your Google maps api key and set it as this environment variable )
 
 ## Testing
 
@@ -92,7 +92,7 @@ To run the Server and application at the same time:
 $ npm run dev
 ```
 
-aaaaand That's it! 
+aaaaand That's it!
 
 If you want to run the backend or front end seperately, follow these instructions:
 
@@ -116,10 +116,9 @@ $ npm start
 
 Great! So now you have both the backend and frontend working! Now feel free to play around with the application on localhost 3000.
 
-
 ## Planning
 
-This was a group project done for the presentation day at Makers Academy. It involved us giving a presentation on a project we worked. We were given just over a week to come up with an idea and create an application in just over a week. The original backend was done in Rails using a SQL database and the front end was done in React using Reacts Context API for state management. I was resposible for the front end. I wanted more responsibilites in the backend and thought it would be a great exercise to rip out the Rails backend and convert that to a JavaScript backend using Node.js, Express.js and MongoDB as the DB. 
+This was a group project done for the presentation day at Makers Academy. It involved us giving a presentation on a project we worked. We were given just over a week to come up with an idea and create an application in just over a week. The original backend was done in Rails using a SQL database and the front end was done in React using Reacts Context API for state management. I was resposible for the front end. I wanted more responsibilites in the backend and thought it would be a great exercise to rip out the Rails backend and convert that to a JavaScript backend using Node.js, Express.js and MongoDB as the DB.
 
 The aim is not only convert the backend but to also thoroughly test it. I believe I've demonstrated my capabilites in using Reacts Context API but I also wanted to demonstrate my capabilites in Redux. To that end I made another aim to convert Reacts Context API to Redux as I believe this will be a great evidence that I am more than competant in the use of Redux.
 
