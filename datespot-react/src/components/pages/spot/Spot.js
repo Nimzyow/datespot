@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import { getSpots, clearSpotDetail } from "../../../actions/spotActions";
 import { loadUser } from "../../../actions/authActions";
 
-const Spot = ({
+export const Spot = ({
   spot: { spots, filtered, filteredByTag },
   getSpots,
   clearSpotDetail,
@@ -43,6 +43,7 @@ const Spot = ({
     //console.log("What is the spot id?", toFilter[0]._id)
     return toFilter.map((spot) => (
       <SpotItem
+        data-test="spot-item-component"
         key={spot._id}
         title={spot.title}
         location={spot.location}
@@ -65,24 +66,29 @@ const Spot = ({
   };
 
   return (
-    <div>
+    <div data-test="spot-container">
       <Jumbotron
+        data-test="jumbotron-element"
         fluid
         className="shadow jumboContainer"
         style={{
           backgroundImage: `url(${table})`,
         }}
       >
-        <Search />
+        <Search data-test="search-component" />
       </Jumbotron>
       <Container className="cont">
-        <div>
+        <div data-test="spots-component">
           {spots !== null ? (
             <CardColumns style={{ marginTop: "20px" }}>
               {spotItemToDisplay()}
             </CardColumns>
           ) : (
-            <div className="text-center" style={{ marginTop: "300px" }}>
+            <div
+              data-test="spinner-element"
+              className="text-center"
+              style={{ marginTop: "300px" }}
+            >
               <Spinner animation="border" variant="danger" />
             </div>
           )}
