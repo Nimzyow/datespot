@@ -28,11 +28,6 @@ describe("Comment.js", () => {
     expect(formContainer.length).toBe(1);
   });
 
-  // comment error displays if sending empty comment
-  // postComment function is called when comment filled in and button clicked
-  // text value changes back to "" when submitting valid comment
-  //
-
   describe("displays", () => {
     let wrapper;
     beforeEach(() => {
@@ -59,25 +54,46 @@ describe("Comment.js", () => {
   });
   test("error when submitting empty comment", () => {
     const wrapper = setup();
-
-    const textElement = findTestByAttr(wrapper, "text-area");
-
-    // textElement.simulate("change", {
-    //   target: { name: "textarea", value: "" },
-    // });
-
     const buttonElement = findTestByAttr(wrapper, "button-element");
-    //console.log("buttonElement", buttonElement.debug());
-
     buttonElement.simulate("click");
-
-    // const textElement = findTestByAttr(wrapper, "text-area");
-
-    // expect(textElement.props().value).toBe("")
-    //wrapper.update();
     const errorElement = findTestByAttr(wrapper, "error-element");
-    console.log("errorElement", errorElement.debug());
 
     expect(errorElement.length).toBe(1);
+  });
+  test("correct text change when typing", () => {
+    const wrapper = setup();
+
+    let textElement = findTestByAttr(wrapper, "text-area");
+    textElement.simulate("change", {
+      target: { name: "textarea", value: "CHANGED" },
+    });
+    textElement = findTestByAttr(wrapper, "text-area");
+
+    expect(textElement.props().value).toBe("CHANGED");
+  });
+  test("successfully posts a comment", () => {
+    const wrapper = setup();
+
+    const textElement = findTestByAttr(wrapper, "text-area");
+    textElement.simulate("change", {
+      target: { name: "textarea", value: "CHANGED" },
+    });
+    const buttonElement = findTestByAttr(wrapper, "button-element");
+    buttonElement.simulate("click");
+
+    expect(postComment).toHaveBeenCalledTimes(1);
+  });
+  test("textarea value return to '' after succesfull post", () => {
+    const wrapper = setup();
+
+    let textElement = findTestByAttr(wrapper, "text-area");
+    textElement.simulate("change", {
+      target: { name: "textarea", value: "CHANGED" },
+    });
+    const buttonElement = findTestByAttr(wrapper, "button-element");
+    buttonElement.simulate("click");
+    textElement = findTestByAttr(wrapper, "text-area");
+
+    expect(textElement.props().value).toBe("");
   });
 });
