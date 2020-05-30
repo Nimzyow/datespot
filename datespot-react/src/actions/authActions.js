@@ -20,6 +20,7 @@ export const loadUser = () => async (dispatch) => {
 
 // Register User
 export const register = (formData) => async (dispatch) => {
+  dispatch({ type: Types.SPINNER_SHOW });
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -37,6 +38,8 @@ export const register = (formData) => async (dispatch) => {
       type: Types.REGISTER_SUCCESS,
       payload: res.data,
     });
+
+    dispatch({ type: Types.SPINNER_NOSHOW });
 
     loadUser();
   } catch (err) {
