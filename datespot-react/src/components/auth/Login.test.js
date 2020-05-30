@@ -110,6 +110,24 @@ describe("Login.js", () => {
 
       expect(login).toHaveBeenCalledTimes(1);
     });
+    test("triggering login function calls spinner", () => {
+      let emailInput = findTestByAttr(wrapper, "email-input");
+      emailInput.simulate("change", {
+        target: { name: "email", value: "test@test.com" },
+      });
+
+      let passwordInput = findTestByAttr(wrapper, "password-input");
+      passwordInput.simulate("change", {
+        target: { name: "password", value: "123456" },
+      });
+
+      const submitButton = findTestByAttr(wrapper, "submit-button");
+      submitButton.simulate("click");
+
+      const spinnerElement = findTestByAttr(wrapper, "spinner-element");
+
+      expect(spinnerElement.length).toBe(1);
+    });
     test("filling only email triggers setAlert function once", () => {
       let emailInput = findTestByAttr(wrapper, "email-input");
 
@@ -142,7 +160,3 @@ describe("Login.js", () => {
     });
   });
 });
-
-//nothing filled in will call setAlert function once
-
-//triggering login function will display spinner

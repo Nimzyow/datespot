@@ -108,6 +108,7 @@ export const Login = ({
       </Row>
 
       <div
+        data-test="spinner-element"
         style={{ display: "flex", justifyContent: "center", marginTop: "30px" }}
       >
         {spinner && <Spinner animation="border" variant="danger" />}
