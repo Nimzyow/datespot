@@ -135,4 +135,36 @@ describe("spotReducer", () => {
 
     expect(spotReducer(initialState, action)).toEqual(expectedState);
   });
+  test("changes state on filter by spot tags", () => {
+    const action = {
+      type: types.FILTER_BY_SPOT_TAGS,
+      payload: "adventure",
+    };
+    const initialState = {
+      spots: [
+        { _id: "oneId", tags: ["dragon"] },
+        { _id: "twoId", tags: [action.payload] },
+      ],
+      error: null,
+      filtered: null,
+      filteredByLiked: null,
+      filteredByTag: null,
+      filterId: null,
+      spotDetail: null,
+    };
+    const expectedState = {
+      spots: [
+        { _id: "oneId", tags: ["dragon"] },
+        { _id: "twoId", tags: [action.payload] },
+      ],
+      error: null,
+      filtered: null,
+      filteredByLiked: null,
+      filteredByTag: [{ _id: "twoId", tags: [action.payload] }],
+      filterId: null,
+      spotDetail: null,
+    };
+
+    expect(spotReducer(initialState, action)).toEqual(expectedState);
+  });
 });
