@@ -144,4 +144,23 @@ describe("spotReducer", () => {
 
     expect(spotReducer(initialState, action)).toEqual(expectedState);
   });
+  test("changes state on filtered by user likes", () => {
+    const action = {
+      type: types.FILTER_BY_USER_LIKES,
+      payload: { _id: "userId" },
+    };
+    initialState.spots = [
+      { _id: "oneId", likes: [{ userId: action.payload._id }] },
+      {
+        _id: "twoId",
+        likes: [{ userId: "threeId" }],
+      },
+    ];
+    expectedState.spots = initialState.spots;
+    expectedState.filteredByLiked = [
+      { _id: "oneId", likes: [{ userId: action.payload._id }] },
+    ];
+
+    expect(spotReducer(initialState, action)).toEqual(expectedState);
+  });
 });
