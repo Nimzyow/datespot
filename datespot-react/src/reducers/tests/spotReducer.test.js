@@ -73,4 +73,32 @@ describe("spotReducer", () => {
 
     expect(spotReducer(initialState, action)).toEqual(expectedState);
   });
+  test("changes state on add to like table", () => {
+    const action = {
+      type: types.ADD_TO_LIKE_TABLE,
+      payload: { spot: { _id: "oneId", likes: [] }, likes: [{ _id: "twoId" }] },
+    };
+    const initialState = {
+      spots: [{ _id: action.payload.spot._id, likes: [] }],
+      error: null,
+      filtered: null,
+      filteredByLiked: null,
+      filteredByTag: null,
+      filterId: null,
+      spotDetail: null,
+    };
+    const expectedState = {
+      spots: [
+        { _id: action.payload.spot._id, likes: [action.payload.likes[0]] },
+      ],
+      error: null,
+      filtered: null,
+      filteredByLiked: null,
+      filteredByTag: null,
+      filterId: null,
+      spotDetail: null,
+    };
+
+    expect(spotReducer(initialState, action)).toEqual(expectedState);
+  });
 });
