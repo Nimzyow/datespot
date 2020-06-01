@@ -177,4 +177,30 @@ describe("spotReducer", () => {
 
     expect(spotReducer(initialState, action)).toEqual(expectedState);
   });
+  test("changes state on remove from like table", () => {
+    const action = {
+      type: types.REMOVE_FROM_LIKE_TABLE,
+      payload: { spotId: "oneSpotId", userId: "oneUserId" },
+    };
+    initialState.spots = [
+      {
+        _id: action.payload.spotId,
+        likes: [
+          { userId: action.payload.userId },
+          { userId: "action.payload.userId" },
+        ],
+      },
+      { _id: "randomSpotId", likes: [{ userId: "randomUserId" }] },
+    ];
+
+    expectedState.spots = [
+      {
+        _id: action.payload.spotId,
+        likes: [{ userId: "action.payload.userId" }],
+      },
+      { _id: "randomSpotId", likes: [{ userId: "randomUserId" }] },
+    ];
+
+    expect(spotReducer(initialState, action)).toEqual(expectedState);
+  });
 });
