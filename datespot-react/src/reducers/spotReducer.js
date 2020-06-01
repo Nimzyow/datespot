@@ -18,7 +18,6 @@ export default (state = initialState, action) => {
         spots: action.payload,
       };
     case Types.SPOTS_ERROR:
-      console.error(action.payload);
       return {
         ...state,
         error: action.payload,

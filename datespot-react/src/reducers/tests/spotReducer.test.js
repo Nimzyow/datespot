@@ -13,5 +13,38 @@ describe("spotReducer", () => {
 
     expect(spotReducer(dummyState, unrelatedAction)).toEqual(dummyState);
   });
-  test("should ", () => {});
+  test("changes state on get spots action", () => {
+    const action = {
+      type: types.GET_SPOTS,
+      payload: "some sort of spots",
+    };
+    const expectedState = {
+      spots: action.payload,
+      error: null,
+      filtered: null,
+      filteredByLiked: null,
+      filteredByTag: null,
+      filterId: null,
+      spotDetail: null,
+    };
+
+    expect(spotReducer(undefined, action)).toEqual(expectedState);
+  });
+  test("changes state on spots error action", () => {
+    const action = {
+      type: types.SPOTS_ERROR,
+      payload: "some sort error",
+    };
+    const expectedState = {
+      spots: null,
+      error: action.payload,
+      filtered: null,
+      filteredByLiked: null,
+      filteredByTag: null,
+      filterId: null,
+      spotDetail: null,
+    };
+
+    expect(spotReducer(undefined, action)).toEqual(expectedState);
+  });
 });
