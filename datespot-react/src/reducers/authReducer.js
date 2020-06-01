@@ -85,12 +85,14 @@ export default (state = initialState, action) => {
     case Types.SPINNER_SHOW:
       return {
         ...state,
+        loading: true,
         spinner: true,
         spinnerComment: "loading",
       };
     case Types.SPINNER_NOSHOW:
       return {
         ...state,
+        loading: false,
         spinner: false,
         spinnerComment: "",
       };

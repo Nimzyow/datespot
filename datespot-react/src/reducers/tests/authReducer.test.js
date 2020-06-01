@@ -147,4 +147,36 @@ describe("authReducer", () => {
 
     expect(authReducer(undefined, action)).toEqual(expectedState);
   });
+  test("update state on spinner show", () => {
+    const action = {
+      type: types.SPINNER_SHOW,
+    };
+    const expectedState = {
+      token: null,
+      isAuthenticated: null,
+      loading: true,
+      user: null,
+      error: null,
+      spinner: true,
+      spinnerComment: "loading",
+    };
+
+    expect(authReducer(undefined, action)).toEqual(expectedState);
+  });
+  test("update state on spinner no-show", () => {
+    const action = {
+      type: types.SPINNER_NOSHOW,
+    };
+    const expectedState = {
+      token: null,
+      isAuthenticated: null,
+      loading: false,
+      user: null,
+      error: null,
+      spinner: false,
+      spinnerComment: "",
+    };
+
+    expect(authReducer(undefined, action)).toEqual(expectedState);
+  });
 });
