@@ -3,8 +3,19 @@ import * as types from "../../actions/types";
 
 describe("spotReducer", () => {
   let initialState;
+  let expectedState;
   beforeEach(() => {
     initialState = {
+      spots: null,
+      error: null,
+      filtered: null,
+      filteredByLiked: null,
+      filteredByTag: null,
+      filterId: null,
+      spotDetail: null,
+    };
+
+    expectedState = {
       spots: null,
       error: null,
       filtered: null,
@@ -30,15 +41,7 @@ describe("spotReducer", () => {
       type: types.GET_SPOTS,
       payload: "some sort of spots",
     };
-    const expectedState = {
-      spots: action.payload,
-      error: null,
-      filtered: null,
-      filteredByLiked: null,
-      filteredByTag: null,
-      filterId: null,
-      spotDetail: null,
-    };
+    expectedState.spots = action.payload;
 
     expect(spotReducer(undefined, action)).toEqual(expectedState);
   });
@@ -47,15 +50,8 @@ describe("spotReducer", () => {
       type: types.SPOTS_ERROR,
       payload: "some sort error",
     };
-    const expectedState = {
-      spots: null,
-      error: action.payload,
-      filtered: null,
-      filteredByLiked: null,
-      filteredByTag: null,
-      filterId: null,
-      spotDetail: null,
-    };
+
+    expectedState.error = action.payload;
 
     expect(spotReducer(undefined, action)).toEqual(expectedState);
   });
@@ -66,15 +62,8 @@ describe("spotReducer", () => {
     };
     initialState.spots = [{ _id: action.payload }];
 
-    const expectedState = {
-      spots: [{ _id: action.payload }],
-      error: null,
-      filtered: null,
-      filteredByLiked: null,
-      filteredByTag: null,
-      filterId: null,
-      spotDetail: { _id: action.payload },
-    };
+    expectedState.spots = [{ _id: action.payload }];
+    expectedState.spotDetail = { _id: action.payload };
 
     expect(spotReducer(initialState, action)).toEqual(expectedState);
   });
@@ -85,17 +74,9 @@ describe("spotReducer", () => {
     };
     initialState.spots = [{ _id: action.payload.spot._id, likes: [] }];
 
-    const expectedState = {
-      spots: [
-        { _id: action.payload.spot._id, likes: [action.payload.likes[0]] },
-      ],
-      error: null,
-      filtered: null,
-      filteredByLiked: null,
-      filteredByTag: null,
-      filterId: null,
-      spotDetail: null,
-    };
+    expectedState.spots = [
+      { _id: action.payload.spot._id, likes: [action.payload.likes[0]] },
+    ];
 
     expect(spotReducer(initialState, action)).toEqual(expectedState);
   });
@@ -110,20 +91,12 @@ describe("spotReducer", () => {
 
     initialState.spots = [{ _id: action.payload.spot._id, comments: [] }];
 
-    const expectedState = {
-      spots: [
-        {
-          _id: action.payload.spot._id,
-          comments: [action.payload.comments[0]],
-        },
-      ],
-      error: null,
-      filtered: null,
-      filteredByLiked: null,
-      filteredByTag: null,
-      filterId: null,
-      spotDetail: null,
-    };
+    expectedState.spots = [
+      {
+        _id: action.payload.spot._id,
+        comments: [action.payload.comments[0]],
+      },
+    ];
 
     expect(spotReducer(initialState, action)).toEqual(expectedState);
   });
@@ -136,18 +109,11 @@ describe("spotReducer", () => {
       { _id: "oneId", tags: ["dragon"] },
       { _id: "twoId", tags: [action.payload] },
     ];
-    const expectedState = {
-      spots: [
-        { _id: "oneId", tags: ["dragon"] },
-        { _id: "twoId", tags: [action.payload] },
-      ],
-      error: null,
-      filtered: null,
-      filteredByLiked: null,
-      filteredByTag: [{ _id: "twoId", tags: [action.payload] }],
-      filterId: null,
-      spotDetail: null,
-    };
+    expectedState.spots = [
+      { _id: "oneId", tags: ["dragon"] },
+      { _id: "twoId", tags: [action.payload] },
+    ];
+    expectedState.filteredByTag = [{ _id: "twoId", tags: [action.payload] }];
 
     expect(spotReducer(initialState, action)).toEqual(expectedState);
   });
