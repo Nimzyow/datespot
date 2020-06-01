@@ -163,4 +163,18 @@ describe("spotReducer", () => {
 
     expect(spotReducer(initialState, action)).toEqual(expectedState);
   });
+  test("changes state on clear filter", () => {
+    const action = {
+      type: types.CLEAR_FILTER,
+    };
+    initialState.filtered = [
+      { _id: "oneId", likes: [{ userId: "userId" }] },
+      {
+        _id: "twoId",
+        likes: [{ userId: "threeId" }],
+      },
+    ];
+
+    expect(spotReducer(initialState, action)).toEqual(expectedState);
+  });
 });
