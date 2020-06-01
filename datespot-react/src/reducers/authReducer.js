@@ -74,22 +74,25 @@ export default (state = initialState, action) => {
         isAuthenticated: false,
         loading: false,
         user: null,
-        error: action.payload,
+        error: null,
       };
     case Types.CLEAR_ERRORS:
       return {
         ...state,
         error: null,
+        loading: false,
       };
     case Types.SPINNER_SHOW:
       return {
         ...state,
+        loading: true,
         spinner: true,
         spinnerComment: "loading",
       };
     case Types.SPINNER_NOSHOW:
       return {
         ...state,
+        loading: false,
         spinner: false,
         spinnerComment: "",
       };
