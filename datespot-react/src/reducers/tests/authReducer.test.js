@@ -115,4 +115,20 @@ describe("authReducer", () => {
 
     expect(authReducer(undefined, action)).toEqual(expectedState);
   });
+  test("update state when user logs out", () => {
+    const action = {
+      type: types.LOGOUT,
+    };
+    const expectedState = {
+      token: null,
+      isAuthenticated: false,
+      loading: false,
+      user: null,
+      error: null,
+      spinner: false,
+      spinnerComment: "",
+    };
+
+    expect(authReducer(undefined, action)).toEqual(expectedState);
+  });
 });

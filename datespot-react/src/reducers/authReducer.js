@@ -74,7 +74,7 @@ export default (state = initialState, action) => {
         isAuthenticated: false,
         loading: false,
         user: null,
-        error: action.payload,
+        error: null,
       };
     case Types.CLEAR_ERRORS:
       return {
