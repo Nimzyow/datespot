@@ -109,12 +109,19 @@ describe("spotReducer", () => {
       { _id: "oneId", tags: ["dragon"] },
       { _id: "twoId", tags: [action.payload] },
     ];
-    expectedState.spots = [
-      { _id: "oneId", tags: ["dragon"] },
-      { _id: "twoId", tags: [action.payload] },
-    ];
+    expectedState.spots = initialState.spots;
+
     expectedState.filteredByTag = [{ _id: "twoId", tags: [action.payload] }];
 
     expect(spotReducer(initialState, action)).toEqual(expectedState);
+  });
+  test("changes state on add filter id", () => {
+    const action = {
+      type: types.ADD_FILTER_ID,
+      payload: "filterId",
+    };
+    expectedState.filterId = action.payload;
+
+    expect(spotReducer(undefined, action)).toEqual(expectedState);
   });
 });
