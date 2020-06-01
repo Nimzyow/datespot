@@ -213,4 +213,59 @@ describe("spotReducer", () => {
 
     expect(spotReducer(undefined, action)).toEqual(expectedState);
   });
+  test("changes state on clear liked array", () => {
+    const action = {
+      type: types.CLEAR_LIKED_ARRAY,
+    };
+
+    initialState.filteredByLiked = [];
+
+    expectedState.filteredByLiked = null;
+
+    expect(spotReducer(initialState, action)).toEqual(expectedState);
+  });
+  test("changes state on clear spot detail", () => {
+    const action = {
+      type: types.CLEAR_SPOT_DETAIL,
+    };
+
+    initialState.spotDetail = "something";
+
+    expectedState.spotDetail = null;
+
+    expect(spotReducer(initialState, action)).toEqual(expectedState);
+  });
+  test("changes state on clear filter", () => {
+    const action = {
+      type: types.CLEAR_FILTER,
+    };
+
+    initialState.filtered = "something";
+
+    expectedState.filtered = null;
+
+    expect(spotReducer(initialState, action)).toEqual(expectedState);
+  });
+  test("changes state on clear filter id", () => {
+    const action = {
+      type: types.CLEAR_FILTER_ID,
+    };
+
+    initialState.filterId = "something";
+
+    expectedState.filterId = null;
+
+    expect(spotReducer(initialState, action)).toEqual(expectedState);
+  });
+  test("changes state on clear filter by spot tags", () => {
+    const action = {
+      type: types.CLEAR_FILTER_BY_SPOT_TAGS,
+    };
+
+    initialState.filteredByTag = "something";
+
+    expectedState.filteredByTag = null;
+
+    expect(spotReducer(initialState, action)).toEqual(expectedState);
+  });
 });
