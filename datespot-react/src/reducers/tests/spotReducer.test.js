@@ -47,4 +47,30 @@ describe("spotReducer", () => {
 
     expect(spotReducer(undefined, action)).toEqual(expectedState);
   });
+  test("changes state on add spot detail action", () => {
+    const action = {
+      type: types.ADD_SPOT_DETAIL,
+      payload: "oneId",
+    };
+    const initialState = {
+      spots: [{ _id: action.payload }],
+      error: null,
+      filtered: null,
+      filteredByLiked: null,
+      filteredByTag: null,
+      filterId: null,
+      spotDetail: null,
+    };
+    const expectedState = {
+      spots: [{ _id: action.payload }],
+      error: null,
+      filtered: null,
+      filteredByLiked: null,
+      filteredByTag: null,
+      filterId: null,
+      spotDetail: { _id: action.payload },
+    };
+
+    expect(spotReducer(initialState, action)).toEqual(expectedState);
+  });
 });
