@@ -124,4 +124,24 @@ describe("spotReducer", () => {
 
     expect(spotReducer(undefined, action)).toEqual(expectedState);
   });
+  test("changes state on filter spots", () => {
+    const action = {
+      type: types.FILTER_SPOTS,
+      payload: "london",
+    };
+    initialState.spots = [
+      { _id: "oneId", title: "london", description: "London spot" },
+      {
+        _id: "twoId",
+        title: "somewhere else",
+        description: "somewhere else spot",
+      },
+    ];
+    expectedState.spots = initialState.spots;
+    expectedState.filtered = [
+      { _id: "oneId", title: "london", description: "London spot" },
+    ];
+
+    expect(spotReducer(initialState, action)).toEqual(expectedState);
+  });
 });
