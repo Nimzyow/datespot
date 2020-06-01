@@ -81,4 +81,21 @@ describe("authReducer", () => {
 
     expect(authReducer(undefined, action)).toEqual(expectedState);
   });
+  test("update state when user fails to register", () => {
+    const action = {
+      type: types.REGISTER_FAIL,
+      payload: "error",
+    };
+    const expectedState = {
+      token: null,
+      isAuthenticated: false,
+      loading: false,
+      user: null,
+      error: action.payload,
+      spinner: false,
+      spinnerComment: "",
+    };
+
+    expect(authReducer(undefined, action)).toEqual(expectedState);
+  });
 });
