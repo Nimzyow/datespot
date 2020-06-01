@@ -131,4 +131,20 @@ describe("authReducer", () => {
 
     expect(authReducer(undefined, action)).toEqual(expectedState);
   });
+  test("update state on clear errors action call", () => {
+    const action = {
+      type: types.CLEAR_ERRORS,
+    };
+    const expectedState = {
+      token: null,
+      isAuthenticated: null,
+      loading: false,
+      user: null,
+      error: null,
+      spinner: false,
+      spinnerComment: "",
+    };
+
+    expect(authReducer(undefined, action)).toEqual(expectedState);
+  });
 });

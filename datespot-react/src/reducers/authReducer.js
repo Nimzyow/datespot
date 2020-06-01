@@ -80,6 +80,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: null,
+        loading: false,
       };
     case Types.SPINNER_SHOW:
       return {
