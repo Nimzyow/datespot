@@ -2,6 +2,18 @@ import spotReducer from "../spotReducer";
 import * as types from "../../actions/types";
 
 describe("spotReducer", () => {
+  let initialState;
+  beforeEach(() => {
+    initialState = {
+      spots: null,
+      error: null,
+      filtered: null,
+      filteredByLiked: null,
+      filteredByTag: null,
+      filterId: null,
+      spotDetail: null,
+    };
+  });
   test("returns default state if non related action is passed", () => {
     const unrelatedAction = {
       type: "unrelatedAction",
@@ -52,15 +64,8 @@ describe("spotReducer", () => {
       type: types.ADD_SPOT_DETAIL,
       payload: "oneId",
     };
-    const initialState = {
-      spots: [{ _id: action.payload }],
-      error: null,
-      filtered: null,
-      filteredByLiked: null,
-      filteredByTag: null,
-      filterId: null,
-      spotDetail: null,
-    };
+    initialState.spots = [{ _id: action.payload }];
+
     const expectedState = {
       spots: [{ _id: action.payload }],
       error: null,
@@ -78,15 +83,8 @@ describe("spotReducer", () => {
       type: types.ADD_TO_LIKE_TABLE,
       payload: { spot: { _id: "oneId", likes: [] }, likes: [{ _id: "twoId" }] },
     };
-    const initialState = {
-      spots: [{ _id: action.payload.spot._id, likes: [] }],
-      error: null,
-      filtered: null,
-      filteredByLiked: null,
-      filteredByTag: null,
-      filterId: null,
-      spotDetail: null,
-    };
+    initialState.spots = [{ _id: action.payload.spot._id, likes: [] }];
+
     const expectedState = {
       spots: [
         { _id: action.payload.spot._id, likes: [action.payload.likes[0]] },
@@ -109,15 +107,9 @@ describe("spotReducer", () => {
         comments: [{ _id: "twoId" }],
       },
     };
-    const initialState = {
-      spots: [{ _id: action.payload.spot._id, comments: [] }],
-      error: null,
-      filtered: null,
-      filteredByLiked: null,
-      filteredByTag: null,
-      filterId: null,
-      spotDetail: null,
-    };
+
+    initialState.spots = [{ _id: action.payload.spot._id, comments: [] }];
+
     const expectedState = {
       spots: [
         {
@@ -140,18 +132,10 @@ describe("spotReducer", () => {
       type: types.FILTER_BY_SPOT_TAGS,
       payload: "adventure",
     };
-    const initialState = {
-      spots: [
-        { _id: "oneId", tags: ["dragon"] },
-        { _id: "twoId", tags: [action.payload] },
-      ],
-      error: null,
-      filtered: null,
-      filteredByLiked: null,
-      filteredByTag: null,
-      filterId: null,
-      spotDetail: null,
-    };
+    initialState.spots = [
+      { _id: "oneId", tags: ["dragon"] },
+      { _id: "twoId", tags: [action.payload] },
+    ];
     const expectedState = {
       spots: [
         { _id: "oneId", tags: ["dragon"] },
