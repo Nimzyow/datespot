@@ -3,19 +3,21 @@ import axios from "axios";
 import setAuthToken from "../Utils/SetAuthToken";
 
 // Load User
-export const loadUser = () => async (dispatch) => {
-  setAuthToken(localStorage.token);
-  try {
-    const res = await axios.get("/api/auth");
+export const loadUser = () => {
+  return async (dispatch) => {
+    setAuthToken(localStorage.token);
+    try {
+      const res = await axios.get("/api/auth");
 
-    dispatch({
-      type: Types.USER_LOADED,
-      payload: res.data,
-    });
-  } catch (err) {
-    console.error(err);
-    dispatch({ type: Types.AUTH_ERROR });
-  }
+      dispatch({
+        type: Types.USER_LOADED,
+        payload: res.data,
+      });
+    } catch (err) {
+      console.error(err);
+      dispatch({ type: Types.AUTH_ERROR });
+    }
+  };
 };
 
 // Register User
@@ -60,23 +62,23 @@ export const login = (formData) => async (dispatch) => {
   try {
     const res = await axios.post("/api/auth", formData, config);
 
+    dispatch({ type: Types.SPINNER_NOSHOW });
+
     dispatch({
       type: Types.LOGIN_SUCCESS,
       payload: res.data,
     });
     //noShowSpinner();
 
-    dispatch({ type: Types.SPINNER_NOSHOW });
+    await loadUser();
+    // setAuthToken(localStorage.token);
 
-    //loadUser();
-    setAuthToken(localStorage.token);
+    // const resLoad = await axios.get("/api/auth");
 
-    const resLoad = await axios.get("/api/auth");
-
-    dispatch({
-      type: Types.USER_LOADED,
-      payload: resLoad.data,
-    });
+    // dispatch({
+    //   type: Types.USER_LOADED,
+    //   payload: resLoad.data,
+    // });
   } catch (err) {
     dispatch({
       type: Types.LOGIN_FAIL,

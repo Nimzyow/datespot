@@ -1,9 +1,12 @@
-import { register, loadUser } from "../authActions";
-const mockAxios = require("axios");
+import { register, loadUser, login } from "../authActions";
+import mockAxios from "axios";
 import * as types from "../types";
 jest.mock("axios");
 
 describe("authActions", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
   test("loads user", async () => {
     const expectedResult = {
       data: {
@@ -75,5 +78,35 @@ describe("authActions", () => {
     } catch (err) {
       console.error(err);
     }
+  });
+  test("login user", async () => {
+    mockAxios.post.mockImplementationOnce(
+      async () =>
+        await Promise.resolve({ data: { token: "greatestTokenEver" } })
+    );
+    const user = {
+      email: "test@test.com",
+      password: "123456",
+    };
+
+    const response = await login(user);
+
+    let dispatchResult;
+    const dispatch = (action) => {
+      dispatchResult = action;
+    };
+
+    await response(dispatch);
+
+    expect(mockAxios.post).toHaveBeenCalledTimes(1);
+    expect(mockAxios.post).toHaveBeenCalledWith("/api/auth", user, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    expect(dispatchResult).toEqual({
+      type: types.LOGIN_SUCCESS,
+      payload: { token: "greatestTokenEver" },
+    });
   });
 });
