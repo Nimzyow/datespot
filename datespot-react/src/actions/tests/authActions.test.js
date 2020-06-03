@@ -1,15 +1,53 @@
-import { register } from "../authActions";
+import { register, loadUser } from "../authActions";
 const mockAxios = require("axios");
 import * as types from "../types";
 jest.mock("axios");
 
-describe("registerUser action", () => {
+describe("authActions", () => {
+  test("loads user", async () => {
+    const expectedResult = {
+      data: {
+        user: {
+          _id: "userId",
+          username: "usery",
+          email: "email@email.com",
+          createdAt: "onceUponATime",
+          updatedAt: "updateUponATime",
+        },
+      },
+    };
+    mockAxios.get.mockImplementationOnce(
+      async () =>
+        await Promise.resolve({
+          ...expectedResult,
+        })
+    );
+
+    try {
+      const response = await loadUser();
+
+      let dispatchResult;
+      let dispatch = (action) => {
+        dispatchResult = action;
+      };
+
+      await response(dispatch);
+
+      expect(mockAxios.get).toHaveBeenCalledTimes(1);
+      expect(mockAxios.get).toHaveBeenCalledWith("/api/auth");
+      expect(dispatchResult).toEqual({
+        type: types.USER_LOADED,
+        payload: expectedResult.data,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  });
   test("registers user", async () => {
     mockAxios.post.mockImplementationOnce(
       async () =>
         await Promise.resolve({ data: { token: "greatestTokenEver" } })
     );
-    //console.log();
 
     const user = {
       username: "nimzy",
@@ -25,9 +63,11 @@ describe("registerUser action", () => {
       };
 
       await response(dispatch);
-      //console.log("dispatchResult", dispatchResult);
 
       expect(mockAxios.post).toHaveBeenCalledTimes(1);
+      expect(mockAxios.post).toHaveBeenCalledWith("/api/users", user, {
+        headers: { "Content-Type": "application/json" },
+      });
       expect(dispatchResult).toEqual({
         type: types.REGISTER_SUCCESS,
         payload: { token: "greatestTokenEver" },

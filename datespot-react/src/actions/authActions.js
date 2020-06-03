@@ -4,22 +4,18 @@ import setAuthToken from "../Utils/SetAuthToken";
 
 // Load User
 export const loadUser = () => async (dispatch) => {
-  console.log("helo im in loadUSer?");
+  setAuthToken(localStorage.token);
+  try {
+    const res = await axios.get("/api/auth");
 
-  return async (dispatch) => {
-    setAuthToken(localStorage.token);
-    try {
-      const res = await axios.get("/api/auth");
-
-      dispatch({
-        type: Types.USER_LOADED,
-        payload: res.data,
-      });
-    } catch (err) {
-      console.error(err);
-      dispatch({ type: Types.AUTH_ERROR });
-    }
-  };
+    dispatch({
+      type: Types.USER_LOADED,
+      payload: res.data,
+    });
+  } catch (err) {
+    console.error(err);
+    dispatch({ type: Types.AUTH_ERROR });
+  }
 };
 
 // Register User
