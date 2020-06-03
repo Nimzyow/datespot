@@ -4,6 +4,7 @@ import * as types from "../types";
 jest.mock("axios");
 
 describe("authActions", () => {
+  let dispatch = jest.fn();
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -23,22 +24,17 @@ describe("authActions", () => {
       async () =>
         await Promise.resolve({
           ...expectedResult,
-        })
+        }),
     );
 
     try {
       const response = await loadUser();
 
-      let dispatchResult;
-      let dispatch = (action) => {
-        dispatchResult = action;
-      };
-
       await response(dispatch);
 
       expect(mockAxios.get).toHaveBeenCalledTimes(1);
       expect(mockAxios.get).toHaveBeenCalledWith("/api/auth");
-      expect(dispatchResult).toEqual({
+      expect(dispatch).toHaveBeenCalledWith({
         type: types.USER_LOADED,
         payload: expectedResult.data,
       });
@@ -49,7 +45,7 @@ describe("authActions", () => {
   test("registers user", async () => {
     mockAxios.post.mockImplementationOnce(
       async () =>
-        await Promise.resolve({ data: { token: "greatestTokenEver" } })
+        await Promise.resolve({ data: { token: "greatestTokenEver" } }),
     );
 
     const user = {
@@ -60,18 +56,13 @@ describe("authActions", () => {
     try {
       const response = await register(user);
 
-      let dispatchResult;
-      const dispatch = (action) => {
-        dispatchResult = action;
-      };
-
       await response(dispatch);
 
       expect(mockAxios.post).toHaveBeenCalledTimes(1);
       expect(mockAxios.post).toHaveBeenCalledWith("/api/users", user, {
         headers: { "Content-Type": "application/json" },
       });
-      expect(dispatchResult).toEqual({
+      expect(dispatch).toHaveBeenCalledWith({
         type: types.REGISTER_SUCCESS,
         payload: { token: "greatestTokenEver" },
       });
@@ -82,7 +73,7 @@ describe("authActions", () => {
   test("login user", async () => {
     mockAxios.post.mockImplementationOnce(
       async () =>
-        await Promise.resolve({ data: { token: "greatestTokenEver" } })
+        await Promise.resolve({ data: { token: "greatestTokenEver" } }),
     );
     const user = {
       email: "test@test.com",
@@ -90,11 +81,6 @@ describe("authActions", () => {
     };
 
     const response = await login(user);
-
-    let dispatchResult;
-    const dispatch = (action) => {
-      dispatchResult = action;
-    };
 
     await response(dispatch);
 
@@ -104,7 +90,7 @@ describe("authActions", () => {
         "Content-Type": "application/json",
       },
     });
-    expect(dispatchResult).toEqual({
+    expect(dispatch).toHaveBeenCalledWith({
       type: types.LOGIN_SUCCESS,
       payload: { token: "greatestTokenEver" },
     });
