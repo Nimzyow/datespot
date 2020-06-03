@@ -57,4 +57,31 @@ describe("spotActions", () => {
       type: Types.CLEAR_SPOT_DETAIL,
     });
   });
+  test("addToLikeCount function dispatches to ADD_TO_LIKE_TABLE", async () => {
+    mockAxios.post.mockImplementationOnce(
+      async () => await Promise.resolve({ data: "some likes" }),
+    );
+    const toAdd = {
+      spotId: "spotId",
+      userId: { _id: "user_id" },
+    };
+    const toSend = {
+      userId: toAdd.userId,
+    };
+    const response = await actionType.addToLikeCount(toAdd);
+    await response(dispatch);
+
+    expect(dispatch).toHaveBeenCalledWith({
+      type: Types.ADD_TO_LIKE_TABLE,
+      payload: "some likes",
+    });
+    expect(mockAxios.post).toHaveBeenCalledWith(
+      `/api/spots/${toAdd.spotId}/like`,
+      toSend,
+      {
+        headers: { "Content-Type": "application/json" },
+      },
+    );
+    expect(mockAxios.post).toHaveBeenCalledTimes(1);
+  });
 });
