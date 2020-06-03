@@ -5,8 +5,14 @@ jest.mock("axios");
 
 describe("authActions", () => {
   let dispatch = jest.fn();
+  let user;
   beforeEach(() => {
     jest.clearAllMocks();
+    user = {
+      username: "testy",
+      email: "test@test.com",
+      password: "123456",
+    };
   });
   test("loads user", async () => {
     const expectedResult = {
@@ -48,11 +54,6 @@ describe("authActions", () => {
         await Promise.resolve({ data: { token: "greatestTokenEver" } }),
     );
 
-    const user = {
-      username: "nimzy",
-      email: "n_soufiani@hotmail.com",
-      password: "123456",
-    };
     try {
       const response = await register(user);
 
@@ -70,15 +71,33 @@ describe("authActions", () => {
       console.error(err);
     }
   });
+  test("REGISTER_FAIL is called with email that already exists in db", async () => {
+    mockAxios.post.mockImplementationOnce(
+      async () =>
+        await Promise.reject({
+          response: { data: { msg: "error" } },
+        }),
+    );
+
+    try {
+      const response = await register(user);
+
+      await response(dispatch);
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: types.REGISTER_FAIL,
+        payload: "error",
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  });
   test("login user", async () => {
     mockAxios.post.mockImplementationOnce(
       async () =>
         await Promise.resolve({ data: { token: "greatestTokenEver" } }),
     );
-    const user = {
-      email: "test@test.com",
-      password: "123456",
-    };
+    delete user.username;
 
     const response = await login(user);
 
