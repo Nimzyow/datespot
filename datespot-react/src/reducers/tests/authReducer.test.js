@@ -2,6 +2,18 @@ import authReducer from "../authReducer";
 import * as types from "../../actions/types";
 
 describe("authReducer", () => {
+  let expectedState;
+  beforeEach(() => {
+    expectedState = {
+      token: localStorage.getItem("token"),
+      isAuthenticated: true,
+      loading: false,
+      user: null,
+      error: null,
+      spinner: false,
+      spinnerComment: "",
+    };
+  });
   test("should return default state if unrelated action is passed in", () => {
     const fakeState = {
       random: "randomState",
@@ -17,16 +29,7 @@ describe("authReducer", () => {
       type: types.USER_LOADED,
       payload: "user information",
     };
-
-    const expectedState = {
-      token: localStorage.getItem("token"),
-      isAuthenticated: true,
-      loading: false,
-      user: action.payload,
-      error: null,
-      spinner: false,
-      spinnerComment: "",
-    };
+    expectedState.user = action.payload;
 
     expect(authReducer(undefined, action)).toEqual(expectedState);
   });
@@ -35,15 +38,8 @@ describe("authReducer", () => {
       type: types.AUTH_ERROR,
       payload: "some error",
     };
-    const expectedState = {
-      token: null,
-      isAuthenticated: false,
-      loading: false,
-      user: null,
-      error: action.payload,
-      spinner: false,
-      spinnerComment: "",
-    };
+    expectedState.error = action.payload;
+    expectedState.isAuthenticated = false;
 
     expect(authReducer(undefined, action)).toEqual(expectedState);
   });
@@ -52,15 +48,8 @@ describe("authReducer", () => {
       type: types.REGISTER_SUCCESS,
       payload: { token: "token" },
     };
-    const expectedState = {
-      token: action.payload.token,
-      isAuthenticated: true,
-      loading: false,
-      user: null,
-      error: null,
-      spinner: false,
-      spinnerComment: "",
-    };
+    expectedState.token = action.payload.token;
+    expectedState.isAuthenticated = true;
 
     expect(authReducer(undefined, action)).toEqual(expectedState);
   });
@@ -69,15 +58,8 @@ describe("authReducer", () => {
       type: types.LOGIN_SUCCESS,
       payload: { token: "token" },
     };
-    const expectedState = {
-      token: action.payload.token,
-      isAuthenticated: true,
-      loading: false,
-      user: null,
-      error: null,
-      spinner: false,
-      spinnerComment: "",
-    };
+    expectedState.token = action.payload.token;
+    expectedState.isAuthenticated = true;
 
     expect(authReducer(undefined, action)).toEqual(expectedState);
   });
@@ -86,15 +68,9 @@ describe("authReducer", () => {
       type: types.REGISTER_FAIL,
       payload: "error",
     };
-    const expectedState = {
-      token: null,
-      isAuthenticated: false,
-      loading: false,
-      user: null,
-      error: action.payload,
-      spinner: false,
-      spinnerComment: "",
-    };
+    expectedState.error = action.payload;
+    expectedState.isAuthenticated = false;
+    expectedState.token = null;
 
     expect(authReducer(undefined, action)).toEqual(expectedState);
   });
@@ -103,15 +79,8 @@ describe("authReducer", () => {
       type: types.LOGIN_FAIL,
       payload: "error",
     };
-    const expectedState = {
-      token: null,
-      isAuthenticated: false,
-      loading: false,
-      user: null,
-      error: action.payload,
-      spinner: false,
-      spinnerComment: "",
-    };
+    expectedState.isAuthenticated = false;
+    expectedState.error = action.payload;
 
     expect(authReducer(undefined, action)).toEqual(expectedState);
   });
@@ -119,15 +88,8 @@ describe("authReducer", () => {
     const action = {
       type: types.LOGOUT,
     };
-    const expectedState = {
-      token: null,
-      isAuthenticated: false,
-      loading: false,
-      user: null,
-      error: null,
-      spinner: false,
-      spinnerComment: "",
-    };
+    expectedState.isAuthenticated = false;
+    expectedState.token = null;
 
     expect(authReducer(undefined, action)).toEqual(expectedState);
   });
@@ -135,15 +97,8 @@ describe("authReducer", () => {
     const action = {
       type: types.CLEAR_ERRORS,
     };
-    const expectedState = {
-      token: null,
-      isAuthenticated: null,
-      loading: false,
-      user: null,
-      error: null,
-      spinner: false,
-      spinnerComment: "",
-    };
+    expectedState.isAuthenticated = null;
+    expectedState.token = null;
 
     expect(authReducer(undefined, action)).toEqual(expectedState);
   });
@@ -151,15 +106,11 @@ describe("authReducer", () => {
     const action = {
       type: types.SPINNER_SHOW,
     };
-    const expectedState = {
-      token: null,
-      isAuthenticated: null,
-      loading: true,
-      user: null,
-      error: null,
-      spinner: true,
-      spinnerComment: "loading",
-    };
+    expectedState.isAuthenticated = null;
+    expectedState.token = null;
+    expectedState.loading = true;
+    expectedState.spinner = true;
+    expectedState.spinnerComment = "loading";
 
     expect(authReducer(undefined, action)).toEqual(expectedState);
   });
@@ -167,15 +118,9 @@ describe("authReducer", () => {
     const action = {
       type: types.SPINNER_NOSHOW,
     };
-    const expectedState = {
-      token: null,
-      isAuthenticated: null,
-      loading: false,
-      user: null,
-      error: null,
-      spinner: false,
-      spinnerComment: "",
-    };
+    expectedState.token = null;
+    expectedState.isAuthenticated = null;
+    expectedState.loading = false;
 
     expect(authReducer(undefined, action)).toEqual(expectedState);
   });
