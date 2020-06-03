@@ -31,7 +31,6 @@ export const clearSpotDetail = () => (dispatch) => {
 };
 
 export const addToLikeCount = (toAdd) => async (dispatch) => {
-  console.log(toAdd);
   const { spotId, userId } = toAdd;
   const toSend = { userId };
   const config = {
@@ -41,7 +40,6 @@ export const addToLikeCount = (toAdd) => async (dispatch) => {
   };
   try {
     const res = await axios.post(`/api/spots/${spotId}/like`, toSend, config);
-    console.log("RES", res.data);
     dispatch({
       type: Types.ADD_TO_LIKE_TABLE,
       payload: res.data,
@@ -72,7 +70,7 @@ export const removeFromLikeCount = (toRemove) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: Types.LIKES_ERROR,
-      payload: toRemove,
+      payload: err,
     });
   }
 };
@@ -104,7 +102,7 @@ export const postComment = (data) => async (dispatch) => {
     const res = await axios.post(
       `/api/spots/${data.spotId}/comments`,
       toSend,
-      config
+      config,
     );
     dispatch({
       type: Types.ADD_COMMENT,
