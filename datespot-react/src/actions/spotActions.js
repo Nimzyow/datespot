@@ -70,7 +70,7 @@ export const removeFromLikeCount = (toRemove) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: Types.LIKES_ERROR,
-      payload: toRemove,
+      payload: err,
     });
   }
 };
