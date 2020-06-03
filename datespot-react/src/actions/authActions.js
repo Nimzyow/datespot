@@ -4,18 +4,22 @@ import setAuthToken from "../Utils/SetAuthToken";
 
 // Load User
 export const loadUser = () => async (dispatch) => {
-  setAuthToken(localStorage.token);
-  try {
-    const res = await axios.get("/api/auth");
+  console.log("helo im in loadUSer?");
 
-    dispatch({
-      type: Types.USER_LOADED,
-      payload: res.data,
-    });
-  } catch (err) {
-    console.error(err);
-    dispatch({ type: Types.AUTH_ERROR });
-  }
+  return async (dispatch) => {
+    setAuthToken(localStorage.token);
+    try {
+      const res = await axios.get("/api/auth");
+
+      dispatch({
+        type: Types.USER_LOADED,
+        payload: res.data,
+      });
+    } catch (err) {
+      console.error(err);
+      dispatch({ type: Types.AUTH_ERROR });
+    }
+  };
 };
 
 // Register User
@@ -30,12 +34,12 @@ export const register = (formData) => async (dispatch) => {
   try {
     const res = await axios.post("/api/users", formData, config);
 
+    dispatch({ type: Types.SPINNER_NOSHOW });
+
     dispatch({
       type: Types.REGISTER_SUCCESS,
       payload: res.data,
     });
-
-    dispatch({ type: Types.SPINNER_NOSHOW });
 
     loadUser();
   } catch (err) {
