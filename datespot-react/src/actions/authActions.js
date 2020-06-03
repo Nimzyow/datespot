@@ -68,24 +68,14 @@ export const login = (formData) => async (dispatch) => {
       type: Types.LOGIN_SUCCESS,
       payload: res.data,
     });
-    //noShowSpinner();
 
     await loadUser();
-    // setAuthToken(localStorage.token);
-
-    // const resLoad = await axios.get("/api/auth");
-
-    // dispatch({
-    //   type: Types.USER_LOADED,
-    //   payload: resLoad.data,
-    // });
   } catch (err) {
     dispatch({
       type: Types.LOGIN_FAIL,
       payload: "Invalid Credentials",
     });
     dispatch({ type: Types.SPINNER_NOSHOW });
-    //noShowSpinner();
   }
 };
 

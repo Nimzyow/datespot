@@ -114,4 +114,17 @@ describe("authActions", () => {
       payload: { token: "greatestTokenEver" },
     });
   });
+  test("login failure calls LOGIN_FAIL action", async () => {
+    mockAxios.post.mockImplementationOnce(async () => await Promise.reject());
+    delete user.username;
+
+    const response = await login(user);
+
+    await response(dispatch);
+
+    expect(dispatch).toHaveBeenCalledWith({
+      type: types.LOGIN_FAIL,
+      payload: "Invalid Credentials",
+    });
+  });
 });
