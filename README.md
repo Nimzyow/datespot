@@ -122,7 +122,9 @@ Great! So now you have both the backend and frontend working! Now feel free to p
 
 This was a group project done for the presentation day at Makers Academy. It involved us giving a presentation on a project we worked. We were given just over a week to come up with an idea and create an application in just over a week. The original backend was done in Rails using a SQL database and the front end was done in React using Reacts Context API for state management. I was resposible for the front end. I wanted more responsibilites in the backend and thought it would be a great exercise to rip out the Rails backend and convert that to a JavaScript backend using Node.js, Express.js and MongoDB as the DB.
 
-The aim is not only convert the backend but to also thoroughly test it. I believe I've demonstrated my capabilites in using Reacts Context API but I also wanted to demonstrate my capabilites in Redux. To that end I made another aim to convert Reacts Context API to Redux as I believe this will be a great evidence that I am more than competant in the use of Redux.
+The aim was not only convert the backend but to also thoroughly test it. I believe I've demonstrated my capabilites in using Reacts Context API but I also wanted to demonstrate my capabilites in Redux. To that end I made another aim to convert Reacts Context API to Redux and thoroughly test it too. I believe I have achieved this aim as the backend and front end (including redux) have been thoroughly tested.
+
+The point was not to just implement new features or new ways of managing state but to show that whatever I wanted to change or add, I can do it with thorough, high quality testing.
 
 **From the below paragraph to the end of the Planning portion of this README is the original brainstorming and planning of this project involving Rails as the backend.**
 
@@ -169,4 +171,4 @@ For our MVP we decided to keep it as simple as possible. Our MVP would be to sim
 
 ## Extra notes
 
-This project is turning to be a great exercise to really test my capabilites. I am not only trying to convert the backend to Node and Express with MongoDB as my database, I am also converting Reacts Context API to Redux. I am also doing all of this with testing in mind. I aim to have the backend and front end thoroughly tested. My use of Tests and implementation of Redux will be the main showcase of this project.
+This project is turned out to be a great exercise to really test my capabilites. I converted the backend to Node and Express with MongoDB as my database. I also converted Reacts Context API to Redux. I did all of this with testing in mind. The entire backend, frontend (including Redux) has been thoroughly tested. In fact, thorough testing was the focus of this project and I believe I have achieved my goals.
