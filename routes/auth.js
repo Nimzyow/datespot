@@ -39,16 +39,21 @@ router.post(
     }
 
     const { email, password } = req.body;
+
     try {
       const user = await User.findOne({ email });
       if (!user) {
+        console.log("invalid credentials??");
         return res.status(401).json({ msg: "Invalid credentials" });
       }
       const isMatch = await compare(password, user.password);
 
       if (!isMatch) {
+        console.log("passwords dont match?");
+
         return res.status(401).json({ msg: "email and password do not match" });
       }
+
       try {
         const token = await generateToken(user.id);
         return res.status(200).json({ token });

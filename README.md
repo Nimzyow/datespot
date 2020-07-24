@@ -22,7 +22,7 @@ So you're in a relationship, or perhaps you matched in an online dating app. Tha
 
 Follow these steps to install required dependencies:
 
-1. In the root of the projecttype the following in your terminal:
+1. In the root of the project type the following in your terminal:
 
 ```
 $ npm install
