@@ -152,6 +152,7 @@ For our MVP we decided to keep it as simple as possible. Our MVP would be to sim
 - Supertest
 - chai
 - nyc
+- GraphQL
 - MongoDB
 - Mongoose
 - eslint
@@ -172,3 +173,11 @@ For our MVP we decided to keep it as simple as possible. Our MVP would be to sim
 ## Extra notes
 
 This project is turned out to be a great exercise to really test my capabilites. I converted the backend to Node and Express with MongoDB as my database. I also converted Reacts Context API to Redux. I did all of this with testing in mind. The entire backend, frontend (including Redux) has been thoroughly tested. In fact, thorough testing was the focus of this project and I believe I have achieved my goals.
+
+Through my curiosity I thought I'd check out what GraphQL was as I was curious as to what a modern take on backend API was. It seemed fascinating to me. You only need to make a request to one end point only for all of your queries and mutations? You just type out what you need and you just get that, with no extra fluff? How would it even work?
+
+Reading through the docs and experiementing with GraphQL by creating a ApolloServer, I started feeling like a kid at christmas and I just found this technology to be absolutely awesome.
+
+How would it work for a backend API that's already been created though? How does one integrate GraphQL without altering the hard work that's been put into the backend API already?
+
+I decided to investigate and incoorporate GraphQL to this very project. As of now, authorisation is successful using a GraphQL endpoint. Type defs and resolvers can be found at ./graphql

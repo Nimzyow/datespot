@@ -2,7 +2,7 @@ const { gql } = require("apollo-server-express");
 
 module.exports = gql`
   type Query {
-    allSpots: [Spot!]!
+    hello: String!
   }
   type Spot {
     _id: ID!
@@ -46,5 +46,6 @@ module.exports = gql`
     createUser(email: String!, username: String!, password: String!): Token!
     loginUser(email: String!, password: String!): Token!
     loadUser(token: String!): User!
+    allSpots(token: String!): [Spot!]!
   }
 `;

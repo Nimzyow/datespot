@@ -2,10 +2,7 @@ const axios = require("axios");
 
 module.exports = {
   Query: {
-    allSpots: async () => {
-      const result = await axios.default.get(`http://localhost:4000/api/spots`);
-      return result;
-    },
+    hello: () => "hello world",
   },
   Mutation: {
     createUser: async (parent, { username, email, password }) => {
@@ -39,6 +36,15 @@ module.exports = {
       const config = { headers: { "x-auth-token": tokenToSend } };
       const result = await axios.default.get(
         `http://localhost:4000/api/auth`,
+        config,
+      );
+      return result.data;
+    },
+    allSpots: async (parent, { token }) => {
+      const tokenToSend = token;
+      const config = { headers: { "x-auth-token": tokenToSend } };
+      const result = await axios.default.get(
+        `http://localhost:4000/api/spots`,
         config,
       );
       return result.data;
