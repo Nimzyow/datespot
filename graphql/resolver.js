@@ -21,5 +21,18 @@ module.exports = {
       );
       return result.data;
     },
+    loginUser: async (parent, { email, password }) => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const result = await axios.default.post(
+        "http://localhost:4000/api/auth",
+        { email, password },
+        config,
+      );
+      return result.data;
+    },
   },
 };
