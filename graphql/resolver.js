@@ -34,5 +34,14 @@ module.exports = {
       );
       return result.data;
     },
+    loadUser: async (parent, { token }) => {
+      const tokenToSend = token;
+      const config = { headers: { "x-auth-token": tokenToSend } };
+      const result = await axios.default.get(
+        `http://localhost:4000/api/auth`,
+        config,
+      );
+      return result.data;
+    },
   },
 };
