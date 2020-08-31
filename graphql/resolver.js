@@ -11,6 +11,7 @@ module.exports = {
                     "Content-Type": "application/json",
                 },
             };
+
             const result = await axios.default.post(
                 "http://localhost:4000/api/users",
                 { email, username, password },

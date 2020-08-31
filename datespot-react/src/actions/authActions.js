@@ -29,15 +29,29 @@ export const register = (formData) => async (dispatch) => {
             "Content-Type": "application/json",
         },
     };
+    const grapqlQuery = {
+        query:
+            "mutation ($email: String! $username: String! $password: String!) { createUser(email: $email username: $username password: $password) { token } }",
+        variables: {
+            email: formData.email,
+            password: formData.password,
+            username: formData.username,
+        },
+    };
 
     try {
-        const res = await axios.post("/api/users", formData, config);
-
+        const res = await axios.post(
+            "/graphql",
+            JSON.stringify(grapqlQuery),
+            config,
+        );
+        //const res = await axios.post("/api/users", formData, config);
+        console.log("res", res);
         dispatch({ type: Types.SPINNER_NOSHOW });
 
         dispatch({
             type: Types.REGISTER_SUCCESS,
-            payload: res.data,
+            payload: res.data.data.createUser,
         });
 
         loadUser();
@@ -72,6 +86,7 @@ export const login = (formData) => async (dispatch) => {
             JSON.stringify(grapqlQuery),
             config,
         );
+        console.log(res);
 
         dispatch({ type: Types.SPINNER_NOSHOW });
         dispatch({
