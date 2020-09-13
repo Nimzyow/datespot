@@ -11,7 +11,7 @@ export const loadUser = () => {
             const res = await axios.post("/graphql");
             dispatch({
                 type: Types.USER_LOADED,
-                payload: res.data,
+                payload: res.data.data.loadUser,
             });
         } catch (err) {
             console.error(err);

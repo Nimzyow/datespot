@@ -44,7 +44,7 @@ describe("authActions", () => {
             expect(mockAxios.post).toHaveBeenCalledWith("/graphql");
             expect(dispatch).toHaveBeenCalledWith({
                 type: types.USER_LOADED,
-                payload: expectedResult.data,
+                payload: expectedResult.data.data.loadUser,
             });
         } catch (err) {
             console.error(err);
