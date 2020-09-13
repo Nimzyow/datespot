@@ -25,7 +25,7 @@ export const SpotItem = ({
     <Card data-test="card-container" className="shadow">
       <Card.Img data-test="card-image" variant="top" src={url} />
       <CardBody title={title} summary={summary} spotId={spotId} likes={likes} />
-      <Card.Footer class="spotFooter">
+      <Card.Footer className="spotFooter">
         <div className="spotButton">
           <Button variant="primary">
             <Link
