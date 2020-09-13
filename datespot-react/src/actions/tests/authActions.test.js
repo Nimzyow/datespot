@@ -51,8 +51,22 @@ describe("authActions", () => {
     test("registers user", async () => {
         mockAxios.post.mockImplementationOnce(
             async () =>
-                await Promise.resolve({ data: { token: "greatestTokenEver" } }),
+                await Promise.resolve({
+                    data: {
+                        data: { createUser: { token: "greatestTokenEver" } },
+                    },
+                }),
         );
+
+        const grapqlQuery = {
+            query:
+                "mutation ($email: String! $username: String! $password: String!) { createUser(email: $email username: $username password: $password) { token } }",
+            variables: {
+                email: user.email,
+                password: user.password,
+                username: user.username,
+            },
+        };
 
         try {
             const response = await register(user);
@@ -60,9 +74,13 @@ describe("authActions", () => {
             await response(dispatch);
 
             expect(mockAxios.post).toHaveBeenCalledTimes(1);
-            expect(mockAxios.post).toHaveBeenCalledWith("/api/users", user, {
-                headers: { "Content-Type": "application/json" },
-            });
+            expect(mockAxios.post).toHaveBeenCalledWith(
+                "/graphql",
+                JSON.stringify(grapqlQuery),
+                {
+                    headers: { "Content-Type": "application/json" },
+                },
+            );
             expect(dispatch).toHaveBeenCalledWith({
                 type: types.REGISTER_SUCCESS,
                 payload: { token: "greatestTokenEver" },

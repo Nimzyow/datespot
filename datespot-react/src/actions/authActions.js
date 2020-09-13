@@ -45,8 +45,6 @@ export const register = (formData) => async (dispatch) => {
             JSON.stringify(grapqlQuery),
             config,
         );
-        //const res = await axios.post("/api/users", formData, config);
-        console.log("res", res);
         dispatch({ type: Types.SPINNER_NOSHOW });
 
         dispatch({
@@ -86,10 +84,8 @@ export const login = (formData) => async (dispatch) => {
             JSON.stringify(grapqlQuery),
             config,
         );
-        //console.log(res);
 
         dispatch({ type: Types.SPINNER_NOSHOW });
-        console.log(res.data.data.loginUser);
         dispatch({
             type: Types.LOGIN_SUCCESS,
             payload: res.data.data.loginUser,
