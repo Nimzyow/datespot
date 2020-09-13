@@ -86,9 +86,10 @@ export const login = (formData) => async (dispatch) => {
             JSON.stringify(grapqlQuery),
             config,
         );
-        console.log(res);
+        //console.log(res);
 
         dispatch({ type: Types.SPINNER_NOSHOW });
+        console.log(res.data.data.loginUser);
         dispatch({
             type: Types.LOGIN_SUCCESS,
             payload: res.data.data.loginUser,
