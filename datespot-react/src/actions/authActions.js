@@ -8,11 +8,10 @@ export const loadUser = () => {
         setAuthToken(localStorage.token);
 
         try {
-            const res = await axios.get("/api/auth");
-
+            const res = await axios.post("/graphql");
             dispatch({
                 type: Types.USER_LOADED,
-                payload: res.data,
+                payload: res.data.data.loadUser,
             });
         } catch (err) {
             console.error(err);

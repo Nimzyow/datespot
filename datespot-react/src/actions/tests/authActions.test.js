@@ -17,16 +17,18 @@ describe("authActions", () => {
     test("loads user", async () => {
         const expectedResult = {
             data: {
-                user: {
-                    _id: "userId",
-                    username: "usery",
-                    email: "email@email.com",
-                    createdAt: "onceUponATime",
-                    updatedAt: "updateUponATime",
+                data: {
+                    loadUser: {
+                        _id: "userId",
+                        username: "usery",
+                        email: "email@email.com",
+                        createdAt: "onceUponATime",
+                        updatedAt: "updateUponATime",
+                    },
                 },
             },
         };
-        mockAxios.get.mockImplementationOnce(
+        mockAxios.post.mockImplementationOnce(
             async () =>
                 await Promise.resolve({
                     ...expectedResult,
@@ -38,11 +40,11 @@ describe("authActions", () => {
 
             await response(dispatch);
 
-            expect(mockAxios.get).toHaveBeenCalledTimes(1);
-            expect(mockAxios.get).toHaveBeenCalledWith("/api/auth");
+            expect(mockAxios.post).toHaveBeenCalledTimes(1);
+            expect(mockAxios.post).toHaveBeenCalledWith("/graphql");
             expect(dispatch).toHaveBeenCalledWith({
                 type: types.USER_LOADED,
-                payload: expectedResult.data,
+                payload: expectedResult.data.data.loadUser,
             });
         } catch (err) {
             console.error(err);
